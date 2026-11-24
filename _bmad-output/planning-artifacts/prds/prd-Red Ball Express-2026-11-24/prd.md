@@ -203,8 +203,8 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye, en
 
 - **NFR-1 Kjørbar lokalt:** appen kan installeres og startes etter README på en ren maskin, uten kontoer, nøkler eller nettilgang til eksterne tjenester (utover å laste ned avhengigheter). Forutsetninger og versjoner står i README.
 - **NFR-2 Ingen hemmeligheter i repoet:** konfigurasjon leses fra miljøvariabler med en `.env.example` uten ekte verdier. Demobrukerens passord er et kjent demopassord, dokumentert i README.
-- **NFR-3 Testbar beregningskjerne:** MRP-beregningen kan kjøres og testes uten database og brukergrensesnitt, direkte mot `input.json` og `expected.json`. Testene kjøres med én kommando som står i README.
-- **NFR-4 Respons:** en MRP-kjøring for testfartøyet og visning av resultatet tar under 2 sekunder på en vanlig bærbar PC.
+- **NFR-3 Testbar beregningskjerne:** MRP-beregningen kan kjøres og testes uten database og brukergrensesnitt, direkte mot `input.json` og `expected.json`. Testene kjøres med én kommando som står i README. I tillegg finnes en automatisk skalatest med en generert BOM på rundt 500 varer og 10 nivåer, der en felles komponent forekommer på flere nivåer. Testen sjekker at beregningen fullfører, at lavnivåkodene er riktige og at massebalansen (lager før uke 1 + åpne ordre + planlagte mottak − bruttobehov = beregnet lager i uke 16) går opp for alle varer. Testen har ikke noe tidskrav. Den skal vise at logikken er generell og ikke tilpasset testfartøyet (jf. SM-C2).
+- **NFR-4 Respons:** en MRP-kjøring for testfartøyet viser resultatet uten merkbar ventetid.
 - **NFR-5 Stabilitet:** ugyldig input, gjentatte kjøringer og tilbakestilling midt i bruk gir ikke krasj eller inkonsistente data.
 - **NFR-6 Tilgjengelighet:** skjermbildene har lesbar kontrast, kan brukes med tastatur og har etiketter på alle skjemafelt. Brukergrensesnittet er på norsk. Skjermbildene er beregnet på PC-skjerm. Mobil er ikke et mål i v1.
 - **NFR-7 Sporbarhet:** stories og automatiske tester viser til FR-nummerene i denne PRD-en, og beregningstestene viser til scenario i fasiten.
@@ -248,7 +248,7 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye, en
 
 **Mot-mål (skal ikke optimeres)**
 - **SM-C1 Antall funksjoner og skjermbilder** — mer funksjonalitet er ikke et mål før SM-1 til SM-3 er nådd. Motvekt til fristelsen å begynne på trinn 2.
-- **SM-C2 Tilpasning til fasiten** — testene skal ikke kunne bestås av kode som er skreddersydd for testfartøyet (hardkodede varer eller uker). Motvekt til SM-1. Scenario D og egenskapssjekker (som massebalanse) brukes for å avsløre dette.
+- **SM-C2 Tilpasning til fasiten** — testene skal ikke kunne bestås av kode som er skreddersydd for testfartøyet (hardkodede varer eller uker). Motvekt til SM-1. Scenario D, skalatesten i NFR-3 og egenskapssjekker (som massebalanse) brukes for å avsløre dette.
 
 ## 9. Åpne spørsmål
 
