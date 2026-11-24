@@ -82,3 +82,4 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
 - **Verktøy/modell**: Claude Code (Opus 5.5).
 - **Endringer**: `CLAUDE.md` har fått seksjonen «Skjermbilder og video». Den angir fem tidspunkter (første gang et skjermbilde virker, UX-skisser, en kjerneflyt som virker fra start til slutt, README, før innlevering), at filene lagres i `docs/media/` med datofilnavn, at videoer skal være små og komprimerte, og at påminnelser som ikke er fulgt opp, føres som åpent punkt.
 - **Verifisering**: Manuell gjennomlesning mot sensorveiledningen: kriterium 4 (spor av designarbeid), kriterium 6 (README med skjermbilde), kriterium 7 (ingen store binærfiler) og kapittel 3 (skjermbilder og video som reserve).
+- **Commit**: `d2c83cd` — Legg til regel om påminnelser for skjermbilder og video i CLAUDE.md
