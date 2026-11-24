@@ -87,10 +87,10 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 - **Prevents:** to måter å avgjøre «det samme forslaget» på, og endringsmarkering som avhenger av lagringsformat
 - **Rule:** «Kjør MRP» leser alle inndata i én transaksjon, kaller kjernen og lagrer resultatet (AD-2) som én rad `mrp_run(id, created_at, result_json)`. Raden endres aldri. Alle kjøringer beholdes til tilbakestilling. Endringene mellom siste og nest siste kjøring beregnes ved lesing av en ren funksjon i `rbe.mrp`, med identitetsnøklene fra PRD-en:
   - bestillingsforslag: (`item`, `quantity`, `receipt_week`, `release_week`)
-  - exception-melding: (`type`, `item`, alle tallfelt)
+  - exception-melding: pares på (`type`, `item`). Flere meldinger av samme type for samme vare pares i rekkefølge etter `receipt_week`. Et par med like tallfelt er uendret. For E2 er et par med høyere `weeks_past_due` `worsened`, med lavere `improved`, og ellers `changed`. Meldinger uten par er `added` eller `resolved` (PRD FR-17, endret etter UX 2026-11-24)
   - celle: (`item`, felt, uke), der «Før u1»-kolonnen (startlager og forfalte frigivelser) også regnes som celler
 
-  Uke 0 i en cellenøkkel betyr «Før u1»: `projected_on_hand` uke 0 er startlageret, og `planned_order_releases` uke 0 er summen av forfalte frigivelser. Funksjonen returnerer `{planned_orders: {added, removed}, exceptions: {added, removed}, cells: [{item, field, week}]}`, og API-et sender dette uendret ved siden av siste kjørings resultat. Uten nest siste kjøring er alle listene tomme. Funksjonen testes automatisk for A→B, A→C og A→E mot akseptansekriteriene i FR-17.
+  Uke 0 i en cellenøkkel betyr «Før u1»: `projected_on_hand` uke 0 er startlageret, og `planned_order_releases` uke 0 er summen av forfalte frigivelser. Funksjonen returnerer `{planned_orders: {added, removed}, exceptions: {added, resolved, paired: [{before, after, direction}]}, cells: [{item, field, week}]}`, der `direction` er `worsened`, `improved` eller `changed`, og API-et sender dette uendret ved siden av siste kjørings resultat. Uten nest siste kjøring er alle listene tomme. Funksjonen testes automatisk for A→B, A→C og A→E mot akseptansekriteriene i FR-17.
 
 ### AD-7 — Alle skrivinger går via backend, validert mot lagrede data [ADOPTED]
 
@@ -161,6 +161,7 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 | React Router | 8.5.2 |
 | TypeScript (som Vite-malen `react-ts` setter) | ~7.0.2 |
 | Biome | 2.6.8 |
+| @fontsource/manrope (font, serveres lokalt) | 5.3.0 |
 | Vitest (bare ved behov for ren frontendlogikk) | 5.1.1 |
 
 ## Strukturfrø
@@ -190,6 +191,7 @@ frontend/
     components/
 testdata/testfartoy-v1/ # fasit (uendret)
 docs/                   # ai-log.md, manuell testplan (SM-2)
+  media/                # skjermbilder og video (CLAUDE.md), YYYY-MM-DD-<hva>.png/.mp4
 _bmad-output/           # planleggingsdokumenter
 README.md
 ```
@@ -238,7 +240,7 @@ graph LR
 | NFR-3, SM-1, SM-C2 Testbar kjerne | `rbe.mrp`, `tests/mrp` | AD-1, AD-4, AD-10 |
 | NFR-4 Respons | `rbe.mrp` (synkron beregning i forespørselen) | AD-6 |
 | NFR-5 Stabilitet | `rbe.api`, `rbe.db` | AD-5, AD-7 |
-| NFR-6 Tilgjengelighet | `frontend` | Utsatt til UX-steget |
+| NFR-6 Tilgjengelighet | `frontend` | [EXPERIENCE.md](../../ux-designs/ux-Red%20Ball%20Express-2026-11-24/EXPERIENCE.md) → Accessibility Floor, [DESIGN.md](../../ux-designs/ux-Red%20Ball%20Express-2026-11-24/DESIGN.md) → Colors |
 | NFR-7, SM-4 Sporbarhet | tester, commits, stories | AD-10, konvensjoner |
 | SM-2 Manuell testplan | `docs/` | AD-6 |
 
@@ -246,7 +248,7 @@ graph LR
 
 | Beslutning | Hvorfor den kan vente |
 | --- | --- |
-| Visuelt uttrykk, komponentbibliotek, CSS-tilnærming og skjermbildenes oppbygging (NFR-6) | Hører til UX-steget (`bmad-ux`). Påvirker ikke backend eller API-form |
+| ~~Visuelt uttrykk, komponentbibliotek, CSS-tilnærming og skjermbildenes oppbygging (NFR-6)~~ | Avgjort i UX-steget 2026-11-24: [DESIGN.md](../../ux-designs/ux-Red%20Ball%20Express-2026-11-24/DESIGN.md) og [EXPERIENCE.md](../../ux-designs/ux-Red%20Ball%20Express-2026-11-24/EXPERIENCE.md). Ingen komponentbibliotek, egen CSS med tokens |
 | Endepunktenes eksakte stier og nyttelast | Følger av stories innenfor AD-2, AD-7 og API-konvensjonen |
 | Omfang av frontendtester (Vitest) og ende-til-ende-tester | FR-15–FR-17 dekkes av manuell testplan (SM-2). Vurderes når skjermbildene finnes |
 | Statisk typesjekk i Python (mypy/pyright/ty) | Ruff og testene dekker v1. Kan legges til uten å endre strukturen |
