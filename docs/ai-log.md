@@ -109,3 +109,12 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Avstemmingen mot kildene fant at designprinsippet «synlig dataflyt» fra brief-addendumet manglet. Det ble lagt inn.
   - Brukeren valgte en kvalitetssjekk med rubrikk og tilgjengelighet. Den ble kjørt sekvensielt i økta, ikke som uavhengige subagenter. Den fant feil i KI-ens eget utkast: kanten på felt hadde for lav kontrast (1,77:1 mot kravet 3:1), forrige verdi i endrede celler var bare tilgjengelig ved hover, og 13 komponenter manglet visuell spesifikasjon. Alt ble rettet før status `final`.
 - **Commit**: `22d7f65`, `5469fad`, `2dbc212`, `e08f920`, `17d50ef`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-24 — Skjermbilde av UX, ny medieregel og bildekreditering
+
+- **Hvorfor**: Åpne punkter etter UX-økten: skjermbilde av nøkkelskjermbildene til `docs/media/` og kreditering av fotografen.
+- **Prompt(er)**: «Må jeg ta skjermbilder eller kan du gjøre det?» og «Må vi kreditere fotografen?». KI-en svarte at den kan ta skjermbilder med Edge uten vindu, men ikke en naturlig video, og at Unsplash ikke krever kreditering. Brukeren valgte at KI-en tar skjermbildene, at regelen i CLAUDE.md endres tilsvarende, og at krediteringen blir en kort linje i README. Brukeren venter med video til appen kjører.
+- **Verktøy/modell**: Claude Code (Opus 5.5). Microsoft Edge headless og Pillow.
+- **Endringer**: `docs/media/2026-11-24-ux-nokkelskjermbilder.png` (ny). `CLAUDE.md`: Claude tar skjermbilder selv, brukeren tar video. `README.md`: bildekreditering, og UX er lagt til blant planleggingsdokumentene.
+- **Verifisering**: Skjermbildet ble sett over før commit. Fotografi og fonter var lastet inn, alle sider kom med, og bildet er beskåret til innholdet og komprimert til 337 KB.
+- **Commit**: `d2045f6`, `0000522`, `094ad9d`, pluss commiten som inneholder denne oppføringen.
