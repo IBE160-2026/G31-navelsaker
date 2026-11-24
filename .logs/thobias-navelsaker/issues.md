@@ -11,5 +11,5 @@
 - [ ] 2026-11-24 [sporbarhetsregler-claude-md](996-2026-11-24-11-41-32-sporbarhetsregler-claude-md.md) — ta i bruk branch og pull request per story når implementasjonen starter (sensorkriterium 1)
 - [x] 2026-11-24 [arkitektur-v1](995-2026-11-24-11-47-42-arkitektur-v1.md) — technology.md (Pytagoras) ligger i architecture-mappa og kan forveksles med prosjektets arkitektur; flytt ut eller merk tydelig (løst 2026-11-24)
 - [x] 2026-11-24 [arkitektur-v1](995-2026-11-24-11-47-42-arkitektur-v1.md) — bekreft TypeScript-versjon i arkitekturens Stack mot Vite-malen ved oppsett av frontend (løst 2026-11-24)
-- [ ] 2026-11-24 [ux-v1](993-2026-11-24-14-48-42-ux-v1.md) — ta skjermbilde av UX-nøkkelskjermbildene til docs/media/2026-11-24-ux-nokkelskjermbilder.png
-- [ ] 2026-11-24 [ux-v1](993-2026-11-24-14-48-42-ux-v1.md) — krediter fotografen av havbildet (Oleksii Topolianskyi / Unsplash) i README og på startsiden ved implementasjon
+- [x] 2026-11-24 [ux-v1](993-2026-11-24-14-48-42-ux-v1.md) — ta skjermbilde av UX-nøkkelskjermbildene til docs/media/2026-11-24-ux-nokkelskjermbilder.png (løst 2026-11-24)
+- [x] 2026-11-24 [ux-v1](993-2026-11-24-14-48-42-ux-v1.md) — krediter fotografen av havbildet (Oleksii Topolianskyi / Unsplash) i README og på startsiden ved implementasjon (løst 2026-11-24: README gjort; startsiden er spesifisert i EXPERIENCE.md)
