@@ -47,3 +47,12 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
 - **Endringer**: `_bmad-output/planning-artifacts/prds/prd-Red Ball Express-2026-11-24/` (`prd.md` med FR-1–FR-18, NFR-1–7, SM-1–4 og SM-C1–2; `addendum.md`; `.memlog.md` med alle beslutninger). `testdata/testfartoy-v1/` (regel R11, scenario D og E). Motoreksempelet i `brief.md` er rettet.
 - **Verifisering**: Scenario D og E er regnet ut for hånd og kryssjekket mot det uavhengige kontrollskriptet (alle fem scenarier stemmer). Kontrollskriptet ble utvidet med R11 og BOM-overstyring. PRD-en er sjekket mot BMADs kvalitetsrubrikk. Det avdekket blant annet at FR-17 ikke definerte når et bestillingsforslag er «det samme» uten pegging, og det er rettet. KI-forslag som ble justert av brukeren: en BOM som bare kunne vises, ble til en BOM som kan justeres, og det faste 2-sekunderskravet ble fjernet.
 - **Commit**: `7cb8d9a`, `f50d19f`, `ba85817`, pluss avslutnings-commiten som inneholder denne oppføringen.
+
+## 2026-11-24 — Faste regler for AI-logg, commits og sporbarhet i CLAUDE.md
+
+- **Hvorfor**: Brukeren spurte om logging og sporbarhet skjer automatisk. Det gjorde det bare delvis: sesjonsloggen, Co-Authored-By og BMADs .memlog. AI-logg, commits og FR-referanser avhang av at det sto i hver prompt.
+- **Prompt(er)**: «Hva må jeg gjøre for å sørge for at loggføring og sporbarhet blir gjennomført? Skjer det automatisk?» → oversikt over hva som er automatisk og ikke, med fire forslag → brukeren valgte å utvide CLAUDE.md. Forslagene om en Stop-hook og branch/PR per story ble ikke valgt nå.
+- **Verktøy/modell**: Claude Code (Opus 5.5).
+- **Endringer**: `CLAUDE.md` har fått tre nye seksjoner: AI-logg, Commits og Sporbarhet fra krav til kode.
+- **Verifisering**: Manuell gjennomlesning mot sensorveiledningens kriterium 1 (sporbar KI-bruk, commit-historikk, sammenheng mellom plan og kode) og mot PRD-ens NFR-7.
+- **Commit**: `1f44523` — Legg regler for AI-logg, commits og sporbarhet i CLAUDE.md
