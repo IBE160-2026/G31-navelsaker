@@ -6,6 +6,7 @@ Repoet inneholder gruppens applikasjon og dokumentasjon av utvikling, testing og
 
 - Planleggingsdokumenter (brief, PRD, arkitektur, stories): `_bmad-output/`
 - Logg over KI-prompter og endringer under implementasjon: [docs/ai-log.md](docs/ai-log.md)
+- Testfartøy med håndregnet MRP-fasit (testgrunnlag for v1): [testdata/testfartoy-v1/](testdata/testfartoy-v1/README.md)
 
 ## Medlemmer
 

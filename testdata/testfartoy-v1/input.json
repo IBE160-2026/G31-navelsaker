@@ -1,0 +1,65 @@
+{
+  "fixture": "testfartoy-v1",
+  "description": "Inndata for testfartøyet i v1 (flernivå BOM + MRP). Håndregnet fasit og beregningskonvensjoner: README.md. Forventet resultat: expected.json.",
+  "horizon": {
+    "first_week": 1,
+    "weeks": 16
+  },
+  "items": [
+    { "id": "RBE-000", "name": "Testfartøy RBE Service 15 (komplett fartøy)", "source": "make",     "unit": "stk", "lead_time_weeks": 2,  "on_hand": 0,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "SKR-100", "name": "Skrog, sammenstilt",                          "source": "make",     "unit": "stk", "lead_time_weeks": 3,  "on_hand": 0,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "MAS-200", "name": "Maskinpakke, installert",                     "source": "make",     "unit": "stk", "lead_time_weeks": 2,  "on_hand": 0,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "DEK-300", "name": "Dekk og overbygg",                            "source": "make",     "unit": "stk", "lead_time_weeks": 2,  "on_hand": 0,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "SEK-110", "name": "Skrogseksjon (blokk)",                        "source": "make",     "unit": "stk", "lead_time_weeks": 2,  "on_hand": 1,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "MOT-210", "name": "Hovedmotor (import)",                         "source": "purchase", "unit": "stk", "lead_time_weeks": 20, "on_hand": 0,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "GIR-220", "name": "Gir og propellanlegg",                        "source": "purchase", "unit": "stk", "lead_time_weeks": 8,  "on_hand": 1,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "STY-310", "name": "Styrehus",                                    "source": "make",     "unit": "stk", "lead_time_weeks": 2,  "on_hand": 0,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "PLT-900", "name": "Stålplate 8 mm, 2000x6000",                   "source": "purchase", "unit": "stk", "lead_time_weeks": 3,  "on_hand": 20, "safety_stock": 0, "lot_sizing": { "rule": "FOQ", "quantity": 25 } },
+    { "id": "PRF-910", "name": "Profil/spant, 6 m",                           "source": "purchase", "unit": "stk", "lead_time_weeks": 2,  "on_hand": 15, "safety_stock": 0, "lot_sizing": { "rule": "L4L" } },
+    { "id": "VIN-920", "name": "Vinduspakke styrehus",                        "source": "purchase", "unit": "stk", "lead_time_weeks": 6,  "on_hand": 0,  "safety_stock": 0, "lot_sizing": { "rule": "L4L" } }
+  ],
+  "bom": [
+    { "parent": "RBE-000", "child": "SKR-100", "qty_per": 1 },
+    { "parent": "RBE-000", "child": "MAS-200", "qty_per": 1 },
+    { "parent": "RBE-000", "child": "DEK-300", "qty_per": 1 },
+    { "parent": "SKR-100", "child": "SEK-110", "qty_per": 4 },
+    { "parent": "MAS-200", "child": "MOT-210", "qty_per": 1 },
+    { "parent": "MAS-200", "child": "GIR-220", "qty_per": 1 },
+    { "parent": "DEK-300", "child": "STY-310", "qty_per": 1 },
+    { "parent": "DEK-300", "child": "PLT-900", "qty_per": 8 },
+    { "parent": "SEK-110", "child": "PLT-900", "qty_per": 6 },
+    { "parent": "SEK-110", "child": "PRF-910", "qty_per": 10 },
+    { "parent": "STY-310", "child": "PLT-900", "qty_per": 4 },
+    { "parent": "STY-310", "child": "VIN-920", "qty_per": 1 }
+  ],
+  "scheduled_receipts": [
+    { "item": "MOT-210", "week": 7, "quantity": 1, "note": "Åpen innkjøpsordre for byggenr. 1, bestilt før horisontstart" },
+    { "item": "PRF-910", "week": 4, "quantity": 20, "note": "Åpen innkjøpsordre" }
+  ],
+  "mps": [
+    { "item": "RBE-000", "week": 12, "quantity": 1, "hull_no": 1 },
+    { "item": "RBE-000", "week": 16, "quantity": 1, "hull_no": 2 }
+  ],
+  "scenarios": {
+    "A": {
+      "description": "Basisplan: byggenr. 1 ferdig uke 12, byggenr. 2 ferdig uke 16."
+    },
+    "B": {
+      "description": "MPS-endring: byggenr. 2 framskyndes fra uke 16 til uke 14. Alt annet som A.",
+      "base": "A",
+      "override": {
+        "mps": [
+          { "item": "RBE-000", "week": 12, "quantity": 1, "hull_no": 1 },
+          { "item": "RBE-000", "week": 14, "quantity": 1, "hull_no": 2 }
+        ]
+      }
+    },
+    "C": {
+      "description": "Lagerendring: giret på lager (GIR-220) viser seg å være skadet, beholdning 1 -> 0. Alt annet som A.",
+      "base": "A",
+      "override": {
+        "on_hand": { "GIR-220": 0 }
+      }
+    }
+  }
+}

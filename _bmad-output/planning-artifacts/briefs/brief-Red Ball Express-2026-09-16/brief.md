@@ -64,7 +64,7 @@ Fortrinnet i v1 er ikke teknologisk unikt — BOM-eksplosjon og MRP-nettobehovsb
 - Flernivå BOM (tre–fire nivåer) for ett testfartøy, fast struktur uten alternative komponenter.
 - MRP: nettobehovsberegning per uke og komponent, bestillingsforslag med ledetidsoffset, exception-meldinger (f.eks. når hovedmotoren har lengre ledetid enn planleggingshorisonten).
 - Enkel MPS som input til MRP — en manuelt satt hovedproduksjonsplan for testfartøyet, ikke en egen S&OP-modul.
-- Et konkret testfartøy med håndregnet MRP-tabell som fasit, til bruk i test og demo.
+- Et konkret testfartøy med håndregnet MRP-tabell som fasit, til bruk i test og demo (se `testdata/testfartoy-v1/`).
 - Enkel innlogging (brukernavn/passord) for demoformål.
 - Lokal database med seed-data for testfartøyet, slik at systemet kan kjøres etter README uten eksterne kontoer eller nøkler.
 
