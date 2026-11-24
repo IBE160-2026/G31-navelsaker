@@ -85,18 +85,20 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 
 - **Binds:** FR-9, FR-15, FR-16, FR-17
 - **Prevents:** to måter å avgjøre «det samme forslaget» på, og endringsmarkering som avhenger av lagringsformat
-- **Rule:** «Kjør MRP» leser alle inndata i én transaksjon, kaller kjernen og lagrer resultatet (AD-2) som én rad `mrp_run(id, created_at, result_json)`. Raden endres aldri. Alle kjøringer beholdes til tilbakestilling. Endringene mellom siste og nest siste kjøring beregnes ved lesing av en ren funksjon i `rbe.mrp`, med identitetsnøklene fra PRD-en:
+- **Rule:** «Kjør MRP» leser alle inndata i én transaksjon, kaller kjernen og lagrer resultatet (AD-2) som én rad `mrp_run(id, created_at, input_revision, result_json)`. Raden endres aldri. Alle kjøringer beholdes til tilbakestilling. Endringene mellom siste og nest siste kjøring beregnes ved lesing av en ren funksjon i `rbe.mrp`, med identitetsnøklene fra PRD-en:
   - bestillingsforslag: (`item`, `quantity`, `receipt_week`, `release_week`)
   - exception-melding: pares på (`type`, `item`). Flere meldinger av samme type for samme vare pares i rekkefølge etter `receipt_week`. Et par med like tallfelt er uendret. For E2 er et par med høyere `weeks_past_due` `worsened`, med lavere `improved`, og ellers `changed`. Meldinger uten par er `added` eller `resolved` (PRD FR-17, endret etter UX 2026-11-24)
   - celle: (`item`, felt, uke), der «Før u1»-kolonnen (startlager og forfalte frigivelser) også regnes som celler
 
   Uke 0 i en cellenøkkel betyr «Før u1»: `projected_on_hand` uke 0 er startlageret, og `planned_order_releases` uke 0 er summen av forfalte frigivelser. Funksjonen returnerer `{planned_orders: {added, removed}, exceptions: {added, resolved, paired: [{before, after, direction}]}, cells: [{item, field, week}]}`, der `direction` er `worsened`, `improved` eller `changed`, og API-et sender dette uendret ved siden av siste kjørings resultat. Uten nest siste kjøring er alle listene tomme. Funksjonen testes automatisk for A→B, A→C og A→E mot akseptansekriteriene i FR-17.
 
+  Ikke-kjørte endringer (EXPERIENCE.md, linjen «Du har N endringer …») telles med `input_revision` i planinnstillingene. Telleren økes i samme transaksjon som hver lagret endring av inndata, men ikke ved avviste endringer. Hver `mrp_run` lagrer revisjonen den ble kjørt på. N er differansen mot siste kjøring, eller telleren selv når det ikke finnes noen kjøring. Tilbakestilling setter telleren til 0 (lagt til etter epics og stories 2026-11-24)
+
 ### AD-7 — Alle skrivinger går via backend, validert mot lagrede data [ADOPTED]
 
 - **Binds:** FR-5, FR-6, FR-7, FR-8, FR-18, NFR-5, SM-C2
 - **Prevents:** at frontend og backend validerer ulikt, at horisonten blir hardkodet, og at en ugyldig endring lagres halvveis
-- **Rule:** Frontend sender endringer til `/api` og beregner aldri MRP eller lavnivåkoder selv. BOM-treet får LLC fra backend, som henter den fra `rbe.mrp`. Hver endring valideres i backend og lagres i én transaksjon, eller avvises uten at noe lagres. Grensene i FR-8 håndheves i backend. Uke valideres mot den lagrede horisonten, ikke mot konstanten 16. MPS-linjer kan bare gjelde nivå 0-varen, og byggenummer må være et heltall ≥ 1. Feil returneres i FastAPIs 422-format (`detail[].loc`, `detail[].msg`) med norske meldinger, og frontend viser dem ved feltet som `loc` peker på. Frontend kan validere tidlig for brukervennlighet, men backend er fasit.
+- **Rule:** Frontend sender endringer til `/api` og beregner aldri MRP eller lavnivåkoder selv. BOM-treet får LLC fra backend, som henter den fra `rbe.mrp`. Hver endring valideres i backend og lagres i én transaksjon, eller avvises uten at noe lagres. Grensene i FR-8 håndheves i backend. Uke valideres mot den lagrede horisonten, ikke mot konstanten 16. MPS-linjer kan bare gjelde nivå 0-varen, og byggenummer må være et heltall ≥ 1 og unikt i hovedplanen. Feil returneres i FastAPIs 422-format (`detail[].loc`, `detail[].msg`) med norske meldinger, og frontend viser dem ved feltet som `loc` peker på. Frontend kan validere tidlig for brukervennlighet, men backend er fasit.
 
 ### AD-8 — Innlogging med sesjonscookie, påkrevd som standard [ADOPTED]
 
@@ -204,11 +206,13 @@ erDiagram
   ITEM ||--o{ SCHEDULED_RECEIPT : "har"
   PLANNING_SETTINGS {
     int horizon_weeks
+    int input_revision
   }
   USER {
     string username
   }
   MRP_RUN {
+    int input_revision
     string result_json
   }
 ```
