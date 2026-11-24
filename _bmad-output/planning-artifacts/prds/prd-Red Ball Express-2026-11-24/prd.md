@@ -134,7 +134,7 @@ Systemet avviser ugyldige verdier med en forståelig feilmelding i skjemaet og l
 
 **Konsekvenser (testbare, gjelder FR-5 til FR-8 og FR-18):**
 - Uke må være et heltall i horisonten (1–16). Antall i MPS-linjer og åpne ordre må være et heltall ≥ 1. Lagerbeholdning må være et heltall ≥ 0.
-- En MPS-linje kan bare gjelde testfartøyet (nivå 0-varen). Byggenummer må være et heltall ≥ 1.
+- En MPS-linje kan bare gjelde testfartøyet (nivå 0-varen). Byggenummer må være et heltall ≥ 1 og unikt i hovedplanen.
 - Mengde per må være et heltall ≥ 1. Ledetid må være et heltall ≥ 0. FOQ-kvantum må være et heltall ≥ 1.
 - Ugyldig verdi gir feilmelding ved feltet. Databasen er uendret.
 - Gyldige endringer lagres og vises ved neste visning av skjermbildet.
@@ -245,7 +245,7 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye og 
 
 **Primære**
 - **SM-1 Riktig beregning:** alle automatiske beregningstester mot scenario A–E i fasiten består. Mål: 100 %. Validerer FR-10 til FR-14.
-- **SM-2 Synlig forplantning:** den manuelle testplanen for scenario A, B, C og E gjennomføres uten avvik og dokumenteres i repoet. Validerer FR-15 til FR-18.
+- **SM-2 Synlig forplantning:** den manuelle testplanen for scenario A, B, C og E og brukerreisene UJ-1 og UJ-2 gjennomføres uten avvik og dokumenteres i repoet. Validerer FR-15 til FR-18, og i grensesnittet også FR-1, FR-4 og FR-8.
 - **SM-3 Kjørbar for sensor:** en person som ikke kjenner prosjektet, får appen og testene til å kjøre bare ved å følge README, på under 15 minutter. Validerer NFR-1, NFR-3.
 
 **Sekundære**
