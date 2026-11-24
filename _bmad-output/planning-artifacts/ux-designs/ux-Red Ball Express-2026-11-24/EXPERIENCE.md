@@ -60,7 +60,7 @@ Dette avsnittet beskriver hvordan resultatet av en MRP-kjøring sammenlignes med
 - En helt ny melding (uten par) vises med sin vanlige farge og merkelappen «ny».
 - En melding uten par i ny kjøring (varen har ikke lenger en melding av den typen) vises i grønt under meldingene: «Løst: …». Den vises bare i denne visningen etter kjøringen.
 
-Dette avviker fra PRD FR-17, der en melding med andre tallfelt regnes som ny + fjernet. Avviket er ført tilbake i PRD FR-17 og arkitekturens AD-6.
+Paringen ble bestemt i UX-steget og er ført tilbake i PRD FR-17 og arkitekturens AD-6, som nå beskriver den samme regelen.
 
 **Celler i MRP-tabellen.** Identitet (vare, felt, uke), der uke 0 er kolonnen «Før u1» (AD-6). En endret celle vises uthevet med prikket understrek, og verktøytipset viser «Forrige kjøring: 8». En endret celle får ingen farge.
 
