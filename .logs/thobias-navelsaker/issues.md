@@ -13,3 +13,4 @@
 - [x] 2026-11-24 [arkitektur-v1](995-2026-11-24-11-47-42-arkitektur-v1.md) — bekreft TypeScript-versjon i arkitekturens Stack mot Vite-malen ved oppsett av frontend (løst 2026-11-24)
 - [x] 2026-11-24 [ux-v1](993-2026-11-24-14-48-42-ux-v1.md) — ta skjermbilde av UX-nøkkelskjermbildene til docs/media/2026-11-24-ux-nokkelskjermbilder.png (løst 2026-11-24)
 - [x] 2026-11-24 [ux-v1](993-2026-11-24-14-48-42-ux-v1.md) — krediter fotografen av havbildet (Oleksii Topolianskyi / Unsplash) i README og på startsiden ved implementasjon (løst 2026-11-24: README gjort; startsiden er spesifisert i EXPERIENCE.md)
+- [ ] 2026-11-24 [epics-og-stories-v1](992-2026-11-24-15-34-28-epics-og-stories-v1.md) — GitHub CLI (`gh`) er ikke installert; installer og logg inn, eller lag PR-ene i nettleseren, før story 1.1
