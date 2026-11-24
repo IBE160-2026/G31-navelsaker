@@ -152,3 +152,12 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Skriptet validerte fila etter skriving. De tre advarslene gjaldt overskrifter som ikke er epics (dekningskart, epic-liste, sporbarhet), og de ble ignorert med vilje.
   - Skriptet kunne ikke startes via uv sitt skriptmiljø (Windows: «Ingen tilgang»). Det ble kjørt med `uv run --no-project --with ruamel.yaml python`.
 - **Commit**: `d6c0931`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-24 — Story 1.1: backend-oppsett med helsesjekk og konfigurasjon
+
+- **Hvorfor**: Første story i epic 1. Sensor skal kunne starte backend og kjøre testene med én kommando hver, uten manuelt oppsett og uten hemmeligheter i repoet (NFR-1, NFR-2, AD-9–AD-11).
+- **Prompt(er)**: «Les spec-1-1-backend-oppsett-med-helsesjekk-og-konfigurasjon.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte blant annet versjoner, stier, at tom `RBE_SESSION_SECRET` regnes som manglende, `basicConfig` i stedet for `dictConfig`, og demobrukeren `demo`/`demo` (Thobias' beslutning).
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`.
+- **Endringer**: Nytt uv-prosjekt `backend/` (`pyproject.toml`, `.python-version`, `uv.lock`, `.env.example`), `src/rbe/config.py`, `src/rbe/main.py`, `src/rbe/api/health.py`, `tests/test_config.py`, `tests/api/test_health.py`. `.gitignore` har fått `backend/data/`.
+- **Verifisering**: `uv lock` løste alle festede versjoner mot Python 3.14.7. 11 tester består, og `ruff check` og `ruff format --check` gir 0 funn. AST-sjekken av at bare `config.py` leser miljøet ble prøvd med en forbudt import lagt inn midlertidig, og den feilet som den skulle. Fra repo-rota svarte `GET /api/health` med `{"status":"ok"}`, og advarselen om tilfeldig nøkkel kom i loggen. `git check-ignore` bekreftet at `backend/.env` og `backend/data/` ikke spores. Avvik i kjøringen: på denne maskinen nekter Windows å kjøre `.venv\Scripts\python.exe` (os error 5), så `uv run` feiler. Testene og serveren ble derfor kjørt med uv sin Python 3.14 direkte og `PYTHONPATH` satt til `src` og venv-ens `site-packages`. `uv run …` må prøves på en annen maskin eller etter at sperren er fjernet.
+- **Commit**: `5202b6c` — Opprett uv-prosjekt for backend med konfigurasjon (AD-9, NFR-2); `95fb071` — Legg til FastAPI-app med helsesjekk (NFR-1, AD-10); pluss commiten med testene og denne oppføringen.
