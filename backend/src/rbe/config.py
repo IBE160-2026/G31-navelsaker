@@ -34,7 +34,7 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def _ensure_session_secret(self) -> Settings:
-        if not self.session_secret:
+        if not self.session_secret or not self.session_secret.strip():
             self.session_secret = secrets.token_urlsafe(32)
             logger.warning(
                 "RBE_SESSION_SECRET er ikke satt. Bruker en tilfeldig nøkkel, "

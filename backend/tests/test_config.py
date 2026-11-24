@@ -13,21 +13,6 @@ FORBIDDEN_OS_NAMES = {"environ", "environb", "getenv", "getenvb", "putenv"}
 SRC_DIR = BACKEND_DIR / "src" / "rbe"
 
 
-@pytest.fixture(autouse=True)
-def clean_env(monkeypatch: pytest.MonkeyPatch):
-    for name in (
-        "DATABASE_URL",
-        "FIXTURE_PATH",
-        "SESSION_SECRET",
-        "DEMO_USERNAME",
-        "DEMO_PASSWORD",
-    ):
-        monkeypatch.delenv(f"RBE_{name}", raising=False)
-    get_settings.cache_clear()
-    yield
-    get_settings.cache_clear()
-
-
 def _secret_warnings(caplog: pytest.LogCaptureFixture) -> list[logging.LogRecord]:
     return [r for r in caplog.records if r.name == "rbe.config" and r.levelno == logging.WARNING]
 
@@ -70,6 +55,33 @@ def test_ad9_empty_session_secret_counts_as_missing(
         settings = Settings(_env_file=None)
     assert settings.session_secret
     assert len(_secret_warnings(caplog)) == 1
+
+
+def test_ad9_whitespace_session_secret_counts_as_missing(
+    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
+) -> None:
+    monkeypatch.setenv("RBE_SESSION_SECRET", "   ")
+    with caplog.at_level(logging.WARNING, logger="rbe.config"):
+        settings = Settings(_env_file=None)
+    assert settings.session_secret.strip()
+    assert len(_secret_warnings(caplog)) == 1
+
+
+def test_ad9_fixture_path_and_demo_user_from_env(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    fixture = tmp_path / "annen fasit.json"
+    monkeypatch.setenv("RBE_FIXTURE_PATH", str(fixture))
+    monkeypatch.setenv("RBE_DEMO_USERNAME", "sensor")
+    monkeypatch.setenv("RBE_DEMO_PASSWORD", "hemmelig")
+    settings = Settings(_env_file=None)
+    assert settings.fixture_path == fixture
+    assert settings.demo_username == "sensor"
+    assert settings.demo_password == "hemmelig"
+
+
+def test_ad9_default_env_file_is_in_backend_dir() -> None:
+    assert Settings.model_config["env_file"] == BACKEND_DIR / ".env"
 
 
 def test_ad9_database_url_from_env(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -117,8 +129,10 @@ def _env_access(source: str) -> list[str]:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
-                if alias.name == "os":
-                    os_aliases.add(alias.asname or "os")
+                if alias.asname is None and (alias.name == "os" or alias.name.startswith("os.")):
+                    os_aliases.add("os")
+                elif alias.asname is not None and alias.name == "os":
+                    os_aliases.add(alias.asname)
         elif isinstance(node, ast.ImportFrom) and node.module == "os":
             for alias in node.names:
                 if alias.name in FORBIDDEN_OS_NAMES or alias.name == "*":
@@ -143,7 +157,9 @@ def test_ad9_env_access_check_finds_all_variants() -> None:
         "os.environ.get('X')\n"
         "os.environb\n"
     )
+    dotted = "import os.path\nos.getenv('X')\n"
     found = _env_access(snippet)
+    assert _env_access(dotted) == ["os.getenv"]
     assert "o.environ" in found
     assert "from os import getenv" in found
     assert found.count("os.environ") == 1
@@ -152,9 +168,11 @@ def test_ad9_env_access_check_finds_all_variants() -> None:
 
 
 def test_ad9_only_config_reads_environment() -> None:
+    files = list(SRC_DIR.rglob("*.py"))
+    assert files
     offenders = {
         str(path.relative_to(SRC_DIR)): hits
-        for path in SRC_DIR.rglob("*.py")
+        for path in files
         if path != Path(config.__file__).resolve()
         and (hits := _env_access(path.read_text(encoding="utf-8")))
     }
