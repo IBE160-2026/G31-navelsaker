@@ -1,6 +1,6 @@
 ---
 title: Red Ball Express v1 — PRD
-status: draft
+status: final
 created: 2026-11-24
 updated: 2026-11-24
 ---
@@ -62,8 +62,8 @@ Begrepene brukes slik i hele PRD-en og i senere dokumenter. Engelske navn i pare
 - **Bestillingsforslag** (`planned_order`) — en planlagt ordre med antall, **mottaksuke** og **frigivelsesuke**. For innkjøpsvarer er det et forslag til innkjøpsordre, for produksjonsvarer et forslag til produksjonsordre.
 - **MRP-kjøring** — én beregning av MRP-tabeller, bestillingsforslag og exception-meldinger fra gjeldende data.
 - **Exception-melding** (`exception`) — et varsel fra en MRP-kjøring. I v1 finnes to typer: **ledetid lengre enn horisont** (E1) og **forfalt bestilling** (E2).
-- **Fasit** — `testdata/testfartoy-v1/`: inndata, forventet resultat og regnereglene R1–R10.
-- **Scenario** — en navngitt variant av inndata i fasiten (A basis, B MPS-endring, C lagerendring, D forfalte produksjonsordrer).
+- **Fasit** — `testdata/testfartoy-v1/`: inndata, forventet resultat og regnereglene R1–R11.
+- **Scenario** — en navngitt variant av inndata i fasiten (A basis, B MPS-endring, C lagerendring, D forfalte produksjonsordrer, E BOM-endring).
 - **Testdata** — fasitens inndata (scenario A) lastet inn i appens database.
 - **Demobruker** — den ene brukerkontoen i v1, med innlogging oppgitt i README.
 
@@ -140,10 +140,14 @@ Systemet avviser ugyldige verdier med en forståelig feilmelding i skjemaet og l
 
 ### 4.5 MRP-beregning
 
-**Beskrivelse:** En MRP-kjøring beregner MRP-tabeller og bestillingsforslag for alle varer fra gjeldende MPS, BOM, lagerbeholdning, åpne ordre, ledetider og partiregler. Reglene er fasitens R1–R10 ([fasit §1](../../../../testdata/testfartoy-v1/README.md#1-beregningskonvensjoner)), pluss FR-12. Beregningen er deterministisk: samme inndata gir alltid samme resultat. Sikkerhetslager er 0 i v1.
+**Beskrivelse:** En MRP-kjøring beregner MRP-tabeller og bestillingsforslag for alle varer fra gjeldende MPS, BOM, lagerbeholdning, åpne ordre, ledetider og partiregler. Reglene er fasitens R1–R11 ([fasit §1](../../../../testdata/testfartoy-v1/README.md#1-beregningskonvensjoner)). R11 tilsvarer FR-12. Beregningen er deterministisk: samme inndata gir alltid samme resultat. Sikkerhetslager er 0 i v1.
 
 #### FR-9: Kjøre MRP
 Planleggeren kan starte en MRP-kjøring med knappen «Kjør MRP». Resultatet lagres, slik at det kan sammenlignes med neste kjøring (FR-17). Realiserer UJ-1, UJ-2.
+
+**Konsekvenser (testbare):**
+- To kjøringer på samme inndata gir identisk resultat.
+- En kjøring bruker inndataene slik de er lagret i det øyeblikket knappen trykkes.
 
 #### FR-10: BOM-eksplosjon med lavnivåkoder
 Systemet beregner bruttobehov per vare og uke: fra MPS for nivå 0, og fra foreldrenes frigivelser × mengde per for øvrige varer. Hver vare planlegges én gang, etter alle foreldrene sine (lavnivåkode).
@@ -190,13 +194,13 @@ Planleggeren kan velge en vare og se MRP-tabellen for horisonten: bruttobehov, �
 Planleggeren kan se alle bestillingsforslag (vare, type, antall, frigivelsesuke, mottaksuke), sortert på frigivelsesuke, og alle exception-meldinger. Forfalte bestillingsforslag er tydelig merket. Realiserer UJ-1, UJ-2.
 
 #### FR-17: Markere endringer siden forrige kjøring
-Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye, endrede og fjernede bestillingsforslag, nye og fjernede exception-meldinger, og endrede celler i MRP-tabellen. Realiserer UJ-1, UJ-2.
+Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye og fjernede bestillingsforslag, nye og fjernede exception-meldinger, og endrede celler i MRP-tabellen. Et bestillingsforslag regnes som det samme når vare, antall, mottaksuke og frigivelsesuke er like. Ellers vises det som nytt, og det gamle som fjernet. En exception-melding regnes som den samme når type, vare og tallfelt er like. Realiserer UJ-1, UJ-2.
 
 **Konsekvenser (testbare, FR-15 til FR-17), verifiseres med manuell testplan:**
 - Etter tilbakestilling og kjøring (scenario A) viser visningene tallene i fasitens tabeller.
-- Når byggenr. 2 flyttes til uke 14 og MRP kjøres (scenario B), er alle bestillingsforslag for byggenr. 2 markert som endret, mens forslagene for byggenr. 1 ikke er markert. Meldingen for hovedmotoren viser 11 uker forfalt.
+- Når byggenr. 2 flyttes til uke 14 og MRP kjøres (scenario B), er alle bestillingsforslag for byggenr. 2 markert som nye (og de gamle som fjernet), mens forslagene for byggenr. 1 ikke er markert. Meldingen for hovedmotoren viser 11 uker forfalt.
 - Når lagerbeholdningen for GIR-220 settes til 0 og MRP kjøres fra scenario A (scenario C), er meldingen om forfalt bestilling for GIR-220 markert som ny. Ingen andre varer har endringer.
-- Når mengde per for SKR-100 → SEK-110 settes til 5 og MRP kjøres fra scenario A (scenario E), er bestillingsforslagene for SEK-110, PLT-900 og PRF-910 markert som endret eller nye (blant annet en ny plateordre med mottak i uke 12). Ingen andre varer har endringer.
+- Når mengde per for SKR-100 → SEK-110 settes til 5 og MRP kjøres fra scenario A (scenario E), er de endrede bestillingsforslagene for SEK-110, PLT-900 og PRF-910 markert som nye og de gamle som fjernet (blant annet en tredje plateordre med mottak i uke 12). Plateordren med mottak i uke 9 er uendret og ikke markert. Ingen andre varer har endringer.
 - Første kjøring etter tilbakestilling har ingen forrige kjøring å sammenligne med, og viser ingen markeringer.
 
 ## 5. Tverrgående krav (NFR)
