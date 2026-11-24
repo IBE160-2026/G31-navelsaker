@@ -12,7 +12,7 @@ Alle FR-1–FR-18, NFR-1–7 og SM-1–4 finnes i kartet fra krav til arkitektur
 
 ## 3. Versjonssjekk
 
-Alle versjoner i Stack ble hentet fra npm og PyPI samme dag (se memlog). Én risiko: Vite-malen `react-ts` kan sette en annen TypeScript-versjon enn siste (7.0.2). Raden er merket slik at den bekreftes ved oppsett.
+Alle versjoner i Stack ble hentet fra npm og PyPI samme dag (se memlog). Én risiko: Vite-malen `react-ts` kan sette en annen TypeScript-versjon enn siste (7.0.2). Bekreftet etterpå: `create-vite` 9.3.4 setter `typescript ~7.0.2` i `react-ts`-malen.
 
 ## 4. Kritisk gjennomgang (to enheter som følger alle AD-er, men likevel ikke passer sammen)
 

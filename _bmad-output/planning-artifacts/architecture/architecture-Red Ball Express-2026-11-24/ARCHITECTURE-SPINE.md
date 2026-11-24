@@ -159,7 +159,7 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 | Vite (mal `react-ts`) | 8.3.8 |
 | React | 19.3.1 |
 | React Router | 8.5.2 |
-| TypeScript (den versjonen Vite-malen setter; bekreftes ved oppsett) | 7.0.2 |
+| TypeScript (som Vite-malen `react-ts` setter) | ~7.0.2 |
 | Biome | 2.6.8 |
 | Vitest (bare ved behov for ren frontendlogikk) | 5.1.1 |
 
