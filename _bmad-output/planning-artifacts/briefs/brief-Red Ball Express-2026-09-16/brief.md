@@ -9,11 +9,11 @@ updated: 2026-09-16
 
 ## Sammendrag
 
-Red Ball Express er et AI-støttet MRP II-system — produksjonsplanleggingskjernen i et ERP-system, ikke et fullt ERP — bygget som eksamensprosjekt i IBE130 (Programmering med KI, logistikkstudiet). Systemet demonstrerer, med en verftsbedrift som bygger mindre spesialfartøy (f.eks. servicefartøy til havvind) som case, hvordan data flyter sammenhengende gjennom hele planleggingskjeden: fra etterspørselsprognose, via S&OP og MPS, ned til produktstruktur (BOM), komponentbehov (MRP) og detaljert produksjonsscheduling.
+Red Ball Express er, i v1, et BOM + MRP-system — kjernen i produksjonsplanleggingen i et MRP II/ERP-system, ikke et fullt ERP — bygget som eksamensprosjekt i IBE160 (Programmering med KI, logistikkstudiet). Systemet demonstrerer, med ett testfartøy fra en fiktiv verftsbedrift som case, hvordan en flernivå produktstruktur (BOM) brytes ned til korrekte nettobehov, bestillingsforslag og exception-meldinger per uke og komponent (MRP) — og hvordan en endring (f.eks. endret hovedplan eller forsinket leveranse) forplanter seg synlig gjennom BOM-strukturen til oppdaterte behov.
 
-Verftsproduksjon er et krevende, men lærerikt case for produksjonsplanlegging fordi det kombinerer dype, flernivå produktstrukturer, lange og usikre ledetider på importerte nøkkelkomponenter (f.eks. hovedmotor), og væravhengig utendørs produksjon (skrogarbeid) — se Problemet for hvorfor dagens store ERP-/MRP-verktøy dekker dette dårlig.
+Verftsproduksjon er et krevende, men lærerikt case for produksjonsplanlegging fordi det kombinerer dype, flernivå produktstrukturer og lange, usikre ledetider på importerte nøkkelkomponenter (f.eks. hovedmotor) — se Problemet for hvorfor dagens store ERP-/MRP-verktøy dekker dette dårlig. Den fulle visjonen inkluderer også væravhengig produksjon, etterspørselsprognoser og usikkerhetsmodellering (se Visjon), men dette er utenfor v1.
 
-Prosjektet er ikke kommersielt. Målet er en fungerende, demonstrerbar helhet innen semesterslutt som viser faglig presisjon i produksjonsplanleggingslogikken og reell dataflyt mellom modulene — ikke bredde for breddens skyld.
+Prosjektet er ikke kommersielt. Målet er en fungerende, testbar v1 innen semesterslutt som viser faglig presisjon i BOM-eksplosjon og nettobehovsberegning, verifisert mot en håndregnet fasit for testfartøyet — ikke bredde for breddens skyld.
 
 ## Problemet
 
@@ -27,61 +27,70 @@ Bransjen løser i dag dette med generalist-ERP-systemer tilpasset engineer-to-or
 
 ## Løsningen
 
-Red Ball Express implementerer de seks klassiske MRP II-modulene — Demand Management, S&OP, MPS, BOM, MRP og Operations Scheduling — som en sammenhengende kjede der en endring ett sted forplanter seg gjennom hele kjeden. AI brukes ikke som pynt på toppen, men som beslutningsstøtte inne i kjeden, med dybde prioritert slik:
+Red Ball Express v1 implementerer kjernen i MRP II-kjeden — Bill of Materials (BOM) og Material Requirements Planning (MRP) — som en sammenhengende flyt der planleggeren jobber slik:
 
-| Prioritet | Fokusområde | Rolle i systemet |
-|---|---|---|
-| 1 | **BOM + MRP** | Kjernen — bygges dypest. Flernivå produktstruktur og nøyaktig nettobehovsberegning er fundamentet alt annet planlegger mot. |
-| 2 | **AI-støttet etterspørselsprognose** | Prognosemodeller for Demand Management-modulen, med scenarioer (optimistisk/pessimistisk/normal). |
-| 3 | **Usikkerhetsmodellering** | Ledetidsusikkerhet fra underleverandører og produksjonsusikkerhet; sikkerhetslager-beregning og Monte Carlo-simulering. Dette er systemets tydeligste differensiator — nærmeste faglige presedens er fersk forskning på ML-basert ledetidsprediksjon for verft (se addendum). |
-| 4 | **S&OP og MPS** | Forenklet, men fungerende — aggregert plan og ukentlig hovedplan kobler prognose til detaljplan. |
-| 5 | **Operations Scheduling** | Forenklet detaljplanlegging — jobbrekkefølge og varsler om forsinkelser. |
+1. Planleggeren legger inn eller justerer hovedproduksjonsplanen (MPS) for testfartøyet — hvilke enheter som skal være ferdige i hvilken uke.
+2. Planleggeren åpner produktstrukturen (BOM) for fartøyet og ser komponentene brutt ned i tre–fire nivåer, med mengder per komponent (fast struktur i v1, uten alternative komponenter).
+3. Systemet kjører MRP-eksplosjonen: beregner nettobehov per uke og komponent basert på MPS, BOM, lagerstatus og ledetider, og genererer bestillingsforslag med ledetidsoffset.
+4. Planleggeren ser en liste over exception-meldinger — for eksempel at hovedmotoren må bestilles i uke 3 fordi ledetiden er lengre enn planleggingshorisonten — og kan justere MPS eller BOM og se at nettobehovet oppdateres på nytt.
 
-Full spesifikasjon av data inn/data ut/beslutningspunkter per modul, fra fagets oppgavetekst, ligger i addendum.
+Full spesifikasjon av data inn/data ut/beslutningspunkter for BOM og MRP, fra fagets oppgavetekst, ligger i addendum. Spesifikasjonen av de fire modulene utenfor v1 (Demand Management, S&OP, Operations Scheduling) ligger også i addendum, som kildegrunnlag for en eventuell videreføring etter v1 (se Visjon).
 
-Datamodellen designes generisk nok til å kunne brukes av andre diskrete produksjonsbedrifter, selv om selve demoen er verftsspesifikk — dette tvinger fram ryddige abstraksjoner (produkt, ressurs, operasjon, leverandør) fremfor verftsspesifikke snarveier.
-
-**Teknisk grunnlag**: FastAPI/Python-backend (uv), Node.js-frontend, Supabase (PostgreSQL). Innlogging kreves siden dataene regnes som forretningskritiske og konkurransesensitive i domenet — for demoformål er enkel brukernavn/passord-autentisering tilstrekkelig, uten krav om mange samtidige brukere.
+**Teknisk grunnlag**: FastAPI/Python-backend (uv), Node.js-frontend, lokal database (SQLite eller lokal PostgreSQL) med seed-data for testfartøyet, slik at systemet kan kjøres etter README uten eksterne kontoer eller nøkler. Enkel innlogging (brukernavn/passord) er inkludert siden dataene regnes som forretningskritiske i domenet, uten krav om mange samtidige brukere.
 
 ## Hva gjør dette annerledes
 
-- **AI inne i planleggingslogikken, ikke rundt den.** Prognoser, ledetidsprediksjon og Monte Carlo-basert sikkerhetslager er integrert i selve beslutningspunktene i MRP-kjeden, ikke et separat analyseverktøy ved siden av.
-- **Værvinduer som eksplisitt usikkerhetsakse.** Skrogarbeidets væravhengighet modelleres direkte i planleggingen, ikke bare som en implisitt buffer slik tradisjonelle MRP-systemer håndterer den.
-- **Ærlig om hva det ikke er.** Dette er ikke et fullt ERP-system — regnskap, HR, CRM, fullverdig innkjøp og leverandørportaler er bevisst utelatt for å gå i dybden der det faglig teller mest.
-- **Generisk datamodell, verftsspesifikk demo.** Domenemodellen er ikke låst til skipsbygging, selv om casen er det.
+- **BOM og MRP testet mot en håndregnet fasit.** Riktigheten dokumenteres med et konkret testfartøy der nettobehov, bestillingsforslag og exception-meldinger er verifisert opp mot en manuelt beregnet MRP-tabell — ikke bare visuelt plausible tall.
+- **Synlig dataflyt gjennom BOM-strukturen.** En endring i MPS eller lagerstatus forplanter seg synlig gjennom BOM-nivåene til oppdaterte nettobehov, slik at sammenhengen i planleggingslogikken er eksplisitt, ikke skjult i en svart boks.
+- **Ærlig om hva det ikke er.** Dette er verken et fullt ERP-system eller en fullverdig MRP II-kjede i v1 — etterspørselsprognoser, S&OP, scheduling, væravhengighet og Monte Carlo-basert usikkerhetsmodellering er bevisst utelatt fra v1 og beskrevet som visjon, ikke levert funksjonalitet.
 
-Fortrinnet er ikke teknologisk unikt — sikkerhetslager og Monte Carlo er etablerte teknikker (se addendum) — men dybden og sammenhengen i hvordan de er integrert gjennom hele planleggingskjeden, i et domene de store verktøyene ikke adresserer med samme AI-fokus.
+Fortrinnet i v1 er ikke teknologisk unikt — BOM-eksplosjon og MRP-nettobehovsberegning er veletablert teori (se addendum) — men presisjonen og testbarheten i implementasjonen, demonstrert mot et konkret, håndregnet eksempel.
 
 ## Hvem dette tjener
 
-**Primær**: En fiktiv produksjonsplanlegger ved verftsbedriften — demo-persona som viser hvordan systemet støtter beslutninger om bestillingstidspunkt, partistørrelse, prioritering ved kapasitetsmangel og håndtering av forsinkelser.
+**Primær**: En fiktiv produksjonsplanlegger ved verftsbedriften — demo-persona som i en vanlig uke tar beslutninger om: når en komponent må bestilles ut fra ledetiden (f.eks. hovedmotor), hvilken partistørrelse som skal bestilles, og hvordan man reagerer når en exception-melding varsler om en forsinkelse som påvirker byggesekvensen. Systemet støtter disse beslutningene ved å gjøre nettobehov og konsekvensen av endringer synlige, ikke ved å ta beslutningen for planleggeren.
 
 ## Suksesskriterier
 
-- **End-to-end sammenheng**: en endring i én modul (f.eks. endret prognose, forsinket leveranse) forplanter seg synlig og korrekt gjennom hele kjeden fram til produksjonsscheduling.
-- **Modul-dybde følger prioritering**: BOM+MRP er den grundigst utbygde og mest robuste delen av systemet; S&OP/MPS/Scheduling er enklere, men reelt fungerende — ikke attrapper.
-- **AI leverer synlig beslutningsstøtte**: prognoser, ledetidsprediksjon og Monte Carlo-baserte sikkerhetslagerforslag er koblet til konkrete beslutningspunkter (ikke bare visualisert isolert).
-- **Demonstrerbar innen semesterslutt**: systemet kan kjøres og vises fram som en sammenhengende demo med realistiske verftsdata.
-- [ANTAKELSE] Konkrete måltall (f.eks. prognosenøyaktighet, andel korrekt genererte bestillingsforslag) er ikke satt ennå — bør defineres i PRD når modellvalg er gjort.
+- **Korrekt BOM-eksplosjon**: for testfartøyet (tre–fire BOM-nivåer) stemmer systemets beregnede nettobehov per uke og komponent med en håndregnet MRP-tabell (fasit) for samme fartøy.
+- **Korrekte bestillingsforslag og exception-meldinger**: bestillingsforslag med ledetidsoffset og exception-meldinger (f.eks. hovedmotor med ledetid lengre enn horisonten) stemmer med fasiten.
+- **Synlig forplantning**: en endring i MPS eller lagerstatus for testfartøyet gir en synlig og korrekt oppdatering av nettobehov og exception-meldinger i brukergrensesnittet.
+- **Kjørbar uten eksterne tjenester**: systemet kan settes opp og kjøres lokalt etter README, med seed-data for testfartøyet, uten kontoer eller nøkler til eksterne tjenester.
+- **Demonstrerbar innen semesterslutt**: BOM+MRP-kjeden for testfartøyet kan vises fram som en sammenhengende, testet demo.
 
 ## Omfang
 
-**Inn (v1, demonstrasjonsklar):**
-- Alle seks moduler i minst forenklet, fungerende form, med data inn/ut/beslutningspunkter som spesifisert i addendum.
-- AI-støttet etterspørselsprognose med scenarioer.
-- Usikkerhetsmodellering: sikkerhetslager-beregning og Monte Carlo-simulering for ledetids- og produksjonsusikkerhet.
-- Flernivå BOM med alternativregler.
-- Innlogging (brukernavn/passord).
-- Generisk datamodell som i prinsippet støtter andre diskrete produksjonsbedrifter.
+**Inn (v1, demonstrasjonsklar — enklest mulige variant som fortsatt er reelt testbar):**
+- Flernivå BOM (tre–fire nivåer) for ett testfartøy, fast struktur uten alternative komponenter.
+- MRP: nettobehovsberegning per uke og komponent, bestillingsforslag med ledetidsoffset, exception-meldinger (f.eks. når hovedmotoren har lengre ledetid enn planleggingshorisonten).
+- Enkel MPS som input til MRP — en manuelt satt hovedproduksjonsplan for testfartøyet, ikke en egen S&OP-modul.
+- Et konkret testfartøy med håndregnet MRP-tabell som fasit, til bruk i test og demo.
+- Enkel innlogging (brukernavn/passord) for demoformål.
+- Lokal database med seed-data for testfartøyet, slik at systemet kan kjøres etter README uten eksterne kontoer eller nøkler.
 
-**Ute (eksplisitt utenfor scope):**
+**Trinn 2 og videre (bygges på kun hvis det er hensiktsmessig etter at v1 er stabil og testet):**
+- Alternativregler i BOM (velge mellom erstattbare komponenter/leverandører for en BOM-linje).
+- Sikkerhetslager-beregning (probabilistisk formel, jf. addendum) for de viktigste importerte komponentene, f.eks. hovedmotor.
+
+**Ute (eksplisitt utenfor scope — flyttet til visjonen):**
+- Demand Management / AI-støttet etterspørselsprognose
+- Sales & Operations Planning (S&OP) som egen modul
+- Monte Carlo-simulering
+- Værvinduer / væravhengig planlegging
+- Operations Scheduling (detaljert produksjonskjøreplan)
 - Regnskap/økonomi
 - HR/lønn
 - CRM/salg
 - Fullverdig innkjøpsmodul
 - Leverandørportal-integrasjon
+- Generisk datamodell for andre produksjonsbedrifter (kan vurderes senere, ikke et v1-mål)
 - Støtte for mange samtidige brukere eller produksjonsherding utover demoformål
 
 ## Visjon
 
-Som eksamensprosjekt er ambisjonen ikke kommersialisering, men et system som selv beviser sin egen påstand: at AI kan gi reell beslutningsstøtte gjennom en hel produksjonsplanleggingskjede i et domene (verft) preget av dyp BOM-kompleksitet og sammensatt usikkerhet. Lykkes den generiske datamodellen, demonstrerer prosjektet i forlengelsen et mønster som kunne bæres videre til andre diskrete, prosjektbaserte produksjonsbedrifter — men det forblir en demonstrasjon av prinsipp, ikke et produkt under videre utvikling etter innlevering, med mindre annet besluttes.
+v1 beviser at BOM-eksplosjon og MRP-nettobehovsberegning kan gjøres riktig og testbart for et verftscase med dype produktstrukturer og usikre ledetider. Lykkes v1, er den naturlige videreføringen (ikke en del av eksamensleveransen med mindre tiden tillater det):
+
+- **Trinn 2**: alternativregler i BOM (erstattbare komponenter), deretter sikkerhetslager-beregning for de viktigste importkomponentene (f.eks. hovedmotor) — bygges på kun hvis det er hensiktsmessig etter at v1 er stabil og testet.
+- **Videre visjon**: en full MRP II-kjede med AI-støttet etterspørselsprognose, S&OP, forenklet operations scheduling, væravhengig planlegging (værvinduer) og Monte Carlo-basert usikkerhetsmodellering — slik den opprinnelige briefen skisserte. Full spesifikasjon av disse modulene ligger i addendum som kildegrunnlag hvis prosjektet videreføres, sammen med en eventuell generisk datamodell for andre diskrete produksjonsbedrifter.
+
+Som eksamensprosjekt er ambisjonen ikke kommersialisering, men et system som beviser sin egen påstand innenfor det avgrensede omfanget: at dyp, korrekt BOM/MRP-logikk kan demonstreres og testes for et krevende verftscase. Det forblir en demonstrasjon av prinsipp, ikke et produkt under videre utvikling etter innlevering, med mindre annet besluttes.

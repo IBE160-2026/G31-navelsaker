@@ -6,36 +6,36 @@ Utfyllende materiale som støtter briefen, men som er for detaljert til å stå 
 
 Siden prosjektet vurderes uten formell rubrikk, bør UI/dokumentasjon gjøre dataflyt og beslutningslogikk eksplisitt synlig — dette er et bevisst designvalg, ikke en funksjon for sluttbrukeren.
 
-## Fullstendig modulspesifikasjon (fra oppgaveteksten, IBE130)
+## Fullstendig modulspesifikasjon (fra oppgaveteksten, IBE160)
 
-Seks moduler, hver med data inn / data ut / beslutningspunkter, slik faget definerer dem:
+Seks moduler, hver med data inn / data ut / beslutningspunkter, slik faget definerer dem. **Kun modul 4 (BOM) og 5 (MRP) er i v1-omfanget** (se brief.md, Omfang). Modul 1–3 og 6 er kildegrunnlag for en eventuell videreføring etter v1 (se brief.md, Visjon) og implementeres ikke i v1.
 
-### 1. Demand Management (prognoser)
+### 1. Demand Management (prognoser) — utenfor v1
 - **Data inn**: Historiske salgstall, sesong-/trendsignaler, kampanjer/markedsdata, kundebestillinger og salgsprognoser.
 - **Data ut**: Etterspørselsprognoser per periode/produkt, scenarioer (optimistisk/pessimistisk/normal).
 - **Beslutningspunkter**: Prognosemetoder, sikkerhetsmargin, håndtering av outliers.
 
-### 2. Sales & Operations Planning (S&OP — månedlig)
+### 2. Sales & Operations Planning (S&OP — månedlig) — utenfor v1
 - **Data inn**: Etterspørselsprognoser, kapasitet, lagerstatus, økonomiske begrensninger.
 - **Data ut**: Aggregert produksjonsplan, kapasitetsbehov, scenarioer for servicegrad/kost.
 - **Beslutningspunkter**: Produksjon vs. lager, intern produksjon vs. outsourcing.
 
-### 3. Master Production Scheduling (MPS — ukentlig)
+### 3. Master Production Scheduling (MPS — ukentlig) — forenklet i v1 (manuelt satt hovedplan som input til MRP, ikke en egen modul)
 - **Data inn**: S&OP, kundebestillinger, lagerstatus ferdigvarer.
 - **Data ut**: Hovedproduksjonsplan per uke/produkt, leveringsdatoer, prioriteringslister.
 - **Beslutningspunkter**: Mix og volum, prioritering ved kapasitetsmangel.
 
-### 4. Bill of Materials (BOM — produktstruktur)
+### 4. Bill of Materials (BOM — produktstruktur) — v1 (forenklet: fast struktur, alternativregler utsatt til trinn 2)
 - **Data inn**: Produktdata fra engineering, versjoner, komponentinformasjon.
 - **Data ut**: Multinivå BOM med mengdekrav og alternativregler.
 - **Beslutningspunkter**: Standardisering vs. tilpasning, alternative materialer.
 
-### 5. Material Requirements Planning (MRP — ukentlig komponentplan)
+### 5. Material Requirements Planning (MRP — ukentlig komponentplan) — v1
 - **Data inn**: MPS, BOM, lagerstatus, innkjøpstid, sikkerhetslager.
 - **Data ut**: Nettobehov per uke, bestillingsforslag, exception-meldinger.
 - **Beslutningspunkter**: Bestillingstidspunkt, partistørrelse, leverandørvalg.
 
-### 6. Operations Planning (Scheduling — detaljplan)
+### 6. Operations Planning (Scheduling — detaljplan) — utenfor v1
 - **Data inn**: Planlagte ordre, maskinkapasitet, operasjonstider, routing.
 - **Data ut**: Produksjonskjøreplan, forventede ferdigdatoer, varsler om forsinkelser.
 - **Beslutningspunkter**: Jobbrekkefølge, batch-størrelse, håndtering av hasteordre.
