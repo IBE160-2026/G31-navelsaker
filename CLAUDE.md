@@ -21,7 +21,7 @@ Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til e
 
 ## Skjermbilder og video
 
-Sensor bruker skjermbilder og video i repoet som dokumentasjon av design og funksjonalitet, og som reserve hvis appen ikke lar seg kjøre. Claude kan ikke ta dem selv, så minn brukeren på det ved disse tidspunktene:
+Sensor bruker skjermbilder og video i repoet som dokumentasjon av design og funksjonalitet, og som reserve hvis appen ikke lar seg kjøre. **Skjermbilder tar Claude selv** med Edge uten vindu (`msedge --headless=new --screenshot=… --window-size=…`) av HTML-skisser eller av appen når den kjører lokalt. Bildet beskjæres til innholdet og komprimeres før commit. **Video tar brukeren**, så Claude minner om den. Ved disse tidspunktene:
 
 - **Et skjermbilde eller en brukerflyt virker for første gang**, f.eks. når en story med brukergrensesnitt er ferdig: skjermbilde.
 - **UX-skisser eller wireframes er laget**: legg dem i repoet som spor av designarbeid.
@@ -29,4 +29,4 @@ Sensor bruker skjermbilder og video i repoet som dokumentasjon av design og funk
 - **README oppdateres med beskrivelse av appen**: README skal ha minst ett skjermbilde.
 - **Før innlevering**: oppdaterte skjermbilder av alle skjermbildene og én demovideo av hele kjerneflyten.
 
-Si konkret hva som bør vises, og foreslå filnavn. Lagres i `docs/media/` med navn `YYYY-MM-DD-<hva>.png` eller `.mp4`. Videoer skal være korte (helst under 2 minutter) og komprimerte (helst under 10 MB). Større filer lenkes til i stedet for å committes, fordi sensor trekker for store binærfiler. Skjermbilder skal ikke vise hemmeligheter (demopassordet er greit). Er en påminnelse ikke fulgt opp, nevnes den i sluttoppsummeringen og som åpent punkt i sesjonsloggen.
+For video: si konkret hva som bør vises, og foreslå filnavn. Lagres i `docs/media/` med navn `YYYY-MM-DD-<hva>.png` eller `.mp4`. Videoer skal være korte (helst under 2 minutter) og komprimerte (helst under 10 MB). Større filer lenkes til i stedet for å committes, fordi sensor trekker for store binærfiler. Skjermbilder skal ikke vise hemmeligheter (demopassordet er greit). Er en påminnelse ikke fulgt opp, nevnes den i sluttoppsummeringen og som åpent punkt i sesjonsloggen.
