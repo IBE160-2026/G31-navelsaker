@@ -74,3 +74,11 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
 - **Endringer**: Arkitekturens Stack-rad for TypeScript er bekreftet mot `create-vite` 9.3.4 (`react-ts` setter `typescript ~7.0.2`). `technology.md` er flyttet til `_bmad-output/planning-artifacts/referanser/technology-pytagoras.md` med en merknad, og lenken i PRD-addendum er oppdatert.
 - **Verifisering**: Malens `package.json` ble lest fra npm-pakken (lastet ned til scratchpad, ikke kjørt). `lint_spine.py` ga 0 funn etter endringen. `grep` bekreftet at ingen andre lenker pekte på den gamle stien.
 - **Commit**: `75255cd` — Bekreft TypeScript-versjon i arkitekturens stack mot Vite-malen; `e3e2bd6` — Flytt Pytagoras-dokumentet til referanser og merk det; pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-24 — Regel om påminnelser for skjermbilder og video i CLAUDE.md
+
+- **Hvorfor**: Sensorveiledningen bruker skjermbilder og video i repoet som dokumentasjon av design og funksjonalitet, og som reserve hvis appen ikke lar seg kjøre. Samtidig trekker den for store binærfiler. Brukeren ønsket å bli minnet på dette til riktig tid.
+- **Prompt(er)**: «Jeg ønsker en regel som minner meg på å ta skjermbilder/videoer når det er riktig tidspunkt, ref. sensorveiledning.»
+- **Verktøy/modell**: Claude Code (Opus 5.5).
+- **Endringer**: `CLAUDE.md` har fått seksjonen «Skjermbilder og video». Den angir fem tidspunkter (første gang et skjermbilde virker, UX-skisser, en kjerneflyt som virker fra start til slutt, README, før innlevering), at filene lagres i `docs/media/` med datofilnavn, at videoer skal være små og komprimerte, og at påminnelser som ikke er fulgt opp, føres som åpent punkt.
+- **Verifisering**: Manuell gjennomlesning mot sensorveiledningen: kriterium 4 (spor av designarbeid), kriterium 6 (README med skjermbilde), kriterium 7 (ingen store binærfiler) og kapittel 3 (skjermbilder og video som reserve).

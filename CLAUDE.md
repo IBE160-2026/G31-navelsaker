@@ -18,3 +18,15 @@ Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til e
 - Stories, tester, commit-meldinger og PR-beskrivelser viser til FR-nummeret de realiserer (f.eks. «FR-11: netting og partiregel»).
 - Beregningstester leser fasiten i `testdata/testfartoy-v1/` direkte og oppgir hvilket scenario (A–E) de tester. Fasiten endres bare bevisst: `input.json`, `expected.json` og `README.md` oppdateres i samme commit, og endringen føres i AI-loggen.
 - Avvik fra PRD eller arkitektur forklares der de oppstår (i commit eller PR) og føres tilbake i planleggingsdokumentet.
+
+## Skjermbilder og video
+
+Sensor bruker skjermbilder og video i repoet som dokumentasjon av design og funksjonalitet, og som reserve hvis appen ikke lar seg kjøre. Claude kan ikke ta dem selv, så minn brukeren på det ved disse tidspunktene:
+
+- **Et skjermbilde eller en brukerflyt virker for første gang**, f.eks. når en story med brukergrensesnitt er ferdig: skjermbilde.
+- **UX-skisser eller wireframes er laget**: legg dem i repoet som spor av designarbeid.
+- **En kjerneflyt fra PRD-en virker fra start til slutt**, f.eks. UJ-1 (flytt byggenr. 2, kjør MRP, se markerte endringer): kort video.
+- **README oppdateres med beskrivelse av appen**: README skal ha minst ett skjermbilde.
+- **Før innlevering**: oppdaterte skjermbilder av alle skjermbildene og én demovideo av hele kjerneflyten.
+
+Si konkret hva som bør vises, og foreslå filnavn. Lagres i `docs/media/` med navn `YYYY-MM-DD-<hva>.png` eller `.mp4`. Videoer skal være korte (helst under 2 minutter) og komprimerte (helst under 10 MB). Større filer lenkes til i stedet for å committes, fordi sensor trekker for store binærfiler. Skjermbilder skal ikke vise hemmeligheter (demopassordet er greit). Er en påminnelse ikke fulgt opp, nevnes den i sluttoppsummeringen og som åpent punkt i sesjonsloggen.
