@@ -93,7 +93,7 @@ Når databasen er tom, lastes testdataene fra `testdata/testfartoy-v1/input.json
 - Testdataene leses fra fasitfila, ikke fra en egen kopi, slik at fasit og app ikke kan sprike.
 
 #### FR-3: Tilbakestille til testdata
-Planleggeren kan trykke «Tilbakestill til testdata». Det erstatter MPS, lagerbeholdning og åpne ordre med verdiene i scenario A og sletter tidligere MRP-kjøringer. Realiserer UJ-2.
+Planleggeren kan trykke «Tilbakestill til testdata». Det erstatter MPS, lagerbeholdning, åpne ordre, mengde per, ledetider og partiregler med verdiene i scenario A og sletter tidligere MRP-kjøringer. Realiserer UJ-2.
 
 **Konsekvenser (testbare):**
 - Appen ber om bekreftelse før tilbakestilling.
@@ -101,7 +101,7 @@ Planleggeren kan trykke «Tilbakestill til testdata». Det erstatter MPS, lagerb
 
 ### 4.3 BOM-visning
 
-**Beskrivelse:** Planleggeren ser produktstrukturen for testfartøyet som et tre. BOM-en er fast i v1 og kan ikke redigeres.
+**Beskrivelse:** Planleggeren ser produktstrukturen for testfartøyet som et tre. Selve strukturen (hvilke varer og BOM-linjer som finnes) er fast i v1, men mengde per, ledetid og partiregel kan justeres (FR-18).
 
 #### FR-4: Vise BOM-treet
 Planleggeren kan se BOM-treet for testfartøyet med alle nivåer. Realiserer UJ-2.
@@ -111,9 +111,9 @@ Planleggeren kan se BOM-treet for testfartøyet med alle nivåer. Realiserer UJ-
 - Alle 12 BOM-linjene i testdataene vises, også når samme vare har flere foreldre (PLT-900 vises under SEK-110, STY-310 og DEK-300).
 - Planleggeren kan se lavnivåkoden for hver vare.
 
-**Utenfor:** redigering av BOM (se §6).
+**Utenfor:** å legge til eller fjerne varer og BOM-linjer (trinn 2, se §7.2).
 
-### 4.4 MPS, lagerbeholdning og åpne ordre
+### 4.4 MPS, lagerbeholdning, åpne ordre og BOM-justering
 
 **Beskrivelse:** Planleggeren endrer inndataene som MRP-en beregner fra. Endringer slår ikke inn i resultatene før neste MRP-kjøring.
 
@@ -126,11 +126,15 @@ Planleggeren kan endre lagerbeholdningen for hver vare. Realiserer UJ-2.
 #### FR-7: Redigere åpne ordre
 Planleggeren kan legge til, endre (uke, antall) og slette åpne ordre.
 
+#### FR-18: Justere BOM-linjer og varedata
+Planleggeren kan endre mengde per på eksisterende BOM-linjer, og ledetid og partiregel (L4L eller FOQ med kvantum) på eksisterende varer. Realiserer briefens «justere MPS eller BOM».
+
 #### FR-8: Validere inndata
 Systemet avviser ugyldige verdier med en forståelig feilmelding i skjemaet og lagrer ingenting av endringen. Realiserer UJ-2.
 
-**Konsekvenser (testbare, gjelder FR-5 til FR-8):**
+**Konsekvenser (testbare, gjelder FR-5 til FR-8 og FR-18):**
 - Uke må være et heltall i horisonten (1–16). Antall i MPS-linjer og åpne ordre må være et heltall ≥ 1. Lagerbeholdning må være et heltall ≥ 0.
+- Mengde per må være et heltall ≥ 1. Ledetid må være et heltall ≥ 0. FOQ-kvantum må være et heltall ≥ 1.
 - Ugyldig verdi gir feilmelding ved feltet. Databasen er uendret.
 - Gyldige endringer lagres og vises ved neste visning av skjermbildet.
 
@@ -145,20 +149,20 @@ Planleggeren kan starte en MRP-kjøring med knappen «Kjør MRP». Resultatet la
 Systemet beregner bruttobehov per vare og uke: fra MPS for nivå 0, og fra foreldrenes frigivelser × mengde per for øvrige varer. Hver vare planlegges én gang, etter alle foreldrene sine (lavnivåkode).
 
 **Konsekvenser (testbare):**
-- `gross_requirements` og `low_level_code` for alle varer stemmer med `expected.json` for scenario A, B og C.
+- `gross_requirements` og `low_level_code` for alle varer stemmer med `expected.json` for scenario A, B, C og E.
 
 #### FR-11: Netting, partiregel og ledetidsoffset
 Systemet beregner beregnet lager, nettobehov og bestillingsforslag per vare og uke, med varens partiregel. Frigivelsesuka er mottaksuka minus ledetiden.
 
 **Konsekvenser (testbare):**
-- `scheduled_receipts`, `projected_on_hand`, `net_requirements`, `planned_order_receipts`, `planned_order_releases` og `planned_orders` for alle varer stemmer med `expected.json` for scenario A, B og C. Sammenligningen gjøres på hele ukesarrayer.
+- `scheduled_receipts`, `projected_on_hand`, `net_requirements`, `planned_order_receipts`, `planned_order_releases` og `planned_orders` for alle varer stemmer med `expected.json` for scenario A, B, C og E. Sammenligningen gjøres på hele ukesarrayer.
 - Bestillingsforslag med frigivelsesuke før uke 1 beholdes med beregnet (negativ eller null) frigivelsesuke.
 
 #### FR-12: Komponentbehov fra forfalte produksjonsordrer
 Når en produksjonsvare får et bestillingsforslag med frigivelsesuke før uke 1, legges barnas bruttobehov fra det forslaget i uke 1. Forslaget gir en melding om forfalt bestilling (FR-14). Regelen gjelder i alle ledd nedover. Realiserer UJ-2.
 
 **Konsekvenser (testbare):**
-- Alle felt stemmer med `expected.json` for scenario D. `[ASSUMPTION: scenario D (byggenr. 1 framskyndet til uke 4) regnes ut for hånd og legges til i fasiten før MRP-logikken implementeres — se §9.]`
+- Alle felt stemmer med `expected.json` for scenario D (byggenr. 1 framskyndet til uke 4), regel R11 i fasiten.
 - Ingen bruttobehov går tapt: summen av barnets bruttobehov er lik summen av foreldrenes bestillingsforslag × mengde per.
 
 ### 4.6 Exception-meldinger
@@ -172,7 +176,7 @@ Systemet gir én melding per vare som har bruttobehov i horisonten og ledetid le
 Systemet gir én melding per bestillingsforslag med frigivelsesuke før uke 1. Meldingen oppgir antall, mottaksuke, beregnet frigivelsesuke, antall uker forfalt og tidligste mulige mottaksuke hvis det bestilles nå.
 
 **Konsekvenser (testbare, FR-13 og FR-14):**
-- Meldingene stemmer med `exceptions` i `expected.json` for scenario A, B, C og D, sammenlignet som usortert mengde på type, vare og tallfelt.
+- Meldingene stemmer med `exceptions` i `expected.json` for scenario A–E, sammenlignet som usortert mengde på type, vare og tallfelt.
 - Meldingsteksten er på norsk og nevner vare (nummer og navn) og uker. Teksten testes ikke ordrett.
 
 ### 4.7 Resultatvisning og forplantning
@@ -192,6 +196,7 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye, en
 - Etter tilbakestilling og kjøring (scenario A) viser visningene tallene i fasitens tabeller.
 - Når byggenr. 2 flyttes til uke 14 og MRP kjøres (scenario B), er alle bestillingsforslag for byggenr. 2 markert som endret, mens forslagene for byggenr. 1 ikke er markert. Meldingen for hovedmotoren viser 11 uker forfalt.
 - Når lagerbeholdningen for GIR-220 settes til 0 og MRP kjøres fra scenario A (scenario C), er meldingen om forfalt bestilling for GIR-220 markert som ny. Ingen andre varer har endringer.
+- Når mengde per for SKR-100 → SEK-110 settes til 5 og MRP kjøres fra scenario A (scenario E), er bestillingsforslagene for SEK-110, PLT-900 og PRF-910 markert som endret eller nye (blant annet en ny plateordre med mottak i uke 12). Ingen andre varer har endringer.
 - Første kjøring etter tilbakestilling har ingen forrige kjøring å sammenligne med, og viser ingen markeringer.
 
 ## 5. Tverrgående krav (NFR)
@@ -208,7 +213,7 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye, en
 
 - **Ingen KI-funksjoner i appen.** KI brukes i utviklingsprosessen (dokumentert i `docs/ai-log.md`), ikke i produktet.
 - Ikke et ERP-system, og ikke en full MRP II-kjede: ingen prognoser, S&OP, scheduling, kapasitetsplanlegging, væravhengighet eller Monte Carlo.
-- Ingen redigering av BOM, alternative komponenter eller versjonering av BOM.
+- Ingen endring av BOM-strukturen (legge til eller fjerne varer og BOM-linjer), ingen alternative komponenter og ingen versjonering av BOM.
 - Ingen meldinger om å framskynde, utsette eller kansellere åpne ordre. MRP flytter aldri ordre selv.
 - Ingen pegging (sporing av behov tilbake til byggenummer) og ingen leverandørvalg.
 - Ingen innkjøpsmodul: bestillingsforslag blir ikke til faktiske ordre i appen.
@@ -221,21 +226,21 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye, en
 - Innlogging med én demobruker (FR-1).
 - Testdata fra fasiten ved oppstart, og tilbakestilling (FR-2, FR-3).
 - BOM-tre for testfartøyet (FR-4).
-- Redigering av MPS, lagerbeholdning og åpne ordre med validering (FR-5 til FR-8).
+- Redigering av MPS, lagerbeholdning og åpne ordre, og justering av mengde per, ledetid og partiregel, med validering (FR-5 til FR-8, FR-18).
 - MRP-kjøring med BOM-eksplosjon, netting, partiregler, ledetidsoffset og forfalte produksjonsordrer (FR-9 til FR-12).
 - Exception-meldingene E1 og E2 (FR-13, FR-14).
 - MRP-tabell, liste over forslag og meldinger, og markering av endringer (FR-15 til FR-17).
 
 ### 7.2 Ute av v1
 
-- **Trinn 2** (bare hvis v1 er stabil og testet): alternativregler i BOM, sikkerhetslager for importkomponenter, meldinger om å framskynde eller utsette åpne ordre.
+- **Trinn 2** (bare hvis v1 er stabil og testet): full redigering av BOM-strukturen, alternativregler i BOM, sikkerhetslager for importkomponenter, meldinger om å framskynde eller utsette åpne ordre.
 - **Visjon:** alt som står under «Ute» i briefen.
 
 ## 8. Suksessmål
 
 **Primære**
-- **SM-1 Riktig beregning:** alle automatiske beregningstester mot scenario A, B, C og D i fasiten består. Mål: 100 %. Validerer FR-10 til FR-14.
-- **SM-2 Synlig forplantning:** den manuelle testplanen for scenario A, B og C gjennomføres uten avvik og dokumenteres i repoet. Validerer FR-15 til FR-17.
+- **SM-1 Riktig beregning:** alle automatiske beregningstester mot scenario A–E i fasiten består. Mål: 100 %. Validerer FR-10 til FR-14.
+- **SM-2 Synlig forplantning:** den manuelle testplanen for scenario A, B, C og E gjennomføres uten avvik og dokumenteres i repoet. Validerer FR-15 til FR-18.
 - **SM-3 Kjørbar for sensor:** en person som ikke kjenner prosjektet, får appen og testene til å kjøre bare ved å følge README, på under 15 minutter. Validerer NFR-1, NFR-3.
 
 **Sekundære**
@@ -247,10 +252,8 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye, en
 
 ## 9. Åpne spørsmål
 
-1. **Scenario D i fasiten** må regnes ut for hånd og legges til i `testdata/testfartoy-v1/` før MRP-logikken implementeres (FR-12). Ansvar: Thobias. Gjøres som første story eller før epics.
-2. **Brief-avvik:** briefen sier at planleggeren kan «justere MPS eller BOM». PRD-en begrenser redigering til MPS, lagerbeholdning og åpne ordre. Briefen bør oppdateres slik at plan og dokumenter henger sammen.
-3. **Teknologivalg** (database, frontend-rammeverk, prosjektstruktur) avgjøres i arkitekturen. Føringer fra briefen står i [addendum.md](addendum.md).
+1. **Teknologivalg** (database, frontend-rammeverk, prosjektstruktur) avgjøres i arkitekturen. Føringer fra briefen står i [addendum.md](addendum.md).
 
 ## 10. Antakelser
 
-- §4.5 FR-12 — scenario D legges til i fasiten før implementasjon, med byggenr. 1 framskyndet til uke 4.
+Ingen gjenstående antakelser. Fasitens regler R1–R11 og scenario A–E er bekreftet.

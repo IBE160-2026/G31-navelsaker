@@ -7,10 +7,10 @@
       "items": {
         "RBE-000": {
           "low_level_code": 0,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_orders": [
@@ -20,10 +20,10 @@
         },
         "SKR-100": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -33,10 +33,10 @@
         },
         "MAS-200": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_orders": [
@@ -46,10 +46,10 @@
         },
         "DEK-300": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_orders": [
@@ -59,10 +59,10 @@
         },
         "SEK-110": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -72,10 +72,10 @@
         },
         "MOT-210": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -84,10 +84,10 @@
         },
         "GIR-220": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -96,10 +96,10 @@
         },
         "STY-310": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -109,10 +109,10 @@
         },
         "PLT-900": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 18, 4, 0, 8, 24, 4, 0, 8, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [20, 20, 20, 20, 2, 23, 23, 15, 16, 12, 12, 4, 4, 4, 4, 4],
-          "net_requirements":       [0, 0, 0, 0, 0, 2, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 18, 4, 0, 8, 24, 4, 0, 8, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [20, 20, 20, 20, 2, 23, 23, 15, 16, 12, 12, 4, 4, 4, 4, 4],
+          "net_requirements": [0, 0, 0, 0, 0, 2, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 25, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 25, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -122,10 +122,10 @@
         },
         "PRF-910": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 30, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [15, 15, 15, 35, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 30, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [15, 15, 15, 35, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -134,10 +134,10 @@
         },
         "VIN-920": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -156,10 +156,10 @@
       "items": {
         "RBE-000": {
           "low_level_code": 0,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
           "planned_orders": [
@@ -169,10 +169,10 @@
         },
         "SKR-100": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -182,10 +182,10 @@
         },
         "MAS-200": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -195,10 +195,10 @@
         },
         "DEK-300": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -208,10 +208,10 @@
         },
         "SEK-110": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 3, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -221,10 +221,10 @@
         },
         "MOT-210": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -233,10 +233,10 @@
         },
         "GIR-220": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -245,10 +245,10 @@
         },
         "STY-310": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -258,10 +258,10 @@
         },
         "PLT-900": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 18, 4, 24, 12, 0, 8, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [20, 20, 20, 20, 2, 23, 24, 12, 12, 4, 4, 4, 4, 4, 4, 4],
-          "net_requirements":       [0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 18, 4, 24, 12, 0, 8, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [20, 20, 20, 20, 2, 23, 24, 12, 12, 4, 4, 4, 4, 4, 4, 4],
+          "net_requirements": [0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 25, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -271,10 +271,10 @@
         },
         "PRF-910": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 30, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [15, 15, 15, 35, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 30, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [15, 15, 15, 35, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -283,10 +283,10 @@
         },
         "VIN-920": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -305,10 +305,10 @@
       "items": {
         "RBE-000": {
           "low_level_code": 0,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_orders": [
@@ -318,10 +318,10 @@
         },
         "SKR-100": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -331,10 +331,10 @@
         },
         "MAS-200": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_orders": [
@@ -344,10 +344,10 @@
         },
         "DEK-300": {
           "low_level_code": 1,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_orders": [
@@ -357,10 +357,10 @@
         },
         "SEK-110": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -370,10 +370,10 @@
         },
         "MOT-210": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -382,10 +382,10 @@
         },
         "GIR-220": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -395,10 +395,10 @@
         },
         "STY-310": {
           "low_level_code": 2,
-          "gross_requirements":     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -408,10 +408,10 @@
         },
         "PLT-900": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 18, 4, 0, 8, 24, 4, 0, 8, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [20, 20, 20, 20, 2, 23, 23, 15, 16, 12, 12, 4, 4, 4, 4, 4],
-          "net_requirements":       [0, 0, 0, 0, 0, 2, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 18, 4, 0, 8, 24, 4, 0, 8, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [20, 20, 20, 20, 2, 23, 23, 15, 16, 12, 12, 4, 4, 4, 4, 4],
+          "net_requirements": [0, 0, 0, 0, 0, 2, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 25, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 25, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -421,10 +421,10 @@
         },
         "PRF-910": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 30, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [15, 15, 15, 35, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 30, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [15, 15, 15, 35, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -433,10 +433,10 @@
         },
         "VIN-920": {
           "low_level_code": 3,
-          "gross_requirements":     [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-          "scheduled_receipts":     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "projected_on_hand":      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          "net_requirements":       [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "gross_requirements": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_receipts": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
           "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "planned_orders": [
@@ -449,6 +449,314 @@
         { "type": "LEAD_TIME_EXCEEDS_HORIZON", "item": "MOT-210", "lead_time_weeks": 20, "horizon_weeks": 16 },
         { "type": "PAST_DUE_RELEASE", "item": "MOT-210", "quantity": 1, "receipt_week": 12, "release_week": -8, "weeks_past_due": 9, "earliest_receipt_week": 21 },
         { "type": "PAST_DUE_RELEASE", "item": "GIR-220", "quantity": 1, "receipt_week": 8, "release_week": 0, "weeks_past_due": 1, "earliest_receipt_week": 9 },
+        { "type": "PAST_DUE_RELEASE", "item": "VIN-920", "quantity": 1, "receipt_week": 6, "release_week": 0, "weeks_past_due": 1, "earliest_receipt_week": 7 }
+      ]
+    },
+    "D": {
+      "items": {
+        "RBE-000": {
+          "low_level_code": 0,
+          "gross_requirements": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+          "planned_order_receipts": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+          "planned_order_releases": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 4, "release_week": 2, "quantity": 1 },
+            { "receipt_week": 16, "release_week": 14, "quantity": 1 }
+          ]
+        },
+        "SKR-100": {
+          "low_level_code": 1,
+          "gross_requirements": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "planned_order_receipts": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 2, "release_week": -1, "quantity": 1 },
+            { "receipt_week": 14, "release_week": 11, "quantity": 1 }
+          ]
+        },
+        "MAS-200": {
+          "low_level_code": 1,
+          "gross_requirements": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "planned_order_receipts": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 2, "release_week": 0, "quantity": 1 },
+            { "receipt_week": 14, "release_week": 12, "quantity": 1 }
+          ]
+        },
+        "DEK-300": {
+          "low_level_code": 1,
+          "gross_requirements": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "planned_order_receipts": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 2, "release_week": 0, "quantity": 1 },
+            { "receipt_week": 14, "release_week": 12, "quantity": 1 }
+          ]
+        },
+        "SEK-110": {
+          "low_level_code": 2,
+          "gross_requirements": [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 1, "release_week": -1, "quantity": 3 },
+            { "receipt_week": 11, "release_week": 9, "quantity": 4 }
+          ]
+        },
+        "MOT-210": {
+          "low_level_code": 2,
+          "gross_requirements": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+          "net_requirements": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 1, "release_week": -19, "quantity": 1 }
+          ]
+        },
+        "GIR-220": {
+          "low_level_code": 2,
+          "gross_requirements": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 12, "release_week": 4, "quantity": 1 }
+          ]
+        },
+        "STY-310": {
+          "low_level_code": 2,
+          "gross_requirements": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_receipts": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 1, "release_week": -1, "quantity": 1 },
+            { "receipt_week": 12, "release_week": 10, "quantity": 1 }
+          ]
+        },
+        "PLT-900": {
+          "low_level_code": 3,
+          "gross_requirements": [30, 0, 0, 0, 0, 0, 0, 0, 24, 4, 0, 8, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [15, 15, 15, 15, 15, 15, 15, 15, 16, 12, 12, 4, 4, 4, 4, 4],
+          "net_requirements": [10, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [25, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 1, "release_week": -2, "quantity": 25 },
+            { "receipt_week": 9, "release_week": 6, "quantity": 25 }
+          ]
+        },
+        "PRF-910": {
+          "low_level_code": 3,
+          "gross_requirements": [30, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 20, 20, 20, 20, 20, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [15, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [15, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 1, "release_week": -1, "quantity": 15 },
+            { "receipt_week": 9, "release_week": 7, "quantity": 20 }
+          ]
+        },
+        "VIN-920": {
+          "low_level_code": 3,
+          "gross_requirements": [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 1, "release_week": -5, "quantity": 1 },
+            { "receipt_week": 10, "release_week": 4, "quantity": 1 }
+          ]
+        }
+      },
+      "exceptions": [
+        { "type": "LEAD_TIME_EXCEEDS_HORIZON", "item": "MOT-210", "lead_time_weeks": 20, "horizon_weeks": 16 },
+        { "type": "PAST_DUE_RELEASE", "item": "SKR-100", "quantity": 1, "receipt_week": 2, "release_week": -1, "weeks_past_due": 2, "earliest_receipt_week": 4 },
+        { "type": "PAST_DUE_RELEASE", "item": "MAS-200", "quantity": 1, "receipt_week": 2, "release_week": 0, "weeks_past_due": 1, "earliest_receipt_week": 3 },
+        { "type": "PAST_DUE_RELEASE", "item": "DEK-300", "quantity": 1, "receipt_week": 2, "release_week": 0, "weeks_past_due": 1, "earliest_receipt_week": 3 },
+        { "type": "PAST_DUE_RELEASE", "item": "SEK-110", "quantity": 3, "receipt_week": 1, "release_week": -1, "weeks_past_due": 2, "earliest_receipt_week": 3 },
+        { "type": "PAST_DUE_RELEASE", "item": "MOT-210", "quantity": 1, "receipt_week": 1, "release_week": -19, "weeks_past_due": 20, "earliest_receipt_week": 21 },
+        { "type": "PAST_DUE_RELEASE", "item": "STY-310", "quantity": 1, "receipt_week": 1, "release_week": -1, "weeks_past_due": 2, "earliest_receipt_week": 3 },
+        { "type": "PAST_DUE_RELEASE", "item": "PLT-900", "quantity": 25, "receipt_week": 1, "release_week": -2, "weeks_past_due": 3, "earliest_receipt_week": 4 },
+        { "type": "PAST_DUE_RELEASE", "item": "PRF-910", "quantity": 15, "receipt_week": 1, "release_week": -1, "weeks_past_due": 2, "earliest_receipt_week": 3 },
+        { "type": "PAST_DUE_RELEASE", "item": "VIN-920", "quantity": 1, "receipt_week": 1, "release_week": -5, "weeks_past_due": 6, "earliest_receipt_week": 7 }
+      ]
+    },
+    "E": {
+      "items": {
+        "RBE-000": {
+          "low_level_code": 0,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 12, "release_week": 10, "quantity": 1 },
+            { "receipt_week": 16, "release_week": 14, "quantity": 1 }
+          ]
+        },
+        "SKR-100": {
+          "low_level_code": 1,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 10, "release_week": 7, "quantity": 1 },
+            { "receipt_week": 14, "release_week": 11, "quantity": 1 }
+          ]
+        },
+        "MAS-200": {
+          "low_level_code": 1,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 10, "release_week": 8, "quantity": 1 },
+            { "receipt_week": 14, "release_week": 12, "quantity": 1 }
+          ]
+        },
+        "DEK-300": {
+          "low_level_code": 1,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 10, "release_week": 8, "quantity": 1 },
+            { "receipt_week": 14, "release_week": 12, "quantity": 1 }
+          ]
+        },
+        "SEK-110": {
+          "low_level_code": 2,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 7, "release_week": 5, "quantity": 4 },
+            { "receipt_week": 11, "release_week": 9, "quantity": 5 }
+          ]
+        },
+        "MOT-210": {
+          "low_level_code": 2,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 12, "release_week": -8, "quantity": 1 }
+          ]
+        },
+        "GIR-220": {
+          "low_level_code": 2,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 12, "release_week": 4, "quantity": 1 }
+          ]
+        },
+        "STY-310": {
+          "low_level_code": 2,
+          "gross_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 8, "release_week": 6, "quantity": 1 },
+            { "receipt_week": 12, "release_week": 10, "quantity": 1 }
+          ]
+        },
+        "PLT-900": {
+          "low_level_code": 3,
+          "gross_requirements": [0, 0, 0, 0, 24, 4, 0, 8, 30, 4, 0, 8, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [20, 20, 20, 20, 21, 17, 17, 9, 4, 0, 0, 17, 17, 17, 17, 17],
+          "net_requirements": [0, 0, 0, 0, 4, 0, 0, 0, 21, 0, 0, 8, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0, 25, 0, 0, 0, 0],
+          "planned_order_releases": [0, 25, 0, 0, 0, 25, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 5, "release_week": 2, "quantity": 25 },
+            { "receipt_week": 9, "release_week": 6, "quantity": 25 },
+            { "receipt_week": 12, "release_week": 9, "quantity": 25 }
+          ]
+        },
+        "PRF-910": {
+          "low_level_code": 3,
+          "gross_requirements": [0, 0, 0, 0, 40, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [15, 15, 15, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 5, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 5, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 5, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 5, "release_week": 3, "quantity": 5 },
+            { "receipt_week": 9, "release_week": 7, "quantity": 50 }
+          ]
+        },
+        "VIN-920": {
+          "low_level_code": 3,
+          "gross_requirements": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "scheduled_receipts": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "projected_on_hand": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "net_requirements": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "planned_order_receipts": [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+          "planned_order_releases": [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "planned_orders": [
+            { "receipt_week": 6, "release_week": 0, "quantity": 1 },
+            { "receipt_week": 10, "release_week": 4, "quantity": 1 }
+          ]
+        }
+      },
+      "exceptions": [
+        { "type": "LEAD_TIME_EXCEEDS_HORIZON", "item": "MOT-210", "lead_time_weeks": 20, "horizon_weeks": 16 },
+        { "type": "PAST_DUE_RELEASE", "item": "MOT-210", "quantity": 1, "receipt_week": 12, "release_week": -8, "weeks_past_due": 9, "earliest_receipt_week": 21 },
         { "type": "PAST_DUE_RELEASE", "item": "VIN-920", "quantity": 1, "receipt_week": 6, "release_week": 0, "weeks_past_due": 1, "earliest_receipt_week": 7 }
       ]
     }
