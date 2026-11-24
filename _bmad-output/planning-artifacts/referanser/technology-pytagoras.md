@@ -1,3 +1,5 @@
+> **Merk: Dette dokumentet gjelder et annet prosjekt (Pytagoras Forlag), ikke Red Ball Express.** Det ble lagt inn 2026-11-12 som inspirasjon til teknologivalg og er ikke en føring for dette prosjektet. Arkitekturen for Red Ball Express står i [architecture-Red Ball Express-2026-11-24/ARCHITECTURE-SPINE.md](../architecture/architecture-Red%20Ball%20Express-2026-11-24/ARCHITECTURE-SPINE.md).
+
 # Website V2 – arkitektur, teknologi og nøkler
 
 Oversikt over `pytagoras-website-v2` (Pytagoras Forlag), skrevet for å kunne gjenskape oppsettet for en annen nettside.

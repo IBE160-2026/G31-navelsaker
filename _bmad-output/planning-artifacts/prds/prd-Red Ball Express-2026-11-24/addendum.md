@@ -9,7 +9,7 @@ Briefen beskriver dette tekniske grunnlaget. Arkitekturen tar endelig stilling:
 - Backend i Python med FastAPI, pakkehåndtering med uv.
 - Frontend i Node.js-økosystemet.
 - Lokal database, SQLite eller lokal PostgreSQL, med testdata fra `testdata/testfartoy-v1/input.json`. Faglærer pekte på at tre separate deler er mye for én person, og at SQLite er det enkleste å kjøre for sensor.
-- [technology.md](../../architecture/technology.md) beskriver et annet prosjekt (Pytagoras) og kan bare brukes som inspirasjon, ikke som føring.
+- [technology-pytagoras.md](../../referanser/technology-pytagoras.md) beskriver et annet prosjekt (Pytagoras) og kan bare brukes som inspirasjon, ikke som føring.
 
 NFR-3 (testbar beregningskjerne) betyr i praksis at MRP-logikken bør ligge som rene funksjoner uten avhengighet til database eller web-rammeverk.
 
