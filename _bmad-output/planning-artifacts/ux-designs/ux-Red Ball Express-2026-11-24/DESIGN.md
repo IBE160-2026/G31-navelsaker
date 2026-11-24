@@ -9,7 +9,7 @@ colors:
   surface: '#FFFFFF'
   surface-muted: '#F6F3EE'
   border: '#ECE6DD'
-  border-strong: '#C9C2B6'
+  border-strong: '#8C857A'
   text: '#2B2A28'
   text-muted: '#6E6A63'
   accent: '#3F4A5A'
@@ -168,6 +168,53 @@ components:
     background: '{colors.surface}'
     border: 'dashed {colors.text-muted}'
     radius: '{rounded.md}'
+  status-line:
+    foreground: '{colors.text-muted}'
+    typography: '{typography.small}'
+  section-toggle:
+    foreground: '{colors.accent}'
+    typography: '{typography.small}'
+  item-list:
+    background: '{colors.surface}'
+    border: '{colors.border}'
+    radius: '{rounded.md}'
+    group-label: '{colors.text-muted}'
+  tree-node:
+    foreground: '{colors.text}'
+    meta-foreground: '{colors.text-muted}'
+    indent: '{spacing.6}'
+    divider: '{colors.surface-muted}'
+  edit-panel:
+    background: '{colors.surface}'
+    border: '{colors.border}'
+    radius: '{rounded.lg}'
+    padding: '{spacing.4}'
+  editing-row:
+    background: '{colors.surface-muted}'
+  empty-state:
+    background: '{colors.surface}'
+    border: '{colors.border}'
+    radius: '{rounded.lg}'
+    foreground: '{colors.text-muted}'
+  error-banner:
+    background: '{colors.danger-subtle}'
+    foreground: '{colors.danger}'
+    edge: '{colors.danger}'
+    radius: '{rounded.md}'
+  login-card:
+    background: '{colors.surface}'
+    border: '{colors.border}'
+    radius: '{rounded.lg}'
+  welcome-overlay:
+    background: '{colors.background}'
+    opacity: '0.94'
+    radius: '{rounded.lg}'
+  skip-link:
+    background: '{colors.accent}'
+    foreground: '{colors.accent-foreground}'
+  checkbox:
+    border: '{colors.border-strong}'
+    checked: '{colors.accent}'
   confirmation-success:
     background: '{colors.success-subtle}'
     foreground: '{colors.success}'
@@ -204,7 +251,7 @@ Spinene (dette dokumentet og [EXPERIENCE.md](EXPERIENCE.md)) gjelder foran alle 
 | `background` | `#FAF8F5` | Sidebakgrunn, menylinje | Kort og tabeller |
 | `surface` | `#FFFFFF` | Kort, tabeller, panel, dialog, felt | — |
 | `surface-muted` | `#F6F3EE` | Kolonnen «Før u1» i MRP-tabellen, rad under redigering | Markering av endringer |
-| `border` / `border-strong` | `#ECE6DD` / `#C9C2B6` | Linjer og kantlinjer / felt og sekundærknapper | — |
+| `border` / `border-strong` | `#ECE6DD` / `#8C857A` | Linjer mellom rader og rundt kort / kant på felt, sekundærknapper og avkrysningsbokser (minst 3:1, WCAG 1.4.11) | `border` på felt (for svak) |
 | `text` / `text-muted` | `#2B2A28` / `#6E6A63` | Tekst / hjelpetekst, kolonneoverskrifter, fjernede rader | — |
 | `accent` | `#3F4A5A` | Primærknapp, valgt menypunkt, valgt rad/node, fokusramme, lenker, sløyfen i logoen | Status eller varsler. Aksenten betyr ingenting |
 | `accent-subtle` | `#EEF0F3` | Bakgrunn på valgt vare i varelisten og valgt node i BOM-treet | — |
@@ -215,7 +262,7 @@ Spinene (dette dokumentet og [EXPERIENCE.md](EXPERIENCE.md)) gjelder foran alle 
 
 Nøytrale endringer (nye og fjernede bestillingsforslag, endrede tall i MRP-tabellen, «ikke kjørt ennå») har **ingen farge**. De vises med tekst og form i `{colors.text}` eller `{colors.text-muted}`.
 
-Kontrast (WCAG 2.x, normal tekst ≥ 4,5:1), beregnet 2026-11-24: `text`, `text-muted` og `accent` mot `surface` og `background`, og `danger`, `warning` og `success` mot både `surface` og sin egen `*-subtle`-tone, er alle minst 4,5:1. `accent-foreground` på `accent` er minst 4,5:1. Fotografiet bærer aldri tekst direkte. Tekst over bildet står på en flate (`{colors.background}` med 94 % dekning).
+Kontrast (WCAG 2.x, normal tekst ≥ 4,5:1), beregnet 2026-11-24: `text`, `text-muted` og `accent` mot `surface` og `background`, og `danger`, `warning` og `success` mot både `surface` og sin egen `*-subtle`-tone, er alle minst 4,5:1. `accent-foreground` på `accent` er minst 4,5:1. Kanter på grensesnittelementer (`border-strong`, fokusramme i `accent`) har minst 3:1 mot både `surface` og `background`. Fotografiet bærer aldri tekst direkte. Tekst over bildet står på en flate (`{colors.background}` med 94 % dekning).
 
 Ingen mørk modus i v1.
 
@@ -272,7 +319,19 @@ Flatt. Dybde lages med `{colors.surface}` mot `{colors.background}` og tynne `{c
 - **Valgt rad eller node (`list-item-selected`).** `{colors.accent-subtle}` og 3 px strek til venstre i `{colors.accent}`.
 - **Felt (`input`, `input-error`).** Etikett over feltet. Ved feil: 2 px kant i `{colors.danger}` og meldingen rett under i rødt.
 - **Linje om ikke-kjørte endringer (`pending-line`).** Hvit med stiplet kant i `{colors.text-muted}` og en liten primærknapp «Kjør MRP». Ingen farge, fordi det ikke er et varsel.
-- **Bekreftelse (`confirmation-success`).** Grønn flate med «✓ …». Nøytrale bekreftelser, som «MRP er kjørt kl. 10:42», bruker et vanlig `card` uten farge.
+- **Bekreftelseslinje (`confirmation-success`).** Grønn flate med «✓ …». Nøytrale bekreftelser, som «MRP er kjørt kl. 10:42», bruker et vanlig `card` uten farge.
+- **Statuslinje (`status-line`).** Liten, dempet tekst under sidetittelen og på startsiden. Aldri farge.
+- **Skjul/vis (`section-toggle`).** «Skjul» eller «Vis» i liten tekst i aksentfarge etter seksjonsoverskriften «Meldinger (N)».
+- **Vareliste (`item-list`).** Hvitt kort med søkefelt (`input`) øverst. Gruppeoverskrifter «Nivå 0–3» i liten, dempet tekst med store bokstaver og litt sperring. Valgt vare bruker `list-item-selected`.
+- **BOM-node (`tree-node`).** Én linje per node med innrykk `{spacing.6}` per nivå, en foldepil (▾/▸), varenummer i `{typography.body-strong}`, navn og «× mengde per», og metadata (type · LT · LLC) til høyre i dempet tekst. Tynn skillelinje i `{colors.surface-muted}`. Valgt node bruker `list-item-selected`.
+- **Redigeringspanel (`edit-panel`).** Hvitt panel til høyre for treet. Tittel med varenummer og navn, og undertittel «Valgt under …». Feltene er gruppert i to `fieldset`: «Denne BOM-linjen» og «Varedata». Knappene «Lagre» og «Avbryt» nederst.
+- **Rad under redigering (`editing-row`).** Raden får `{colors.surface-muted}`. Feltene er smale `input`-er med «Lagre» (liten primær) og «Avbryt» (liten sekundær) til høyre.
+- **Tom tilstand (`empty-state`).** Hvitt kort med sentrert tekst: overskrift i `{typography.section-title}`, én setning i dempet tekst og eventuelt én primærknapp.
+- **Feillinje (`error-banner`).** Rød flate med kant til venstre, øverst i innholdet. Tekst og knappen «Prøv igjen» (sekundær).
+- **Innloggingskort (`login-card`).** Sentrert hvitt kort (ca. 320 px) med stablet logo, to felt, en primærknapp over hele bredden og hjelpeteksten «Demobrukeren står i README».
+- **Velkomstflate (`welcome-overlay`).** Lys flate oppå fotografiet, øverst til venstre, med «Velkommen» (`{typography.welcome-title}`) og «Hva vil du gjøre?».
+- **Hopp til innhold (`skip-link`).** Usynlig til den får fokus. Vises da øverst til venstre i aksentfarge.
+- **Avkrysningsboks (`checkbox`).** Native avkrysningsboks med kant i `{colors.border-strong}` og avkrysning i `{colors.accent}`. Brukes til «Vis verdier fra forrige kjøring» over MRP-tabellen. Påslått vises endrede celler som «24 ← 0», der forrige verdi står i dempet tekst.
 - **Dialog (`dialog`).** Hvit, `{rounded.lg}`, skygge. Tittel, forklaring og knapper til høyre: «Avbryt» og så handlingen.
 - **Logo (`logo`).** Se Brand & Style. På mørk eller fotografisk bakgrunn brukes den ikke. Logoen står bare i menylinjen og på innloggingssiden.
 
@@ -284,6 +343,7 @@ Flatt. Dybde lages med `{colors.surface}` mot `{colors.background}` og tynne `{c
 | Vis nøytrale endringer med tekst og form («ny», uthevet tall, gjennomstreking) | Farg nye forslag eller endrede celler |
 | La aksenten (skifer) være den eneste fargen uten betydning | Innfør nye aksentfarger, eller bruk `brand-red` utenfor logoen |
 | Hold én primærknapp per område | Stable flere fylte knapper ved siden av hverandre |
+| Gjør alle klikkbare mål minst 24 × 24 px | Små knapper og lenker tett i tett |
 | Bruk tabulære, høyrejusterte tall i alle tabeller | Proporsjonale tall i kolonner |
 | Sett tekst over fotografiet på en lys flate | Legg tekst rett på bildet |
 | Manrope til alt | Bland inn serif eller flere familier |

@@ -96,7 +96,7 @@ Hvordan komponentene oppfører seg. Utseendet står i `DESIGN.md` → Components
 | Meldingskort | Meldingsseksjonen | Én melding per kort. Merkelapp etter signal (se Endringer og fargebetydning) |
 | Forslagstabell | Bestillingsforslag og meldinger | Sortert på frigivelsesuke (forfalte først), deretter varenummer. Kolonner: endring, vare, type, antall, frigivelse, mottak. Forfalte forslag har den røde merkelappen «u−10 forfalt». Fjernede forslag ligger bak en lenke |
 | Vareliste | MRP-tabell | Varer gruppert etter nivå (lavnivåkode), sortert på varenummer, med søkefelt øverst som filtrerer på nummer og navn. Valgt vare er markert, og adressen endres. Piltast opp/ned flytter valget når listen har fokus |
-| MRP-tabell | MRP-tabell | Overskrift med vare, type, ledetid, partiregel og lavnivåkode. Rader: bruttobehov, åpne ordre, beregnet lager, nettobehov, planlagt mottak, planlagt frigivelse. Kolonner: «Før u1» og uke 1–16. Nuller vises som tom celle, unntatt i «beregnet lager». Forfalte frigivelser summeres i «Før u1». Endrede celler markeres |
+| MRP-tabell | MRP-tabell | Overskrift med vare, type, ledetid, partiregel og lavnivåkode. Rader: bruttobehov, åpne ordre, beregnet lager, nettobehov, planlagt mottak, planlagt frigivelse. Kolonner: «Før u1» og uke 1–16. Nuller vises som tom celle, unntatt i «beregnet lager». Forfalte frigivelser summeres i «Før u1». Endrede celler markeres. Avkrysningsboksen «Vis verdier fra forrige kjøring» over tabellen viser «24 ← 0» i endrede celler, så forrige verdi også kan nås uten mus. Tabellen ligger i et rulleområde som kan nås med tastatur |
 | BOM-tre | BOM-tre | Alle 12 linjer. Varer med flere foreldre vises under hver forelder. Noder kan foldes inn og ut, og alt er utfoldet når siden åpnes. Hver node viser varenummer, navn, «× mengde per», type, ledetid og LLC (FR-4). Klikk eller Enter på en node åpner redigeringspanelet |
 | Redigeringspanel | BOM-tre | Viser valgt vare og hvilken forelder den ble valgt under. Felt: mengde per (bare for denne BOM-linjen), ledetid, partiregel (L4L/FOQ) og kvantum (bare ved FOQ). Teksten «gjelder alle N steder varen brukes» står ved varedataene. «Lagre» og «Avbryt». Esc avbryter. Lenke «Vis MRP-tabell» |
 | Radredigering | MPS og lager (alle tre tabeller) | «Endre» gjør raden om til felt med «Lagre» og «Avbryt». Én rad om gangen. Enter lagrer, Esc avbryter. «Slett» sletter etter en innebygd bekreftelse i raden («Slette byggenr. 2? Ja / Nei»). «+ Legg til …» legger til en tom rad i redigeringsmodus |
@@ -120,6 +120,9 @@ Hvordan komponentene oppfører seg. Utseendet står i `DESIGN.md` → Components
 | Tom hovedplan | MPS og lager | «Ingen byggenummer i planen. MRP gir da ingen behov.» og «+ Legg til byggenummer» |
 | Ingen åpne ordre | MPS og lager | «Ingen åpne ordre.» og «+ Legg til åpen ordre» |
 | Ingen meldinger | Forslag | Seksjonen viser «Ingen meldinger fra siste kjøring.» (nøytral) |
+| Ingen bestillingsforslag | Forslag | «Ingen bestillingsforslag fra siste kjøring.» (nøytral), for eksempel når hovedplanen er tom |
+| Logger inn | Innlogging | Knappen viser «Logger inn …» og er deaktivert |
+| Kjøring feilet | Der «Kjør MRP» står | Feillinjen vises, knappen blir aktiv igjen, og forrige resultat beholdes |
 | Tilbakestilt | MPS og lager | Grønn bekreftelse. Kjøringene er slettet, så resultatsidene viser «Ingen MRP-kjøring ennå» |
 | Lasting av side | Alle | Overskriften vises med en gang, og tabellene viser «Henter …» i dempet tekst. Ingen skjelettanimasjon |
 | Serverfeil eller ingen kontakt | Alle | Rød linje øverst i innholdet: «Fikk ikke kontakt med serveren. Prøv igjen.» med «Prøv igjen». Det som ble skrevet i et skjema, beholdes |
@@ -131,7 +134,9 @@ Hvordan komponentene oppfører seg. Utseendet står i `DESIGN.md` → Components
 - **Eksplisitt framfor automatisk.** MRP kjøres bare når Ingrid trykker «Kjør MRP». Ingenting beregnes, oppdateres eller navigerer av seg selv.
 - **Ingen tvang til å se meldinger.** Startsiden viser aldri innholdet i eller antallet meldinger, og ingen handling sender Ingrid til meldingene uten at hun selv klikker.
 - **Lenker på varenavn** er den raske veien til en vares MRP-tabell.
-- **Tastatur:** Tab følger leserekkefølgen. Enter aktiverer lenker og knapper og lagrer en rad eller et panel. Esc lukker panel, rad og dialog. Piltastene flytter i varelisten og BOM-treet.
+- **Tastatur:** «Hopp til innhold» er første element med fokus. Tab følger leserekkefølgen. Enter aktiverer lenker og knapper og lagrer en rad eller et panel. Esc lukker panel, rad og dialog. Piltastene flytter i varelisten og BOM-treet.
+- **Fokus ved navigasjon:** ved sidebytte settes dokumenttittelen (f.eks. «MRP-tabell: PLT-900 – Red Ball Express»), og fokus flyttes til H1.
+- **Fokus ved redigering:** «Endre» og et klikk på en BOM-node flytter fokus til første felt. «Lagre» eller «Avbryt» gir fokus tilbake til utløseren (knappen «Endre» eller noden). Bekreftelsen i raden ved «Slett» har fokus på «Nei».
 - **Mus:** klikk. Ingen dra-og-slipp og ingen funksjoner som bare finnes ved hover.
 - **Ikke tillatt:** automatisk omberegning, automatisk navigasjon til meldinger, modaler oppå modaler, uendelig rulling, faner i MPS og lager.
 
@@ -148,6 +153,10 @@ Krav til oppførsel. Kontrast står i `DESIGN.md` → Colors (alle tekstpar mins
 - BOM-treet bruker tre-semantikk (`role="tree"`/`treeitem`, `aria-expanded`). MRP-tabellen er en ekte `<table>` med rad- og kolonneoverskrifter (`<th scope>`).
 - Endrede celler har skjult tekst for skjermleser, for eksempel «24, endret fra 0».
 - Fotografiet er dekorativt (`alt=""`).
+- «Hopp til innhold»-lenke (WCAG 2.4.1), unik dokumenttittel per side (2.4.2) og fokus til H1 ved sidebytte.
+- Forrige verdi i endrede celler kan nås uten hover, via avkrysningsboksen «Vis verdier fra forrige kjøring» (1.4.13, 2.1.1).
+- Rulleområdet rundt MRP-tabellen har `tabindex="0"`, `role="region"` og en etikett, så det kan rulles med tastatur.
+- Klikkbare mål er minst 24 × 24 px (2.5.8). Kanter på felt og knapper har minst 3:1 kontrast (1.4.11).
 - `lang="no"` på dokumentet.
 
 ## Responsive & Platform
