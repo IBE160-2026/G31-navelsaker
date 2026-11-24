@@ -1,7 +1,7 @@
 ---
 name: Red Ball Express
 description: Rolig, oversiktlig MRP-verktøy for produksjonsplanlegging ved verft. Egen CSS med tokens (CSS-variabler) i en Vite + React-SPA, uten komponentbibliotek.
-status: draft
+status: final
 created: 2026-11-24
 updated: 2026-11-24
 colors:

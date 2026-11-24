@@ -1,6 +1,6 @@
 ---
 name: Red Ball Express
-status: draft
+status: final
 created: 2026-11-24
 updated: 2026-11-24
 sources:
