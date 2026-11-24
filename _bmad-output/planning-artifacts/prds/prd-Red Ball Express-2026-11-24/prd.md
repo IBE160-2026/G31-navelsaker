@@ -11,7 +11,7 @@ updated: 2026-11-24
 
 Denne PRD-en beskriver hva v1 av Red Ball Express skal gjøre: flernivå BOM og MRP for ett testfartøy. Den bygger på [product brief](../../briefs/brief-Red%20Ball%20Express-2026-09-16/brief.md) med [addendum](../../briefs/brief-Red%20Ball%20Express-2026-09-16/addendum.md), [faglærers tilbakemelding](../../briefs/brief-Red%20Ball%20Express-2026-09-16/tilbakemelding-product-brief.md) og den håndregnede fasiten i [testdata/testfartoy-v1/](../../../../testdata/testfartoy-v1/README.md). Fasiten gjentas ikke her. PRD-en viser til den.
 
-Dokumentet er skrevet for den som lager arkitektur, epics og stories, og for faglærer og sensor som skal kunne spore krav til kode. Begrepene i §3 brukes konsekvent. Krav har faste nummer (FR-n, NFR-n, SM-n), slik at stories og tester kan vise til dem. Antakelser er merket `[ASSUMPTION]` og samlet i §10. Teknologivalg hører til arkitekturen. Føringer fra briefen er samlet i [addendum.md](addendum.md).
+Dokumentet er skrevet for den som lager arkitektur, epics og stories, og for faglærer og sensor som skal kunne spore krav til kode. Begrepene i §3 brukes konsekvent. Krav har faste nummer (FR-n, NFR-n, SM-n), slik at stories og tester kan vise til dem. Antakelser er merket `[ASSUMPTION]` og samlet i §10. Teknologivalg står i [arkitekturen](../../architecture/architecture-Red%20Ball%20Express-2026-11-24/ARCHITECTURE-SPINE.md). Føringer fra briefen er samlet i [addendum.md](addendum.md).
 
 ## 1. Visjon
 
@@ -134,6 +134,7 @@ Systemet avviser ugyldige verdier med en forståelig feilmelding i skjemaet og l
 
 **Konsekvenser (testbare, gjelder FR-5 til FR-8 og FR-18):**
 - Uke må være et heltall i horisonten (1–16). Antall i MPS-linjer og åpne ordre må være et heltall ≥ 1. Lagerbeholdning må være et heltall ≥ 0.
+- En MPS-linje kan bare gjelde testfartøyet (nivå 0-varen). Byggenummer må være et heltall ≥ 1.
 - Mengde per må være et heltall ≥ 1. Ledetid må være et heltall ≥ 0. FOQ-kvantum må være et heltall ≥ 1.
 - Ugyldig verdi gir feilmelding ved feltet. Databasen er uendret.
 - Gyldige endringer lagres og vises ved neste visning av skjermbildet.
@@ -194,7 +195,7 @@ Planleggeren kan velge en vare og se MRP-tabellen for horisonten: bruttobehov, �
 Planleggeren kan se alle bestillingsforslag (vare, type, antall, frigivelsesuke, mottaksuke), sortert på frigivelsesuke, og alle exception-meldinger. Forfalte bestillingsforslag er tydelig merket. Realiserer UJ-1, UJ-2.
 
 #### FR-17: Markere endringer siden forrige kjøring
-Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye og fjernede bestillingsforslag, nye og fjernede exception-meldinger, og endrede celler i MRP-tabellen. Et bestillingsforslag regnes som det samme når vare, antall, mottaksuke og frigivelsesuke er like. Ellers vises det som nytt, og det gamle som fjernet. En exception-melding regnes som den samme når type, vare og tallfelt er like. Realiserer UJ-1, UJ-2.
+Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye og fjernede bestillingsforslag, nye og fjernede exception-meldinger, og endrede celler i MRP-tabellen, også i kolonnen før uke 1 (lagerbeholdning og forfalte frigivelser). Et bestillingsforslag regnes som det samme når vare, antall, mottaksuke og frigivelsesuke er like. Ellers vises det som nytt, og det gamle som fjernet. En exception-melding regnes som den samme når type, vare og tallfelt er like. Realiserer UJ-1, UJ-2.
 
 **Konsekvenser (testbare, FR-15 til FR-17), verifiseres med manuell testplan:**
 - Etter tilbakestilling og kjøring (scenario A) viser visningene tallene i fasitens tabeller.
@@ -256,7 +257,7 @@ Etter en MRP-kjøring markeres det som er endret siden forrige kjøring: nye og 
 
 ## 9. Åpne spørsmål
 
-1. **Teknologivalg** (database, frontend-rammeverk, prosjektstruktur) avgjøres i arkitekturen. Føringer fra briefen står i [addendum.md](addendum.md).
+Ingen. Teknologivalget (database, frontend-rammeverk, prosjektstruktur) er avgjort i [arkitekturen](../../architecture/architecture-Red%20Ball%20Express-2026-11-24/ARCHITECTURE-SPINE.md) 2026-11-24.
 
 ## 10. Antakelser
 
