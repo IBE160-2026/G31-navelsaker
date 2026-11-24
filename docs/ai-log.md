@@ -83,3 +83,29 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
 - **Endringer**: `CLAUDE.md` har fått seksjonen «Skjermbilder og video». Den angir fem tidspunkter (første gang et skjermbilde virker, UX-skisser, en kjerneflyt som virker fra start til slutt, README, før innlevering), at filene lagres i `docs/media/` med datofilnavn, at videoer skal være små og komprimerte, og at påminnelser som ikke er fulgt opp, føres som åpent punkt.
 - **Verifisering**: Manuell gjennomlesning mot sensorveiledningen: kriterium 4 (spor av designarbeid), kriterium 6 (README med skjermbilde), kriterium 7 (ingen store binærfiler) og kapittel 3 (skjermbilder og video som reserve).
 - **Commit**: `d2c83cd` — Legg til regel om påminnelser for skjermbilder og video i CLAUDE.md
+
+## 2026-11-24 — UX for v1: design og opplevelse
+
+- **Hvorfor**: Neste BMAD-steg etter arkitekturen. Arkitekturen hadde utsatt visuelt uttrykk, komponentbibliotek og skjermbildenes oppbygging til UX, og skisser av skjermbildene sto som åpent punkt (faglærers tilbakemelding, sensorkriterium 4).
+- **Prompt(er)**: `bmad-ux` på coaching-vei. Brukerens utgangspunkt: «rent design, behagelig og profesjonell fargepalett, svært enkelt å finne frem, ikke mange komponenter som kjemper om oppmerksomheten». KI-en viste alternativer som HTML-skisser, og brukeren valgte i hver runde. Eksempler på at brukeren styrte eller rettet KI-forslag:
+  - Valgte først designretning A, men byttet til C («mest oversiktlig»).
+  - Ba om en logo med symbolikk fra konvoioperasjonen i 1944. Valgte konsept 3, ba om flere varianter og valgte 3c. Valgte fontpar 7 (Manrope), selv om det fjernet serif-preget fra C.
+  - Innførte prinsippet «farger skal ha betydning» (rød = varsel, grønn = forbedring). Rettet KI-ens utkast til fargekart: E1 skal være rav, og «noe som er nøytralt trenger ikke farge», i stedet for KI-ens forslag om blått for nøytrale endringer.
+  - Valgte at en forverret melding skal vises som én melding («forverret: 9 → 11 uker»). Det avviker fra PRD FR-17 og ble ført tilbake.
+  - Krevde en rolig startside som mellomledd for å unngå overstimulering, og at «Kjør MRP» bare vises der det er relevant.
+  - Ville ha et ekte fotografi av havet, helst fra Norge, i stedet for KI-ens illustrasjon.
+- **Verktøy/modell**: Claude Code (Opus 5.5), BMAD-skill `bmad-ux`. Én web-fetch-subagent for å sjekke lisens på bilder fra Unsplash.
+- **Endringer**: Ny mappe `_bmad-output/planning-artifacts/ux-designs/ux-Red Ball Express-2026-11-24/`:
+  - `DESIGN.md`: tokens, palett A «Varm skifer» med fast fargebetydning, Manrope og komponenter.
+  - `EXPERIENCE.md`: navigasjon med adresser, endringsmarkering med paringsregel, tone, tilstander, tastatur, tilgjengelighet, UJ-1 og UJ-2.
+  - `mockups/key-screens.html`, `mockups/logo-3c.svg` og `mockups/favicon.svg`.
+  - `imports/` med havbilde fra Stavanger (Oleksii Topolianskyi, Unsplash-lisens, WebP 270 KB) og `KILDER.md`.
+  - `.working/` med alle skissene, `reviews/` og `.memlog.md`.
+
+  PRD FR-17 og arkitekturens AD-6 er oppdatert med paringsregelen. Arkitekturen har også fått `@fontsource/manrope` 5.3.0 og `docs/media/`.
+- **Verifisering**:
+  - Kontrasten for alle tekstpar ble beregnet etter WCAG (minst 4,5:1).
+  - Lisensen for bildet ble sjekket på bildesiden. Et Unsplash+-bilde (betalt) ble forkastet.
+  - Avstemmingen mot kildene fant at designprinsippet «synlig dataflyt» fra brief-addendumet manglet. Det ble lagt inn.
+  - Brukeren valgte en kvalitetssjekk med rubrikk og tilgjengelighet. Den ble kjørt sekvensielt i økta, ikke som uavhengige subagenter. Den fant feil i KI-ens eget utkast: kanten på felt hadde for lav kontrast (1,77:1 mot kravet 3:1), forrige verdi i endrede celler var bare tilgjengelig ved hover, og 13 komponenter manglet visuell spesifikasjon. Alt ble rettet før status `final`.
+- **Commit**: `22d7f65`, `5469fad`, `2dbc212`, `e08f920`, `17d50ef`, pluss commiten som inneholder denne oppføringen.
