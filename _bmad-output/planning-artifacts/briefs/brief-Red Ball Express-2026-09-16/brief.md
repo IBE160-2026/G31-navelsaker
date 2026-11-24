@@ -32,7 +32,7 @@ Red Ball Express v1 implementerer kjernen i MRP II-kjeden — Bill of Materials 
 1. Planleggeren legger inn eller justerer hovedproduksjonsplanen (MPS) for testfartøyet — hvilke enheter som skal være ferdige i hvilken uke.
 2. Planleggeren åpner produktstrukturen (BOM) for fartøyet og ser komponentene brutt ned i tre–fire nivåer, med mengder per komponent (fast struktur i v1, uten alternative komponenter).
 3. Systemet kjører MRP-eksplosjonen: beregner nettobehov per uke og komponent basert på MPS, BOM, lagerstatus og ledetider, og genererer bestillingsforslag med ledetidsoffset.
-4. Planleggeren ser en liste over exception-meldinger — for eksempel at hovedmotoren må bestilles i uke 3 fordi ledetiden er lengre enn planleggingshorisonten — og kan justere MPS eller BOM og se at nettobehovet oppdateres på nytt.
+4. Planleggeren ser en liste over exception-meldinger — for eksempel at hovedmotoren til byggenr. 2 skulle vært bestilt for 9 uker siden, fordi ledetiden (20 uker) er lengre enn planleggingshorisonten (16 uker) — og kan justere MPS eller BOM og se at nettobehovet oppdateres på nytt.
 
 Full spesifikasjon av data inn/data ut/beslutningspunkter for BOM og MRP, fra fagets oppgavetekst, ligger i addendum. Spesifikasjonen av de fire modulene utenfor v1 (Demand Management, S&OP, Operations Scheduling) ligger også i addendum, som kildegrunnlag for en eventuell videreføring etter v1 (se Visjon).
 
