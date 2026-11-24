@@ -10,7 +10,7 @@ Brukeren spurte om logging og sporbarhet skjer automatisk. Svaret var at bare se
 - Andre forslag (en Stop-hook som håndhever logging, og branch/PR per story i implementasjonen) ble presentert, men ikke valgt nå.
 
 ### Resultat
-- CLAUDE.md oppdatert, commit `1f44523`. Ikke pushet.
+- CLAUDE.md oppdatert, commit `1f44523`. Oppføring i docs/ai-log.md, commit `e6fe098`. Ikke pushet.
 - Lukket fra issues.md: «docs/ai-log.md må fylles videre» — dette er nå en fast instruks i CLAUDE.md.
 
 ### Åpne punkter
