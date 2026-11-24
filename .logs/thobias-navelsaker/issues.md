@@ -9,5 +9,5 @@
 - [x] 2026-11-24 [prd-v1](997-2026-11-24-11-30-45-prd-v1.md) — teknologivalg (database, frontend, prosjektstruktur) avgjøres i arkitekturen (bmad-architecture) (løst 2026-11-24, SQLite og øvrig stack valgt i arkitekturen)
 - [ ] 2026-11-24 [prd-v1](997-2026-11-24-11-30-45-prd-v1.md) — skisser av de fire skjermbildene er ikke laget; hører til UX-steget (bmad-ux)
 - [ ] 2026-11-24 [sporbarhetsregler-claude-md](996-2026-11-24-11-41-32-sporbarhetsregler-claude-md.md) — ta i bruk branch og pull request per story når implementasjonen starter (sensorkriterium 1)
-- [ ] 2026-11-24 [arkitektur-v1](995-2026-11-24-11-47-42-arkitektur-v1.md) — technology.md (Pytagoras) ligger i architecture-mappa og kan forveksles med prosjektets arkitektur; flytt ut eller merk tydelig
-- [ ] 2026-11-24 [arkitektur-v1](995-2026-11-24-11-47-42-arkitektur-v1.md) — bekreft TypeScript-versjon i arkitekturens Stack mot Vite-malen ved oppsett av frontend
+- [x] 2026-11-24 [arkitektur-v1](995-2026-11-24-11-47-42-arkitektur-v1.md) — technology.md (Pytagoras) ligger i architecture-mappa og kan forveksles med prosjektets arkitektur; flytt ut eller merk tydelig (løst 2026-11-24)
+- [x] 2026-11-24 [arkitektur-v1](995-2026-11-24-11-47-42-arkitektur-v1.md) — bekreft TypeScript-versjon i arkitekturens Stack mot Vite-malen ved oppsett av frontend (løst 2026-11-24)
