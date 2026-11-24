@@ -1,0 +1,126 @@
+<!doctype html><html lang="no"><head><meta charset="utf-8"><title>Fontforslag – Red Ball Express</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Source+Sans+3:wght@400;600&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;600&family=Libre+Baskerville&family=Public+Sans:wght@400;600&family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=Zilla+Slab:wght@400;500&family=Inter:wght@400;600&family=Manrope:wght@400;600;700&family=Big+Shoulders+Stencil+Display:wght@700&family=Inter:wght@400;600&display=swap"><style>
+/* Retning C: bg #FAF8F5, kort #FFFFFF, linjer #ECE6DD, tekst #2B2A28, aksent #2F5D50, logorød #B5402F, endring #C2703D.
+   Skissen henter fonter fra Google Fonts for visning. I appen lastes valgt font ned som npm-pakke (@fontsource), så appen ikke trenger nett ved kjøring (NFR-1). */
+*{box-sizing:border-box} body{margin:0;background:#FAF8F5;color:#2B2A28;font-family:system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 16px 64px} .top h1{font-family:Georgia,serif;font-weight:400;font-size:30px;margin:0 0 8px}
+.lead{max-width:800px;color:#5c5a55;line-height:1.55}
+.pair{background:#fff;border:1px solid #ECE6DD;border-radius:12px;padding:24px;margin-top:28px;font-family:var(--body)}
+.pname{font-family:system-ui,sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#8b877f;margin:0 0 4px;font-weight:600}
+.why{color:#5c5a55;margin:0 0 18px;max-width:800px;line-height:1.5;font-family:system-ui,sans-serif;font-size:14px}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:start}
+.logo{display:flex;align-items:center;gap:8px;border:1px dashed #ECE6DD;border-radius:10px;padding:22px 16px}
+.logo span{font-family:var(--logo);font-weight:var(--wt);font-size:27px;white-space:nowrap}
+.sample h1{font-family:var(--head);font-weight:var(--wt);font-size:28px;margin:0 0 6px}
+.sample h3{font-family:var(--head);font-weight:var(--wt);font-size:19px;margin:14px 0 6px}
+.sample p{margin:0 0 12px;line-height:1.55;font-size:15px;max-width:640px}
+table{border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;margin-bottom:10px}
+th,td{padding:4px 9px;text-align:right;border-bottom:1px solid #f3efe9} thead th{color:#8b877f;font-weight:400}
+tbody th{text-align:left;font-weight:400;white-space:nowrap} td.chg{color:#C2703D;font-weight:600}
+.small{font-size:13px;color:#5c5a55}
+</style></head><body><div class="wrap">
+<div class="top"><h1>Fontforslag</h1><p class="lead">Åtte fontpar med logo 3c i retning C. Hvert par viser logoen, overskrifter, en meldingstekst og et utsnitt av MRP-tabellen. Tallene i tabellen skal stå rett under hverandre (tabulære tall). Oransje tall er endret siden forrige kjøring. Fontene hentes fra Google Fonts i denne skissen, så du må være på nett for å se dem. I appen lastes de ned som pakke og trenger ikke nett ved kjøring.</p></div>
+<section class="pair" style="--head:Georgia, serif;--logo:Georgia, serif;--body:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;--wt:400">
+<h2 class="pname">1 · Georgia + systemfont</h2><p class="why">Det som står i skissene nå. Følger med operativsystemet, så ingenting må lastes ned. Trygt og kjent, men litt anonymt.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section><section class="pair" style="--head:'Source Serif 4', serif;--logo:'Source Serif 4', serif;--body:'Source Sans 3', sans-serif;--wt:500">
+<h2 class="pname">2 · Source Serif 4 + Source Sans 3</h2><p class="why">En serif og en sans fra samme familie, laget for skjerm. Rolig, klassisk og svært lesbar. Passer godt sammen fordi de er tegnet for hverandre.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section><section class="pair" style="--head:'Fraunces', serif;--logo:'Fraunces', serif;--body:'Inter', sans-serif;--wt:400">
+<h2 class="pname">3 · Fraunces + Inter</h2><p class="why">Fraunces er en myk, varm serif med litt personlighet. Inter er en svært nøytral sans for brødtekst og tabeller. Varmest av forslagene.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section><section class="pair" style="--head:'Libre Baskerville', serif;--logo:'Libre Baskerville', serif;--body:'Public Sans', sans-serif;--wt:400">
+<h2 class="pname">4 · Libre Baskerville + Public Sans</h2><p class="why">Baskerville gir et tradisjonelt, troverdig uttrykk. Public Sans er laget for offentlige tjenester og er nøktern og tydelig.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section><section class="pair" style="--head:'IBM Plex Serif', serif;--logo:'IBM Plex Serif', serif;--body:'IBM Plex Sans', sans-serif;--wt:500">
+<h2 class="pname">5 · IBM Plex Serif + IBM Plex Sans</h2><p class="why">Laget av IBM med et teknisk og ingeniørpreget uttrykk. Passer til et planleggingsverktøy for industri, men er mindre varm.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section><section class="pair" style="--head:'Zilla Slab', serif;--logo:'Zilla Slab', serif;--body:'Inter', sans-serif;--wt:500">
+<h2 class="pname">6 · Zilla Slab + Inter</h2><p class="why">Slab-serif, med firkantede seriffer, minner om skrivemaskin, fraktdokumenter og transport. Litt mer kantet og robust.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section><section class="pair" style="--head:'Manrope', sans-serif;--logo:'Manrope', sans-serif;--body:'Manrope', sans-serif;--wt:600">
+<h2 class="pname">7 · Manrope gjennomgående</h2><p class="why">Bare én moderne sans for både logo, overskrifter og tekst. Renest og mest «app-aktig», men tar bort serif-preget fra retning C.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section><section class="pair" style="--head:'Inter', sans-serif;--logo:'Big Shoulders Stencil Display', sans-serif;--body:'Inter', sans-serif;--wt:700">
+<h2 class="pname">8 · Big Shoulders Stencil + Inter</h2><p class="why">Sjablongskrift i logoen, som malte merker på lastebiler i 1940-årene. Tydeligst historisk kobling. Brukes bare i logoen, med Inter i resten av appen. Kan fort bli kostymeaktig.</p>
+<div class="grid">
+<div class="logo"><svg width="64" height="60" viewBox="0 0 64 60" aria-hidden="true"><rect x="10" y="10" width="44" height="40" rx="20" fill="none" stroke="#2F5D50" stroke-width="5"/><circle cx="47" cy="17" r="9" fill="#B5402F" stroke="#FFFFFF" stroke-width="2.5"/></svg><span>Red Ball Express</span></div>
+<div class="sample">
+<h1>Bestillingsforslag og meldinger</h1>
+<h3>Dette bør du se på</h3>
+<p>Hovedmotor (MOT-210) skulle vært bestilt for 11 uker siden. 1 stk med mottak i uke 10. Bestilles den nå, kommer den tidligst i uke 21.</p>
+<table><thead><tr><th>PLT-900</th><th>Før u1</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th></tr></thead>
+<tbody><tr><th>Bruttobehov</th><td></td><td></td><td>18</td><td>4</td><td class="chg">24</td><td class="chg">12</td><td class="chg"></td><td class="chg">8</td><td></td></tr>
+<tr><th>Beregnet lager</th><td>20</td><td>20</td><td>2</td><td>23</td><td class="chg">24</td><td class="chg">12</td><td class="chg">12</td><td class="chg">4</td><td class="chg">4</td></tr>
+<tr><th>Planlagt mottak</th><td></td><td></td><td></td><td>25</td><td class="chg">25</td><td></td><td class="chg"></td><td></td><td></td></tr></tbody></table>
+<p class="small">Logg inn · Kjør MRP · Tilbakestill til testdata · 0123456789 · ÆØÅ æøå</p>
+</div></div></section></div></body></html>
