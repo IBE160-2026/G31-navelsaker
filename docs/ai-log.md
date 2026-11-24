@@ -118,3 +118,25 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
 - **Endringer**: `docs/media/2026-11-24-ux-nokkelskjermbilder.png` (ny). `CLAUDE.md`: Claude tar skjermbilder selv, brukeren tar video. `README.md`: bildekreditering, og UX er lagt til blant planleggingsdokumentene.
 - **Verifisering**: Skjermbildet ble sett over før commit. Fotografi og fonter var lastet inn, alle sider kom med, og bildet er beskåret til innholdet og komprimert til 337 KB.
 - **Commit**: `d2045f6`, `0000522`, `094ad9d`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-24 — Epics og stories for v1
+
+- **Hvorfor**: Neste BMAD-steg etter PRD, arkitektur og UX. Implementasjonen skal kunne gjøres story for story, med én branch og én pull request per story, og hver FR skal kunne spores til story og test (NFR-7, SM-4).
+- **Prompt(er)**: Lag epics og stories med `bmad-create-epics-and-stories`. Brukeren ba om forslag med kort begrunnelse og ville ta valgene selv. Seks punkter skulle avgjøres: inndeling og rekkefølge, størrelse på stories, akseptansekriterier, sporbarhet fra FR til story til test, hvor enkelttestene og dokumentene hører hjemme, og når skjermbilder og video skal tas. Uklarheter skulle meldes og føres tilbake.
+- **Verktøy/modell**: Claude Code (Opus 5.5), BMAD-skillene `bmad-create-epics-and-stories` og `bmad-advanced-elicitation` (pre-mortem og gjennomgang av grensetilfeller).
+- **Endringer**:
+  - `_bmad-output/planning-artifacts/epics.md` (ny): 6 epics og 27 stories, kravoversikt med 22 UX-krav, sporbarhetstabell og medieplan.
+  - PRD: FR-8 (unikt byggenummer) og SM-2 (testplanen dekker også UJ-1 og UJ-2).
+  - Arkitektur: AD-6 (revisjonsteller `input_revision`), AD-7 og ER-diagrammet.
+  - EXPERIENCE.md: en utdatert setning om FR-17 er rettet.
+- **Verifisering**:
+  - Akseptansekriteriene for FR-17 ble regnet mot `expected.json` før de ble brukt: A→B gir 11 nye og 11 fjernede forslag, A→C 1 og 0, A→E 6 og 4.
+  - Et skript sjekket at hver FR og hver UX-DR er dekket av minst én story, og at ingen story viser til en senere story. Det fant én henvisning framover (1.5 → 4.2), som ble rettet.
+- **Brukerens styring av KI-forslagene**:
+  - Brukeren godtok anbefalingene om rekkefølge (skjelettet først), sammenslåing av BOM og redigering, revisjonsteller og utvidet SM-2.
+  - Brukeren påpekte at KI-en skrev forslaget på engelsk selv om prosjektet er satt opp på norsk.
+  - Brukeren spurte hvorfor KI-en ikke brukte Python. Den hadde byttet til Node fordi `python` på PATH bare var Store-aliaset, men skulle brukt Python via uv.
+  - Pre-mortem fant at story 3.2 var for stor, og den ble delt i to.
+  - Gjennomgangen av grensetilfeller avdekket at PRD-en ikke sa noe om duplikate byggenumre. Brukeren valgte å avvise duplikater.
+  - KI-en sa først at det var 24 stories. Det riktige tallet med inndelingen brukeren godkjente var 26, og 27 etter delingen.
+- **Commit**: `1038d5d`, `144175a`, `e0ab294`, `e0cede3`, pluss commiten som inneholder denne oppføringen.
