@@ -140,3 +140,15 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Gjennomgangen av grensetilfeller avdekket at PRD-en ikke sa noe om duplikate byggenumre. Brukeren valgte å avvise duplikater.
   - KI-en sa først at det var 24 stories. Det riktige tallet med inndelingen brukeren godkjente var 26, og 27 etter delingen.
 - **Commit**: `1038d5d`, `144175a`, `e0ab294`, `e0cede3`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-24 — Sprintstatus for v1
+
+- **Hvorfor**: Sjekke at planene er klare for implementasjon, og lage sporingsfila for stories før første story bygges.
+- **Prompt(er)**: «Fortsett» etter epics og stories. Det startet `bmad-sprint-planning` med full flyt: sjekk av om planene er klare, og deretter generering av statusfila.
+- **Verktøy/modell**: Claude Code (Opus 5.5), BMAD-skill `bmad-sprint-planning` (skriptet `sprint_plan.py`).
+- **Endringer**: `_bmad-output/implementation-artifacts/sprint-status.yaml` (ny): 6 epics og 27 stories i backlog, og retrospektiver som valgfrie.
+- **Verifisering**:
+  - Klar-sjekken ga PASS. Krav og beslutninger kan spores fram til stories, ingen story viser til en senere story, og arkitektur- og UX-beslutningene stories bygger på, er skrevet ned.
+  - Skriptet validerte fila etter skriving. De tre advarslene gjaldt overskrifter som ikke er epics (dekningskart, epic-liste, sporbarhet), og de ble ignorert med vilje.
+  - Skriptet kunne ikke startes via uv sitt skriptmiljø (Windows: «Ingen tilgang»). Det ble kjørt med `uv run --no-project --with ruamel.yaml python`.
+- **Commit**: `d6c0931`, pluss commiten som inneholder denne oppføringen.
