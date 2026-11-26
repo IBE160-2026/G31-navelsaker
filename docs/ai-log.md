@@ -319,4 +319,12 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
     - `uv python install` ble fjernet fra løsningen på os error 5, fordi den bare ga en advarsel.
   - **Avvik:** å stoppe serverne fra økten på 8000 og 5173 ble nektet av tillatelsessystemet. Backend fra klonen ble derfor prøvd på port 8001, og frontend fra klonen fikk port 5175. Raden «Backend kjører ikke» ble ikke prøvd på nytt.
   - **Brukerens styring:** brukeren valgte alternativ B for kommandoene, «den som er best og oppfyller kravene sensor stiller». Det ble `python -m`-formen, og prøven bekreftet valget: `uv run pytest` ga os error 5 i den nye klonen, mens `uv run python -m pytest` virket.
-- **Commit**: `8225c6b` (README v1), `7466eac` (rettelser etter prøven), `f3518eb` (AD-10 og AD-11), pluss commiten som inneholder denne oppføringen og specen.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 15 funn.
+    - Rettet (`f727195`):
+      - README beskrev MRP-funksjoner som om de fantes. Den har nå en statusdel, og setningen om beregningstestene er rettet.
+      - Det er nye setninger om `.env`, `RBE_SESSION_SECRET` og endret demobruker, og et nytt punkt om opptatt port 8000.
+      - Tilbakestillingen nevner nå `RBE_DATABASE_URL`, og rådet om kort sti peker på `C:\dev`.
+      - Kommandoene bruker `python -m ruff`, og formuleringen i AD-11 er presisert.
+    - Avvist: 6 funn med begrunnelse i specens Review Triage Log. Tidtaking etter SM-3 på en ren maskin hører til story 6.2.
+  - **Rettelse fra brukeren underveis:** skjermbildene ble tatt på nytt fra brukerens opptak i ekte nettleser (egen oppføring over).
+- **Commit**: `8225c6b` (README v1), `7466eac` (rettelser etter prøven), `f3518eb` (AD-10 og AD-11), `f38907f` (første versjon av denne oppføringen og prøven i specen), `f727195` (rettelser etter gjennomgangen), pluss commiten som inneholder denne oppdateringen.

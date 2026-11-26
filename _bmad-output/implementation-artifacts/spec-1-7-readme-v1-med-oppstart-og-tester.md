@@ -2,7 +2,7 @@
 title: 'Story 1.7: README v1 med oppstart og tester'
 type: 'chore'
 created: '2026-11-26'
-status: 'in-progress'
+status: 'done'
 baseline_commit: 'd6de94ae2c08579b2984f2e24111c66d32e801c6'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -126,3 +126,23 @@ context:
 ## Spec Change Log
 
 ## Review Triage Log
+
+Runde 1 (2026-11-26, lagene blind-hunter (BH), edge-case-hunter (ECH) og verification-gap (VG)). VG fant ingen hull, fordi diffen bare endrer dokumentasjon, og bekreftet at alle relative lenker finnes. Rute: patch (P), defer (D) eller avvist (A).
+
+| # | Lag | Funn | Vurdering | Begrunnelse | Rute |
+|---|---|---|---|---|---|
+| 1 | BH | README beskriver MRP-funksjoner som ennå ikke finnes | medium | Sensor vil lete etter BOM-nedbrytning og forslag som kommer i epic 2–5. Det trengs en statusdel, og setningen om beregningstestene må rettes | P |
+| 2 | BH | README sier ikke at `.env.example` kopieres, eller at alle logges ut ved omstart uten `RBE_SESSION_SECRET` | low | Én setning hver er en direkte rettelse | P |
+| 3 | ECH | Et endret `RBE_DEMO_USERNAME` lar den gamle demobrukeren stå igjen | low | Stemmer med `ensure_demo_user` (andre brukere røres ikke). Én setning | P |
+| 4 | ECH | Tilbakestilling nevner ikke `RBE_DATABASE_URL` | low | Direkte tillegg | P |
+| 5 | ECH | Det står ikke noe i Feilsøking om at port 8000 er opptatt | low | Proxyen går alltid til 8000. Ett punkt | P |
+| 6 | BH | Rådet om kort sti peker på `Documents`, som ofte synkroniseres med OneDrive | low | Direkte rettelse til `C:\dev` | P |
+| 7 | ECH | `uv run ruff` er ikke dekket av `python -m`-forklaringen | low | `python -m ruff` er en direkte utskifting og gjør kommandoene like | P |
+| 8 | BH | «Alternativ B» i AD-11 viser til alternativer som ikke står i dokumentet | low | Direkte omformulering | P |
+| 9 | BH | AI-loggen mangler hashen `f38907f`, og specen og sprintstatusen er ikke committet | low | Rettes og committes ved avslutningen | P (orkestrator) |
+| 10 | BH | Tidskravet i SM-3 er ikke målt, og prøven fra klonen brukte 8001 og 5175 | low | Story 6.2 («README for sensor prøvd på ren maskin») dekker en bokstavelig prøve med tidtaking. Frontend fra klonen gikk mot proxyen på 8000 | A |
+| 11 | BH | Det rå opptaket ligger i rotmappa uten commit og uten ignorering | low | Det er brukerens fil, og brukeren får beskjed om å slette den | A |
+| 12 | BH | Emnekoden IBE160 kontra mappenavnet IBE130 | false | Linja er uendret fra før, og GitHub-organisasjonen heter `IBE160-2026` | A |
+| 13 | BH | `npm install` i stedet for `npm ci`, og ingen versjonssjekk | low | `npm install` følger `package-lock.json` når `package.json` stemmer. Forutsetningene står med versjon | A |
+| 14 | BH | Ctrl+C, `-k` for scenario, og løsningen på os error 5 bare for PowerShell | low | Sperren er Windows-spesifikk. Resten er kjent for målgruppen | A |
+| 15 | ECH | `uv python find` kan gi tom verdi i løsningen på os error 5 | false | Feilen oppstår først etter at uv har hentet Python, så tolken finnes (prøvd av implementeringen) | A |
