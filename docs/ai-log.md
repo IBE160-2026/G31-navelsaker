@@ -169,3 +169,25 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Til slutt består 15 tester, og ruff gir 0 funn.
   - **Avvik:** på denne maskinen nekter Windows å kjøre filer som uv lager (`uv venv`, `pytest.exe`, `fastapi.exe`: os error 5). Løsningen var å lage `backend/.venv` med Pythons egen `venv` og bruke `uv run python -m pytest` og `uv run python -m fastapi dev`. `uv run pytest` og `uv run fastapi dev` slik de står i README-flyten, er ikke prøvd ennå. Det må gjøres på en annen maskin senest i story 1.7.
 - **Commit**: `5202b6c`, `95fb071`, `29711fa`, `ec068af`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-26 — Story 1.2: kjernens datatyper og fasitparser
+
+- **Hvorfor**: Seed (story 1.3) og fasittestene i epic 2 trenger testfartøyets inndata som kjernens egne typer, lest direkte fra `testdata/testfartoy-v1/input.json`, slik at app og fasit ikke kan sprike (FR-2, AD-4). MRP-kjernen skal være ren fra første linje (AD-1, AD-2).
+- **Prompt(er)**: «Les spec-1-2-kjernens-datatyper-og-fasitparser.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte typene og feltnavnene, reglene for override, hvilke feil som skal gi `FixtureError`, og lista over forbudte importer og kall i `rbe.mrp`.
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`.
+- **Endringer**: `backend/src/rbe/mrp/__init__.py` og `types.py` (nye, frosne inndatatyper), `backend/src/rbe/fixture.py` (ny, `load_input` og `FixtureError`), `backend/tests/conftest.py` (fixturene `fixture_dir` og `input_path`), `backend/tests/test_fixture.py` og `backend/tests/mrp/test_core_is_pure.py` (nye).
+- **Verifisering**:
+  - 65 tester består (27 nye for parseren, 23 for renhetstesten), og `ruff check` og `ruff format --check` gir 0 funn.
+  - Scenario A sammenlignes felt for felt med `input.json`, og B–E sjekkes som «A pluss overstyringen» med `dataclasses.replace`.
+  - Renhetstesten ble prøvd med en midlertidig `import pathlib` i `rbe/mrp/types.py`. Den feilet med `{'rbe.mrp.types': ['import pathlib (forbudt)']}`, og linjen ble fjernet før commit.
+  - En test skanner `src/rbe` for varenumrene i fasiten og finner ingen.
+  - **Utover specen:** parseren avviser også ukjente override-nøkler, feil felttyper, ukjent partiregel eller varetype og scenarioer i ring. Det står i specens Implementation Notes.
+  - **Gjennomgang av koden etterpå:** tre uavhengige lag (blind-hunter, edge-case-hunter, verification-gap) ga 12 funn etter sammenslåing. 6 ble rettet i `2329d35`:
+    - flere av avvisningene parseren gjorde, var ikke testet, og kunne fjernes uten at noen test feilet
+    - et feilstavet `overide` på scenarionivå ga stille en kopi av A
+    - renhetsvakten slapp gjennom `builtins`, `importlib`, `__import__`, `eval` og `exec`
+
+    6 ble avvist med begrunnelse i specens triagelogg, blant annet full validering av grunndataene. Den hører til API-et (AD-7) og kjernen (story 2.1).
+  - Til slutt består 78 tester, og ruff gir 0 funn.
+  - Specen ble godkjent uten egen gjennomgang. Brukeren valgte å beholde den samlet selv om den var på omtrent 2000 tokens.
+- **Commit**: `38f2ef1`, `852af8a`, `cdf0bb9`, `2329d35`, pluss commiten som inneholder denne oppføringen.
