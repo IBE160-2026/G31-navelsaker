@@ -117,7 +117,7 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 
 - **Binds:** NFR-3, NFR-7, SM-1, SM-4, SM-C2
 - **Prevents:** tester som ikke kan spores til krav, og en kjerne som bare består fordi den er tilpasset testfartøyet
-- **Rule:** `uv run pytest` i `backend/` kjører alle backendtester.
+- **Rule:** `uv run pytest` i `backend/` kjører alle backendtester. README anbefaler formen `uv run python -m pytest`, som kjører de samme testene (se AD-11).
   - Fasittestene er parametrisert over scenario × vare × felt og sammenligner hele ukesarrayer. Testnavnet eller test-id-en oppgir scenario og FR-nummer. `exceptions` sammenlignes som usortert mengde.
   - Skalatesten bruker en generator med fast seed (~500 varer, 10 nivåer, en felles komponent på flere nivåer). Den sjekker at beregningen fullfører, at LLC stemmer med en uavhengig beregning av lengste vei, og at massebalansen fra NFR-3 går opp for alle varer.
   - Integrasjonstester mot `TestClient` og en midlertidig SQLite-fil dekker FR-1, FR-2, FR-3, FR-8 og AD-8.
@@ -127,6 +127,7 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 - **Binds:** NFR-1, SM-3, AD-8
 - **Prevents:** CORS-oppsett, cookie-problemer på tvers av porter, og tunge forutsetninger for sensor
 - **Rule:** Forutsetninger: uv og Node 26 LTS. uv henter Python 3.14 fra `.python-version`. Backend startes med `uv run fastapi dev src/rbe/main.py` i `backend/`, og frontend med `npm run dev` i `frontend/`. Vite sender `/api` videre til backend, så nettleseren ser ett opphav. Ingen Docker, ingen produksjonsbygg i sensorflyten, og ingen eksterne tjenester.
+- **Presisert i story 1.7 (2026-11-26):** README bruker `uv run python -m fastapi dev src/rbe/main.py` og `uv run python -m pytest` som hovedkommandoer. Noen Windows-maskiner nekter å kjøre konsollskriptene uv lager (`fastapi.exe`, `pytest.exe`, os error 5), og `python -m`-formen virker både med og uten den sperren. Prøven fra en ny klone viste sperren på skriptene. Der den også gjelder Python i `.venv`, lages `.venv` med Pythons egen `venv` før `uv sync`, som README forklarer under Feilsøking. Kommandoene over gjelder fortsatt på maskiner uten sperren. Valgt av Thobias (alternativ B).
 
 ## Konsistenskonvensjoner
 
