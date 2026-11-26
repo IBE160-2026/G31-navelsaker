@@ -36,3 +36,22 @@ Brukeren prøvde innloggingen fra story 1.5 og fikk «Fikk ikke kontakt med serv
 - Frontend mangler et testmiljø for komponenter (jsdom), så utlogging, `RequireAuth`, fokus og ruter er bare prøvd manuelt (`deferred-work.md`).
 - Meldingen om utløpt sesjon bør prøves i nettleseren når det første data-API-et finnes (epic 3 eller 4).
 - Video: CLAUDE.md ber om en kort video når en kjerneflyt virker fra start til slutt. UJ-1 er ikke ferdig ennå. En valgfri kort video av innlogging → startside → meny → utlogging kan lagres som `docs/media/2026-11-26-innlogging-og-meny.mp4`.
+
+## 2026-11-26 kl. 15:00 — Thobias Navelsaker
+
+### Oppgave
+Gi lenke til appen, forklare hva videoen skal vise, og legge til en knapp for å vise passordet på innloggingssiden.
+
+### Plan
+- Lenken: den gamle Vite-serveren på 5173, startet av en agent med `--strictPort`, sendte ikke lenger `/api` videre. Claude fikk ikke lov til å stoppe den og startet en ny på 5174.
+- Videoen: innhold, opptak med Win + Shift + R og plassering i `docs/media/`.
+- Vis/skjul passord: endret direkte, uten `bmad-build`, fordi endringen er liten.
+
+### Resultat
+- Appen kjører på http://localhost:5174. Den gamle serveren på 5173 (PID 27436) kjører fortsatt uten proxy, og brukeren kan lukke den.
+- `LoginPage.tsx` og `.css` har fått «Vis passord» / «Skjul passord» ved etiketten, og passordet skjules igjen ved innsending. Skjermbildet `docs/media/2026-11-26-innlogging.png` er oppdatert. Begge deler ligger i commiten «FR-1: legg til knapp for å vise og skjule passordet».
+- DESIGN.md (`login-card`) og AI-loggen er oppdatert i en egen commit.
+- Build, Biome og Vitest (10 tester) gir 0 feil.
+
+### Åpne punkter
+- Ingen nye. Videoen står fortsatt som valgfritt punkt i `issues.md`.
