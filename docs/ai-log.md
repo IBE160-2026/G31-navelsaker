@@ -202,5 +202,12 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - 87 tester består (9 nye), og `ruff check` og `ruff format --check` gir 0 funn. Testene dekker alle radene i I/O-matrisen mot en midlertidig SQLite-fil i en mappe med mellomrom som ikke finnes på forhånd.
   - `read_input` sammenlignes med `load_input(..., "A")` etter at begge er sortert likt. Fasiten har ikke varene og BOM-linjene sortert, mens specen krever at `read_input` sorterer på id og (forelder, barn).
   - Backend ble startet to ganger lokalt (`uv run python -m fastapi run`). Første gang logget den seed av scenario A og opprettelse av demobrukeren, andre gang «Databasen har allerede data» og at demobrukeren finnes. `backend/data/` ble slettet etterpå.
-  - SQLite håndhever fremmednøklene (`PRAGMA foreign_keys=ON`).
-- **Commit**: `5bc79c3`, `1746ff5`, pluss commiten som inneholder denne oppføringen.
+  - SQLite håndhever fremmednøklene (`PRAGMA foreign_keys=ON`). Etter gjennomgangen er dette testet, og orkestratoren har sjekket at testen feiler når pragmaet fjernes.
+  - **Gjennomgang av koden etterpå:** tre uavhengige lag ga 17 funn etter sammenslåing.
+    - 5 ble rettet i `d6fbc6b`: fremmednøklene var ikke testet, og testene brukte en engine uten pragmaet. Testen for manglende fasit traff mappenavnet i testen i stedet for feilmeldingen. Testene kunne lese en lokal `.env`. Grenen «unchanged» og loggtekstene var ikke testet, og nå brukes `verify_and_update`.
+    - 1 er utsatt til story 4.6 i `deferred-work.md`: en gammel databasefil må gi en tydelig melding når skjemaet endres.
+    - 11 ble avvist med begrunnelse i specens triagelogg.
+  - Til slutt består 89 tester, og ruff gir 0 funn.
+  - **Brukerens styring:** KI-en foreslo i specen to måter å håndtere et endret demopassord på. Brukeren spurte hvorfor databasefila måtte slettes med alternativ a), og valgte b) etter forklaringen: hashen synkroniseres ved oppstart. AD-5 i arkitekturen er presisert tilsvarende (`0830903`).
+  - Ingen skjermbilder, fordi storyen ikke har noe brukergrensesnitt.
+- **Commit**: `0830903` (AD-5), `5bc79c3`, `1746ff5`, `05daff7`, `d6fbc6b`, pluss commiten som inneholder denne oppføringen.
