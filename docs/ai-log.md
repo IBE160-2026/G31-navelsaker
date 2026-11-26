@@ -264,4 +264,13 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Gjennomgangen fant én feil som ble rettet: « · » mellom brukernavn og «Logg ut» forsvant, fordi flex fjerner mellomrommene i teksten.
   - **Avvik fra specen:** ruteverneren er endret litt. Etter egen utlogging sender den til `/logg-inn` uten adresse (notice `signed-out`). Ellers ville den lagt siden man logget ut fra i `state`, og neste innlogging ville gått dit i stedet for til `/`. Navigasjonen i React Router går i en overgang (`startTransition`), så det var ikke trygt å navigere før brukeren ble satt til `null`.
   - Skjermbildet er tatt med Edge uten vindu (1280 × 800), beskåret til 1280 × 560 og redusert til 256 farger (179 kB). Paletten har tokenfargene med, så logoballen beholder fargen.
-- **Commit**: `593e95c` (utlogging, oppsett, menylinje, fokus), `ac5af66` (startside, plassholdere, ukjent adresse), pluss commiten med skjermbildet og denne oppføringen.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 11 funn.
+    - Rettet (`8c70170`):
+      - Etter utlogging husket ikke appen adressen fra en dyp lenke (nå `clearSignedOut()`).
+      - Feillinjen etter mislykket utlogging fulgte med til andre sider.
+      - Testnavnet viser nå til NFR-6.
+      - Nettleserstegene er prøvd på nytt: 38 av 38 sjekker besto.
+    - Utsatt: et testmiljø for komponenter (jsdom). Uten det er utlogging, `RequireAuth`, fokus og ruter bare prøvd manuelt (`deferred-work.md`).
+    - Avvist: 6 funn med begrunnelse i specens Review Triage Log.
+  - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet (ca. 2 500 tokens). Før storyen prøvde brukeren innloggingen fra 1.5 selv og fikk «Fikk ikke kontakt med serveren». KI-en fant at backend ikke kjørte, og at den korte `uv run fastapi dev` stoppes av en Windows-sperre på maskinen. Etter at backend ble startet med `python -m`, bekreftet brukeren at innloggingen virket. Deretter ba brukeren KI-en flette PR #5.
+- **Commit**: `593e95c` (utlogging, oppsett, menylinje, fokus), `ac5af66` (startside, plassholdere, ukjent adresse), `a27ce44` (skjermbilde og AI-logg), `8c70170` (rettelser etter gjennomgangen), pluss commiten som inneholder denne oppdateringen.

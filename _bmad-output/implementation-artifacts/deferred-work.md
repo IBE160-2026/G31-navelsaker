@@ -11,3 +11,7 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-5-frontend-oppsett-designtokens-og-innloggingsside.md`
   summary: Flyten for innlogging i frontend (adressen brukeren ba om ligger i routerens `state`, meldingen om utløpt sesjon vises bare etter bekreftet innlogging) bør prøves på nytt når story 1.6 bygger om rutene i `App.tsx`, og føres i testplanen i story 3.2.
   evidence: Flyten er bare prøvd manuelt i story 1.5. Et tapt `search`/`hash` i `RequireAuth` eller en fjernet vakt rundt `userRef.current` passerer build, Biome og backendtestene (gjennomgang av story 1.5, funn 2).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-6-menylinje-og-startside.md`
+  summary: Frontend mangler et testmiljø for komponenter (jsdom og testing-library), så utloggingen i `AuthProvider` (204/401/nettverksfeil og vakten mot meldingen om utløpt sesjon), `RequireAuth` etter egen utlogging, fokus til H1 i `PageTitle` og rutene for menyen og dørene er bare prøvd manuelt.
+  evidence: Å fjerne vakten `loggingOutRef`, snu betingelsen i `PageTitle` eller endre en rutesti passerer build, Biome og Vitest (gjennomgang av story 1.6, VG-funn 1–4). Vurder testmiljøet når skjermbildene i epic 3 og 4 kommer, eller før stegene i testplanen i 3.2.
