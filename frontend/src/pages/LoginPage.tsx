@@ -8,16 +8,18 @@ import "./LoginPage.css";
 type LoginError = "credentials" | "server" | null;
 
 const ERROR_ID = "login-error";
+const PASSWORD_ID = "login-password";
 
 /** Innloggingssiden `/logg-inn` (FR-1, UX-DR5). */
 export function LoginPage() {
-  const { user, notice, login } = useAuth();
+  const { user, notice, login, clearSignedOut } = useAuth();
   const location = useLocation();
   const from = (location.state as LoginLocationState | null)?.from;
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<LoginError>(
     notice === "server-error" ? "server" : null,
   );
@@ -27,6 +29,10 @@ export function LoginPage() {
     document.title = "Logg inn – Red Ball Express";
   }, []);
 
+  useEffect(() => {
+    if (notice === "signed-out") clearSignedOut();
+  }, [notice, clearSignedOut]);
+
   if (user) {
     const target = from ? `${from.pathname}${from.search}${from.hash}` : "/";
     return <Navigate to={target} replace />;
@@ -35,6 +41,8 @@ export function LoginPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (pending) return;
+    // Skjul passordet igjen før det sendes, så nettleseren ikke lagrer feltet som vanlig tekst.
+    setShowPassword(false);
     setPending(true);
     setError(null);
     try {
@@ -89,19 +97,32 @@ export function LoginPage() {
               aria-describedby={invalid ? ERROR_ID : undefined}
             />
           </label>
-          <label className="field">
-            <span className="field__label">Passord</span>
+          <div className="field">
+            <div className="field__label-row">
+              <label className="field__label" htmlFor={PASSWORD_ID}>
+                Passord
+              </label>
+              <button
+                className="field__toggle"
+                type="button"
+                aria-controls={PASSWORD_ID}
+                onClick={() => setShowPassword((shown) => !shown)}
+              >
+                {showPassword ? "Skjul passord" : "Vis passord"}
+              </button>
+            </div>
             <input
+              id={PASSWORD_ID}
               className="field__input"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               aria-invalid={invalid || undefined}
               aria-describedby={invalid ? ERROR_ID : undefined}
             />
-          </label>
+          </div>
 
           <button
             className="button-primary login-card__submit"

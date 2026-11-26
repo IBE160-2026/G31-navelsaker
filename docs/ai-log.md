@@ -251,3 +251,39 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
     - Avvist: 18 funn med begrunnelse i specens Review Triage Log, blant annet mobilbredde, `vite preview` og README, som er story 1.7.
   - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet, selv om den var godt over anbefalt lengde (ca. 2 800 tokens). Før storyen ba brukeren KI-en flette PR #4 uten egen gjennomgang. Valget ble gitt eksplisitt, med at det da ikke blir noen menneskelig gjennomgang av PR-en.
 - **Commit**: `6f85d01`, `46b4734`, `f8c2c4b` (Biomes linjeskift), `7ae7734` (skjermbilde og AI-logg), `7d659c7` (Vitest), pluss commiten som inneholder denne oppdateringen.
+
+## 2026-11-26 — Story 1.6: menylinje og startside
+
+- **Hvorfor**: Etter innlogging kom man til en foreløpig side uten navigasjon. Planleggeren skal komme til en rolig startside med fire dører og ha menylinjen med utlogging på alle sider (FR-1, UX-DR3, UX-DR4, UX-DR21, UX-DR22).
+- **Prompt(er)**: «Les spec-1-6-menylinje-og-startside.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte tekstene, rekkefølgen på dørene, at utlogging uten server beholder innloggingen, at 401 på utlogging ikke skal gi meldingen om utløpt sesjon, og at fokus flyttes til H1 ved sidebytte, men ikke ved første lasting.
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`. Edge uten vindu over DevTools-protokollen for nettlesertest og skjermbilde.
+- **Endringer**: `frontend/src/auth/AuthProvider.tsx` (`logout`, notice `signed-out`), nye `components/AppLayout`, `TopNav`, `PageTitle` og `navigation.ts` (med `navigation.test.ts`), `pages/HomePage`, `PlaceholderPage` og `NotFoundPage`, havfotoet i `src/assets/`, rutene i `App.tsx`. `SignedInPage.tsx` er fjernet. Skjermbildet `docs/media/2026-11-26-startside.png`.
+- **Verifisering**:
+  - `npm run build`, `npx biome check` og `npm run test` (10 tester) gir 0 feil. Backend har fortsatt 107 tester som består, og `ruff` er ren.
+  - Alle radene i I/O-matrisen er prøvd i Edge uten vindu med ekte Tab, Enter og museklikk: 32 av 32 sjekker besto, ved 1280 og 1024 px. Utlogging uten server ble laget ved å avvise logout-kallet i nettleseren (`Fetch.failRequest`), og 401 på utlogging ved å logge ut i backend først. Steg og utfall står i specens Implementation Notes.
+  - Gjennomgangen fant én feil som ble rettet: « · » mellom brukernavn og «Logg ut» forsvant, fordi flex fjerner mellomrommene i teksten.
+  - **Avvik fra specen:** ruteverneren er endret litt. Etter egen utlogging sender den til `/logg-inn` uten adresse (notice `signed-out`). Ellers ville den lagt siden man logget ut fra i `state`, og neste innlogging ville gått dit i stedet for til `/`. Navigasjonen i React Router går i en overgang (`startTransition`), så det var ikke trygt å navigere før brukeren ble satt til `null`.
+  - Skjermbildet er tatt med Edge uten vindu (1280 × 800), beskåret til 1280 × 560 og redusert til 256 farger (179 kB). Paletten har tokenfargene med, så logoballen beholder fargen.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 11 funn.
+    - Rettet (`8c70170`):
+      - Etter utlogging husket ikke appen adressen fra en dyp lenke (nå `clearSignedOut()`).
+      - Feillinjen etter mislykket utlogging fulgte med til andre sider.
+      - Testnavnet viser nå til NFR-6.
+      - Nettleserstegene er prøvd på nytt: 38 av 38 sjekker besto.
+    - Utsatt: et testmiljø for komponenter (jsdom). Uten det er utlogging, `RequireAuth`, fokus og ruter bare prøvd manuelt (`deferred-work.md`).
+    - Avvist: 6 funn med begrunnelse i specens Review Triage Log.
+  - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet (ca. 2 500 tokens). Før storyen prøvde brukeren innloggingen fra 1.5 selv og fikk «Fikk ikke kontakt med serveren». KI-en fant at backend ikke kjørte, og at den korte `uv run fastapi dev` stoppes av en Windows-sperre på maskinen. Etter at backend ble startet med `python -m`, bekreftet brukeren at innloggingen virket. Deretter ba brukeren KI-en flette PR #5.
+- **Commit**: `593e95c` (utlogging, oppsett, menylinje, fokus), `ac5af66` (startside, plassholdere, ukjent adresse), `a27ce44` (skjermbilde og AI-logg), `8c70170` (rettelser etter gjennomgangen), pluss commiten som inneholder denne oppdateringen.
+
+## 2026-11-26 — Vis/skjul passord på innloggingssiden
+
+- **Hvorfor**: Brukeren prøvde innloggingssiden og savnet en måte å se passordet man skriver på (FR-1, UX-DR5, NFR-6).
+- **Prompt(er)**: «Det er ikke mulig å trykke på slik at man har valget til å se passordet man skriver inn. Det ønsker jeg».
+- **Verktøy/modell**: Claude Code (Opus 5.5), direkte uten `bmad-build`, fordi endringen er liten og avgrenset. Edge uten vindu for skjermbilde.
+- **Endringer**:
+  - `frontend/src/pages/LoginPage.tsx` og `LoginPage.css`: tekstknappen «Vis passord» / «Skjul passord» (`type="button"`, `aria-controls`) står på samme linje som etiketten «Passord». Den bytter feltet mellom `password` og `text`.
+  - KI-en valgte plasseringen ved etiketten og ikke inni feltet, så knappen ikke dekker teksten og den synlige teksten er knappens navn (WCAG 2.5.3).
+  - Passordet skjules igjen ved innsending.
+  - Skjermbildet `docs/media/2026-11-26-innlogging.png` er oppdatert, og DESIGN.md (`login-card`) beskriver knappen.
+- **Verifisering**: `npm run build`, `npx biome check` og `npm run test` (10 tester) gir 0 feil. Skjermbildet fra Edge uten vindu viser knappen til høyre for etiketten.
+- **Commit**: commiten med koden og skjermbildet, og commiten med DESIGN.md og denne oppføringen.
