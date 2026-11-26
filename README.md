@@ -18,7 +18,7 @@ Det trengs ingen kontoer, nøkler, Docker eller eksterne tjenester. Stien til re
 
 ## Oppstart
 
-Klon repoet og gå inn i mappa:
+Klon repoet og gå inn i mappa. På Windows bør mappa du kloner i, ha en kort sti (se [Feilsøking](#feilsøking)).
 
 ```sh
 git clone https://github.com/IBE160-2026/G31-navelsaker.git
@@ -32,7 +32,7 @@ cd backend
 uv run python -m fastapi dev src/rbe/main.py
 ```
 
-Første gang laster uv ned Python og pakkene, så det tar et halvt minutt eller to. Første start oppretter databasen `backend/data/rbe.db` og legger inn testfartøyet og demobrukeren. Advarselen om tilfeldig sesjonsnøkkel i loggen er forventet. La terminalen stå åpen.
+Første gang laster uv ned Python og pakkene, så det kan ta et minutt. Første start oppretter databasen `backend/data/rbe.db` og legger inn testfartøyet og demobrukeren. Advarselen om tilfeldig sesjonsnøkkel i loggen er forventet. La terminalen stå åpen.
 
 **Terminal 2 — frontend** (port 5173), fra repoets rotmappe:
 
@@ -72,18 +72,18 @@ npx biome check
 npm run build
 ```
 
-Beregningstestene leser den håndregnede fasiten i [testdata/testfartoy-v1/](testdata/testfartoy-v1/README.md) direkte, og testnavnene viser scenario (A–E) og kravnummer (FR-n).
+Beregningstestene leser den håndregnede fasiten i [testdata/testfartoy-v1/](testdata/testfartoy-v1/README.md) direkte.
 
 ## Feilsøking
 
 - **«Fikk ikke kontakt med serveren. Prøv igjen.»** ved innlogging betyr at backend ikke kjører. Start den i terminal 1 og prøv igjen.
 - **Port 5173 er opptatt:** Vite velger da en annen port og skriver adressen i terminalen. Bruk den adressen. Backend må likevel kjøre på port 8000, fordi frontend sender `/api` dit.
 - **Tilbakestill databasen:** stopp backend, slett `backend/data/rbe.db` og start backend igjen. Testfartøyet og demobrukeren legges da inn på nytt.
-- **«os error 5» (tilgang nektet) på Windows:** noen maskiner nekter å kjøre de kjørbare filene uv lager. Kommandoene over bruker `python -m …`, så de virker selv om `pytest.exe` og `fastapi.exe` er sperret. Gjelder sperren også selve Python i `backend/.venv`, lag `.venv` med Pythons egen `venv` før `uv sync`. I PowerShell, i `backend/`:
+- **«Filename too long» fra git, eller `ModuleNotFoundError` i testene, på Windows:** stien til repoet er for lang for grensen på 260 tegn i Windows. Klon på nytt i en mappe med kortere sti, for eksempel `C:\Users\<navn>\Documents`.
+- **«os error 5» (tilgang nektet) på Windows:** noen maskiner nekter å kjøre de kjørbare filene uv lager (`Failed to spawn … os error 5`). Kommandoene over bruker `python -m …`, så de virker selv om `pytest.exe` og `fastapi.exe` er sperret. Gjelder sperren også selve Python i `backend/.venv`, lag `.venv` med Pythons egen `venv` før `uv sync`. I PowerShell, i `backend/`:
 
   ```powershell
   Remove-Item -Recurse -Force .venv -ErrorAction SilentlyContinue
-  uv python install
   & (uv python find --no-project 3.14) -m venv .venv
   uv sync
   ```
