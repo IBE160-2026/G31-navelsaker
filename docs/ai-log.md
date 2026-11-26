@@ -224,5 +224,11 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - **To avvik fra den første planen, oppdaget underveis:**
     - FastAPI 0.165 flater ikke ut inkluderte rutere i `app.routes`, men legger inn ett objekt per ruter. Den første rutetesten fant derfor ingen ruter og besto uten å sjekke noe. Det ble oppdaget fordi testen for unntakslista feilet. Rutetesten bruker nå FastAPIs `iter_route_contexts`, som gir hver rute med avhengighetene fra `include_router`.
     - Hvis rutene selv avhenger av `require_user` for å få brukeren, finnes den i avhengighetstreet selv om ruteren mangler den, og akseptansekriteriet kan ikke oppfylles. `require_user` legger derfor brukeren på `request.state`, og rutene leser den med `current_user`, som også avviser med 401 hvis brukeren mangler.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 15 funn, hvorav 5 ble rettet og 10 avvist med begrunnelse i specens Review Triage Log.
+    - Rettet: en test av at cookien signeres med `RBE_SESSION_SECRET`, en test av at innlogging tømmer en eksisterende sesjon, en test av reserveveien i `current_user`, og `%r` når brukernavnet logges (`56d2387`).
+    - AD-8 er presisert i arkitekturen, siden CLAUDE.md krever at avvik føres tilbake (`29d942e`).
+    - Avvist blant annet: lengdegrense på passordet, sperre av cookien etter utlogging og begrensning av antall forsøk. Dette er en lokal demoapp med én bruker, og specen holder slikt utenfor.
+    - Etter rettelsene består 107 tester.
+  - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet, selv om den var over anbefalt lengde.
   - Ingen skjermbilder, fordi storyen ikke har noe brukergrensesnitt.
-- **Commit**: `eef5a41`, `6970659`, pluss commiten som inneholder denne oppføringen.
+- **Commit**: `eef5a41`, `6970659`, `22912e3`, `29d942e` (AD-8), `56d2387`, pluss commiten som inneholder denne oppdateringen.
