@@ -211,3 +211,24 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - **Brukerens styring:** KI-en foreslo i specen to måter å håndtere et endret demopassord på. Brukeren spurte hvorfor databasefila måtte slettes med alternativ a), og valgte b) etter forklaringen: hashen synkroniseres ved oppstart. AD-5 i arkitekturen er presisert tilsvarende (`0830903`).
   - Ingen skjermbilder, fordi storyen ikke har noe brukergrensesnitt.
 - **Commit**: `0830903` (AD-5), `5bc79c3`, `1746ff5`, `05daff7`, `d6fbc6b`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-26 — Story 1.4: innlogging i backend
+
+- **Hvorfor**: Hvem som helst som nådde backend, kunne lese alt API-et ga. Planleggeren skal logge inn og ut med demobrukeren, og alle `/api`-ruter utenom innlogging og helsesjekk skal avvise uinnloggede (FR-1, AD-8).
+- **Prompt(er)**: «Les spec-1-4-innlogging-i-backend.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte cookien (`rbe_session`, 8 timer, SameSite=Lax), endepunktene, feilmeldingene, dummy-hashen ved ukjent brukernavn og at `require_user` settes på ruterne, ikke på hver rute.
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`.
+- **Endringer**: `backend/pyproject.toml` og `uv.lock` (`itsdangerous==2.2.0`), nye `backend/src/rbe/api/deps.py` (`get_session`, `require_user`, `current_user`) og `api/auth.py` (`public_router` med innlogging, `router` med utlogging og `me`), `backend/src/rbe/main.py` (`SessionMiddleware` og rutere), `backend/tests/conftest.py` (`client`, `logged_in_client`), nye `tests/api/test_auth.py` og `tests/api/test_routes_require_login.py`.
+- **Verifisering**:
+  - 104 tester består (15 nye), og `ruff check` og `ruff format --check` gir 0 funn. Auth-testene dekker alle radene i I/O-matrisen, blant annet tuklet cookie, slettet bruker og at passordet ikke havner i loggen. At ukjent brukernavn verifiseres mot dummy-hashen, er sjekket med en spion på `verify`.
+  - Akseptansekriteriet er prøvd: med `require_user` fjernet midlertidig fra `include_router` i `create_app()` feiler rutetesten og nevner `POST /api/auth/logout` og `GET /api/auth/me`. Endringen ble tilbakestilt etterpå.
+  - **To avvik fra den første planen, oppdaget underveis:**
+    - FastAPI 0.165 flater ikke ut inkluderte rutere i `app.routes`, men legger inn ett objekt per ruter. Den første rutetesten fant derfor ingen ruter og besto uten å sjekke noe. Det ble oppdaget fordi testen for unntakslista feilet. Rutetesten bruker nå FastAPIs `iter_route_contexts`, som gir hver rute med avhengighetene fra `include_router`.
+    - Hvis rutene selv avhenger av `require_user` for å få brukeren, finnes den i avhengighetstreet selv om ruteren mangler den, og akseptansekriteriet kan ikke oppfylles. `require_user` legger derfor brukeren på `request.state`, og rutene leser den med `current_user`, som også avviser med 401 hvis brukeren mangler.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 15 funn, hvorav 5 ble rettet og 10 avvist med begrunnelse i specens Review Triage Log.
+    - Rettet: en test av at cookien signeres med `RBE_SESSION_SECRET`, en test av at innlogging tømmer en eksisterende sesjon, en test av reserveveien i `current_user`, og `%r` når brukernavnet logges (`56d2387`).
+    - AD-8 er presisert i arkitekturen, siden CLAUDE.md krever at avvik føres tilbake (`29d942e`).
+    - Avvist blant annet: lengdegrense på passordet, sperre av cookien etter utlogging og begrensning av antall forsøk. Dette er en lokal demoapp med én bruker, og specen holder slikt utenfor.
+    - Etter rettelsene består 107 tester.
+  - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet, selv om den var over anbefalt lengde.
+  - Ingen skjermbilder, fordi storyen ikke har noe brukergrensesnitt.
+- **Commit**: `eef5a41`, `6970659`, `22912e3`, `29d942e` (AD-8), `56d2387`, pluss commiten som inneholder denne oppdateringen.
