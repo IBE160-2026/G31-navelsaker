@@ -79,7 +79,7 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 
 - **Binds:** FR-2, FR-3, NFR-1, NFR-5
 - **Prevents:** schemaforvaltning, migreringsfeil hos sensor og halvveis tilbakestilte data
-- **Rule:** SQLite-fil i `backend/data/` (gitignorert). Tabellene opprettes med `create_all` ved oppstart, uten Alembic. Endres schemaet under utvikling, slettes fila. Ved oppstart: er varetabellen tom, seedes scenario A, og mangler demobrukeren, opprettes den. De to sjekkes hver for seg. «Tilbakestill til testdata» kjører i én transaksjon: slett alle inndata og alle MRP-kjøringer, last scenario A på nytt via `rbe.fixture`, og behold demobrukeren.
+- **Rule:** SQLite-fil i `backend/data/` (gitignorert). Tabellene opprettes med `create_all` ved oppstart, uten Alembic. Endres schemaet under utvikling, slettes fila. Ved oppstart: er varetabellen tom, seedes scenario A, og mangler demobrukeren, opprettes den. Finnes demobrukeren, men passordet i konfigurasjonen ikke stemmer med hashen, oppdateres hashen, så `RBE_DEMO_PASSWORD` alltid gjelder (presisert i story 1.3, 2026-11-26). De to sjekkes hver for seg. «Tilbakestill til testdata» kjører i én transaksjon: slett alle inndata og alle MRP-kjøringer, last scenario A på nytt via `rbe.fixture`, og behold demobrukeren.
 
 ### AD-6 — Kjøringer er uforanderlige øyeblikksbilder, og endringer beregnes i kjernen [ADOPTED]
 
