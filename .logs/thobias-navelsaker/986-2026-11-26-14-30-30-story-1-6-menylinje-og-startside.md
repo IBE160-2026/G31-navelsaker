@@ -29,7 +29,7 @@ Brukeren prøvde innloggingen fra story 1.5 og fikk «Fikk ikke kontakt med serv
 - **Verifisering:**
   - Build, Biome og Vitest (10 tester) gir 0 feil. Backend har 107 tester som består.
   - I nettleseren besto 38 av 38 sjekker ved 1280 og 1024 px, med ekte Tab og Enter.
-- **Status:** AI-logg, spec, utsatt arbeid og sprintstatus (1.6 → review) ligger i `ef77b74`. Ikke pushet, og ingen PR ennå.
+- **Status:** AI-logg, spec, utsatt arbeid og sprintstatus (1.6 → review) ligger i `ef77b74`. Branchen er pushet, og PR #6 er opprettet (https://github.com/IBE160-2026/G31-navelsaker/pull/6).
 - **Det utsatte punktet fra 1.5 er delvis løst:** adressen etter innlogging er prøvd på nytt med de nye rutene. Meldingen om utløpt sesjon kan ikke prøves i nettleseren før det finnes datakall.
 
 ### Åpne punkter
