@@ -91,9 +91,11 @@ def ensure_demo_user(session: Session, settings: Settings) -> str:
             )
         )
         return "created"
-    if password_hash.verify(settings.demo_password, user.password_hash):
+    valid, new_hash = password_hash.verify_and_update(settings.demo_password, user.password_hash)
+    if valid and new_hash is None:
         return "unchanged"
-    user.password_hash = password_hash.hash(settings.demo_password)
+    # Feil passord gir ny hash. Riktig passord med utdatert hash gir den nye fra pwdlib.
+    user.password_hash = new_hash or password_hash.hash(settings.demo_password)
     return "updated"
 
 

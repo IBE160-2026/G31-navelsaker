@@ -13,17 +13,26 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 from pwdlib import PasswordHash
-from sqlalchemy import create_engine, inspect, select, update
+from sqlalchemy import inspect, select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from rbe.config import get_settings
-from rbe.db.models import ItemRow, UserRow
+from rbe.config import Settings, get_settings
+from rbe.db.models import ItemRow, MpsLineRow, UserRow
 from rbe.db.repository import read_input
+from rbe.db.session import make_engine
 from rbe.fixture import FixtureError, load_input
 from rbe.main import create_app
 from rbe.mrp.types import MrpInput
 
 TABLES = {"items", "bom_lines", "mps_lines", "scheduled_receipts", "planning_settings", "users"}
+
+
+@pytest.fixture(autouse=True)
+def no_env_file(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Hindre at en lokal ``backend/.env`` påvirker testene."""
+    monkeypatch.setitem(Settings.model_config, "env_file", None)
+    get_settings.cache_clear()
 
 
 @pytest.fixture
@@ -45,7 +54,7 @@ def _start() -> None:
 
 @contextmanager
 def _session(db_file: Path) -> Iterator[Session]:
-    engine = create_engine(f"sqlite:///{db_file.as_posix()}")
+    engine = make_engine(f"sqlite:///{db_file.as_posix()}")
     try:
         with Session(engine) as session:
             yield session
@@ -66,10 +75,14 @@ def _users(session: Session) -> list[UserRow]:
     return list(session.scalars(select(UserRow)))
 
 
-def test_fr2_seed_matches_fixture(db_file: Path, input_path: Path) -> None:
+def test_fr2_seed_matches_fixture(
+    db_file: Path, input_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
     """Scenario A: en tom database uten mappe får nøyaktig fasitens inndata."""
     assert not db_file.parent.exists()
-    _start()
+    with caplog.at_level(logging.INFO, logger="rbe.db.seed"):
+        _start()
+    assert "Opprettet demobrukeren «demo»" in caplog.text
     assert db_file.is_file()
     with _session(db_file) as session:
         assert set(inspect(session.get_bind()).get_table_names()) == TABLES
@@ -126,13 +139,15 @@ def test_fr1_only_missing_user_is_created(db_file: Path) -> None:
 
 
 def test_fr1_changed_demo_password_updates_hash(
-    db_file: Path, monkeypatch: pytest.MonkeyPatch
+    db_file: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture
 ) -> None:
     _start()
     with _session(db_file) as session:
         before = read_input(session)
     monkeypatch.setenv("RBE_DEMO_PASSWORD", "nytt")
-    _start()
+    with caplog.at_level(logging.INFO, logger="rbe.db.seed"):
+        _start()
+    assert "Oppdaterte passordet til demobrukeren «demo»" in caplog.text
     hasher = PasswordHash.recommended()
     with _session(db_file) as session:
         users = _users(session)
@@ -170,5 +185,26 @@ def test_fr2_missing_fixture_stops_startup(
         _start()
     missing = tmp_path / "finnes ikke" / "input.json"
     monkeypatch.setenv("RBE_FIXTURE_PATH", str(missing))
-    with pytest.raises(FixtureError, match="finnes ikke"):
+    with pytest.raises(FixtureError, match="Fant ikke fasitfila"):
         _start()
+
+
+def test_fr1_unchanged_password_keeps_hash(db_file: Path, caplog: pytest.LogCaptureFixture) -> None:
+    _start()
+    with _session(db_file) as session:
+        (before,) = _users(session)
+    with caplog.at_level(logging.INFO, logger="rbe.db.seed"):
+        _start()
+    assert "Demobrukeren «demo» finnes allerede" in caplog.text
+    with _session(db_file) as session:
+        (after,) = _users(session)
+    assert after.password_hash == before.password_hash
+
+
+def test_fr2_foreign_keys_are_enforced(db_file: Path) -> None:
+    """AD-5: en MPS-linje for en vare som ikke finnes, avvises av databasen."""
+    get_settings.cache_clear()
+    with TestClient(create_app()) as client:
+        with pytest.raises(IntegrityError):
+            with client.app.state.sessionmaker.begin() as session:
+                session.add(MpsLineRow(item="FINNES-IKKE", week=1, quantity=1, hull_no=99))
