@@ -204,6 +204,44 @@ def _non_int_quantity(data: dict) -> None:
     data["bom"][0]["qty_per"] = "1"
 
 
+def _bool_quantity(data: dict) -> None:
+    data["bom"][0]["qty_per"] = True
+
+
+def _unknown_lot_rule(data: dict) -> None:
+    data["items"][0]["lot_sizing"]["rule"] = "POQ"
+
+
+def _unknown_source(data: dict) -> None:
+    data["items"][0]["source"] = "buy"
+
+
+def _foq_zero_quantity(data: dict) -> None:
+    for item in data["items"]:
+        if item["lot_sizing"]["rule"] == "FOQ":
+            item["lot_sizing"]["quantity"] = 0
+
+
+def _l4l_with_quantity(data: dict) -> None:
+    data["items"][0]["lot_sizing"] = {"rule": "L4L", "quantity": 5}
+
+
+def _override_without_base(data: dict) -> None:
+    del data["scenarios"]["B"]["base"]
+
+
+def _override_not_object(data: dict) -> None:
+    data["scenarios"]["B"]["override"] = []
+
+
+def _bom_qty_not_list(data: dict) -> None:
+    data["scenarios"]["E"]["override"]["bom_qty"] = {"parent": "SKR-100"}
+
+
+def _unknown_scenario_key(data: dict) -> None:
+    data["scenarios"]["C"]["overide"] = data["scenarios"]["C"].pop("override")
+
+
 @pytest.mark.parametrize(
     ("mutate", "scenario", "expected"),
     [
@@ -215,6 +253,15 @@ def _non_int_quantity(data: dict) -> None:
         (_mps_unknown_item, "B", "FINNES-IKKE"),
         (_unknown_override_key, "B", "ledetid"),
         (_non_int_quantity, "A", "heltall"),
+        (_bool_quantity, "A", "heltall"),
+        (_unknown_lot_rule, "A", "POQ"),
+        (_unknown_source, "A", "buy"),
+        (_foq_zero_quantity, "A", "større enn 0"),
+        (_l4l_with_quantity, "A", "L4L"),
+        (_override_without_base, "B", "ingen «base»"),
+        (_override_not_object, "B", "«override»"),
+        (_bom_qty_not_list, "E", "«bom_qty»"),
+        (_unknown_scenario_key, "C", "overide"),
     ],
 )
 def test_fr2_invalid_content_fails(
@@ -246,7 +293,7 @@ def test_fr2_fixture_error_is_value_error() -> None:
 
 
 def test_fr2_default_settings_path_loads_scenario_a(scenario_a: MrpInput) -> None:
-    """Standardstien fra konfigurasjonen (repoet ligger i en sti med mellomrom) laster A."""
+    """Standardstien i konfigurasjonen peker på fasiten og laster scenario A."""
     assert load_input(Settings(_env_file=None).fixture_path) == scenario_a
 
 

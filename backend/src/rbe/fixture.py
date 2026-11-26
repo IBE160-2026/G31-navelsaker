@@ -9,21 +9,24 @@ de oppgitte BOM-linjene. Stien kommer fra kalleren (seed sender ``get_settings()
 import json
 from dataclasses import replace
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from rbe.mrp.types import (
     BomLine,
     Horizon,
     Item,
+    LotRule,
     LotSizing,
     MpsLine,
     MrpInput,
     ScheduledReceipt,
+    Source,
 )
 
 LOT_RULES = ("L4L", "FOQ")
 SOURCES = ("make", "purchase")
 OVERRIDE_KEYS = ("mps", "on_hand", "bom_qty")
+SCENARIO_KEYS = ("description", "base", "override")
 
 
 class FixtureError(ValueError):
@@ -66,7 +69,7 @@ class _Reader:
             raise self.fail(f"feltet «{key}» i {where} skal være tekst.")
         return value
 
-    def choice(self, data: dict[str, Any], key: str, where: str, allowed: tuple[str, ...]) -> Any:
+    def choice(self, data: dict[str, Any], key: str, where: str, allowed: tuple[str, ...]) -> str:
         value = self.get_str(data, key, where)
         if value not in allowed:
             raise self.fail(f"feltet «{key}» i {where} er «{value}», men skal være {allowed}.")
@@ -107,6 +110,11 @@ def _resolve(
         raise reader.fail(f"scenarioene peker på hverandre i ring: {chain}.")
     where = f"scenario {name}"
     spec = reader.as_obj(scenarios[name], where)
+    unknown = sorted(set(spec) - set(SCENARIO_KEYS))
+    if unknown:
+        raise reader.fail(
+            f"{where} har ukjente nøkler: {', '.join(unknown)}. Kjente: {', '.join(SCENARIO_KEYS)}."
+        )
     if "base" not in spec:
         if "override" in spec:
             raise reader.fail(f"{where} har «override», men ingen «base».")
@@ -147,7 +155,7 @@ def _parse_item(reader: _Reader, raw: Any, index: int) -> Item:
     return Item(
         id=item_id,
         name=reader.get_str(data, "name", where),
-        source=reader.choice(data, "source", where, SOURCES),
+        source=cast(Source, reader.choice(data, "source", where, SOURCES)),
         unit=reader.get_str(data, "unit", where),
         lead_time_weeks=reader.get_int(data, "lead_time_weeks", where),
         on_hand=reader.get_int(data, "on_hand", where),
@@ -159,7 +167,7 @@ def _parse_item(reader: _Reader, raw: Any, index: int) -> Item:
 def _parse_lot_sizing(reader: _Reader, raw: Any, owner: str) -> LotSizing:
     where = f"«lot_sizing» for {owner}"
     data = reader.as_obj(raw, where)
-    rule = reader.choice(data, "rule", where, LOT_RULES)
+    rule = cast(LotRule, reader.choice(data, "rule", where, LOT_RULES))
     if rule == "FOQ":
         if "quantity" not in data:
             raise reader.fail(f"{where} har regelen FOQ, men mangler «quantity».")
@@ -167,8 +175,9 @@ def _parse_lot_sizing(reader: _Reader, raw: Any, owner: str) -> LotSizing:
         if quantity <= 0:
             raise reader.fail(f"«quantity» i {where} skal være større enn 0.")
         return LotSizing(rule=rule, quantity=quantity)
-    quantity = reader.get_int(data, "quantity", where) if "quantity" in data else None
-    return LotSizing(rule=rule, quantity=quantity)
+    if "quantity" in data:
+        raise reader.fail(f"{where} har regelen {rule}, som ikke bruker «quantity».")
+    return LotSizing(rule=rule)
 
 
 def _parse_bom_line(reader: _Reader, raw: Any, where: str) -> BomLine:

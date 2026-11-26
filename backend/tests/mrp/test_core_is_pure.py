@@ -38,9 +38,26 @@ FORBIDDEN_MODULES = frozenset(
         "random",
         "logging",
         "json",
+        "builtins",
+        "importlib",
+        "glob",
+        "pickle",
+        "shelve",
+        "zipfile",
+        "ssl",
+        "asyncio",
+        "threading",
+        "multiprocessing",
+        "ctypes",
+        "uuid",
+        "secrets",
+        "zoneinfo",
+        "calendar",
     }
 )
-FORBIDDEN_CALLS = frozenset({"open", "print", "input"})
+FORBIDDEN_CALLS = frozenset(
+    {"open", "print", "input", "__import__", "eval", "exec", "compile", "breakpoint"}
+)
 
 
 def _matches(module: str, prefix: str) -> bool:
@@ -133,6 +150,10 @@ def test_ad1_purity_check_allows(snippet: str) -> None:
         "import numpy\n",
         "import rbe.main\n",
         "import json as j\n",
+        "import builtins\n",
+        '__import__("os")\n',
+        'eval("1")\n',
+        "import importlib\n",
     ],
 )
 def test_ad1_purity_check_rejects(snippet: str) -> None:
