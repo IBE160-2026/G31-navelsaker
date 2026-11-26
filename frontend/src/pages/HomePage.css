@@ -1,0 +1,116 @@
+/* Startsiden (UX-DR4). Stilene følger .heroimg, .overlay, .lift, .door og .credit i mockups/key-screens.html. */
+.home-hero {
+  position: relative;
+  height: 340px;
+}
+
+.home-hero__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+}
+
+.home-hero__inner {
+  position: absolute;
+  inset: 0;
+  max-width: var(--space-content-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-page-gutter);
+}
+
+/* welcome-overlay */
+.welcome-overlay {
+  display: inline-block;
+  padding: var(--space-4) var(--space-5);
+  background: color-mix(in srgb, var(--color-background) 94%, transparent);
+  border-radius: var(--radius-lg);
+}
+
+/* welcome-title */
+.welcome-title {
+  font-size: var(--font-size-welcome-title);
+  font-weight: var(--font-weight-welcome-title);
+  line-height: var(--line-height-welcome-title);
+}
+
+.welcome-overlay__lead {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+}
+
+/* Dørene ligger delvis over bildet. */
+.home-body {
+  position: relative;
+  max-width: var(--space-content-max);
+  margin: -70px auto 0;
+  padding: 0 var(--space-page-gutter) var(--space-8);
+}
+
+.doors {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doors > li {
+  display: flex;
+}
+
+/* door: svak skygge brukes bare her. */
+.door {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 130px;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--color-text) 6%, transparent);
+  text-decoration: none;
+}
+
+.door:hover,
+.door:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+}
+
+.door__title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-section-title);
+  font-weight: var(--font-weight-section-title);
+  line-height: var(--line-height-section-title);
+}
+
+.door__text {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-small);
+}
+
+.door__go {
+  margin-top: auto;
+  align-self: flex-end;
+  color: var(--color-accent);
+  font-weight: var(--font-weight-body-strong);
+}
+
+/* status-line: nøytral, uten farge og antall. */
+.status-line {
+  margin: var(--space-5) 0 0;
+  color: var(--color-text-muted);
+}
+
+.home-credit {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
