@@ -287,3 +287,16 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Skjermbildet `docs/media/2026-11-26-innlogging.png` er oppdatert, og DESIGN.md (`login-card`) beskriver knappen.
 - **Verifisering**: `npm run build`, `npx biome check` og `npm run test` (10 tester) gir 0 feil. Skjermbildet fra Edge uten vindu viser knappen til høyre for etiketten.
 - **Commit**: commiten med koden og skjermbildet, og commiten med DESIGN.md og denne oppføringen.
+
+## 2026-11-26 — Skjermbilder fra ekte nettleser i stedet for Edge uten vindu
+
+- **Hvorfor**: Brukeren påpekte at skjermbildene tatt med Edge uten vindu ikke ga et riktig bilde av appen («Der ligger skrift utenfor boksene. Det må gjøres i en nettleser i full skjerm utenfor terminal, eller underveis i videoen»).
+- **Prompt(er)**: Se over. Det er en rettelse av en KI-praksis som stod i CLAUDE.md.
+- **Verktøy/modell**: Claude Code (Opus 5.5). ffmpeg (via `imageio-ffmpeg`) og Pillow.
+- **Endringer**:
+  - `docs/media/2026-11-26-startside.png` og `2026-11-26-innlogging.png` er tatt på nytt. Bildene er hentet fra brukerens skjermopptak i full skjerm (1902 × 1118): startsiden fra 0:34,5 og innloggingen fra 0:39,5.
+  - Nettleserrammen er beskåret bort. Cursoren på startsiden er dekket med bakgrunnsfargen.
+  - Bildene er komprimert til 243 kB og 20 kB.
+  - CLAUDE.md, under «Skjermbilder og video», sier nå at skjermbilder av appen skal vise den i en ekte nettleser i full skjerm.
+- **Verifisering**: Bildene er sjekket visuelt: ingen cursor, ingen nettleserramme og ingen hemmeligheter.
+- **Commit**: commiten som inneholder bildene, CLAUDE.md og denne oppføringen.
