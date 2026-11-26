@@ -56,6 +56,26 @@
   font-weight: var(--font-weight-body-strong);
 }
 
+.field__label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Vis/skjul passord: tekstknapp i aksentfargen, klikkmål minst 24 × 24 px. */
+.field__toggle {
+  min-height: 24px;
+  padding: 0 var(--space-1);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-accent);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-body-strong);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .field__input {
   width: 100%;
   min-height: 36px;
