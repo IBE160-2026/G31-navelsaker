@@ -36,6 +36,11 @@ type AuthContextValue = {
    * `NetworkError` (og andre feil) kastes videre, og brukeren er da fortsatt innlogget.
    */
   logout: () => Promise<void>;
+  /**
+   * Innloggingssiden kaller denne når den er nådd. Da gjelder `signed-out` bare
+   * selve utloggingsnavigasjonen, og en dyp lenke etterpå huskes igjen.
+   */
+  clearSignedOut: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -100,9 +105,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }, []);
 
+  const clearSignedOut = useCallback(() => {
+    setNotice((current) => (current === "signed-out" ? null : current));
+  }, []);
+
   const value = useMemo(
-    () => ({ user, notice, login, logout }),
-    [user, notice, login, logout],
+    () => ({ user, notice, login, logout, clearSignedOut }),
+    [user, notice, login, logout, clearSignedOut],
   );
 
   return (

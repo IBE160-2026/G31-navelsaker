@@ -1,5 +1,5 @@
-import { type MouseEvent, useState } from "react";
-import { Outlet } from "react-router";
+import { type MouseEvent, useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router";
 import { useAuth } from "../auth/AuthProvider";
 import { TopNav } from "./TopNav";
 import "./AppLayout.css";
@@ -11,6 +11,13 @@ export function AppLayout() {
   const { user, logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
   const [logoutFailed, setLogoutFailed] = useState(false);
+  const { key } = useLocation();
+
+  // Feillinjen gjelder siden der utloggingen feilet, ikke neste side.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: skal kjøre ved hvert sidebytte.
+  useEffect(() => {
+    setLogoutFailed(false);
+  }, [key]);
 
   async function handleLogout() {
     if (loggingOut) return;

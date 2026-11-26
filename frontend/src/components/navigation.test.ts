@@ -8,7 +8,7 @@ beforeEach(async () => {
   navigation = await import("./navigation");
 });
 
-describe("UX-DR21: fokus til H1 ved sidebytte", () => {
+describe("NFR-6, UX-DR21: fokus til H1 ved sidebytte", () => {
   it("flytter ikke fokus ved første lasting, heller ikke når effekten kjører to ganger", () => {
     navigation.rememberInitialLocation("default");
     expect(navigation.isInAppNavigation("default")).toBe(false);

@@ -11,7 +11,7 @@ const ERROR_ID = "login-error";
 
 /** Innloggingssiden `/logg-inn` (FR-1, UX-DR5). */
 export function LoginPage() {
-  const { user, notice, login } = useAuth();
+  const { user, notice, login, clearSignedOut } = useAuth();
   const location = useLocation();
   const from = (location.state as LoginLocationState | null)?.from;
 
@@ -26,6 +26,10 @@ export function LoginPage() {
   useEffect(() => {
     document.title = "Logg inn – Red Ball Express";
   }, []);
+
+  useEffect(() => {
+    if (notice === "signed-out") clearSignedOut();
+  }, [notice, clearSignedOut]);
 
   if (user) {
     const target = from ? `${from.pathname}${from.search}${from.hash}` : "/";
