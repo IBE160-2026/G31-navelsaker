@@ -274,3 +274,16 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
     - Avvist: 6 funn med begrunnelse i specens Review Triage Log.
   - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet (ca. 2 500 tokens). Før storyen prøvde brukeren innloggingen fra 1.5 selv og fikk «Fikk ikke kontakt med serveren». KI-en fant at backend ikke kjørte, og at den korte `uv run fastapi dev` stoppes av en Windows-sperre på maskinen. Etter at backend ble startet med `python -m`, bekreftet brukeren at innloggingen virket. Deretter ba brukeren KI-en flette PR #5.
 - **Commit**: `593e95c` (utlogging, oppsett, menylinje, fokus), `ac5af66` (startside, plassholdere, ukjent adresse), `a27ce44` (skjermbilde og AI-logg), `8c70170` (rettelser etter gjennomgangen), pluss commiten som inneholder denne oppdateringen.
+
+## 2026-11-26 — Vis/skjul passord på innloggingssiden
+
+- **Hvorfor**: Brukeren prøvde innloggingssiden og savnet en måte å se passordet man skriver på (FR-1, UX-DR5, NFR-6).
+- **Prompt(er)**: «Det er ikke mulig å trykke på slik at man har valget til å se passordet man skriver inn. Det ønsker jeg».
+- **Verktøy/modell**: Claude Code (Opus 5.5), direkte uten `bmad-build`, fordi endringen er liten og avgrenset. Edge uten vindu for skjermbilde.
+- **Endringer**:
+  - `frontend/src/pages/LoginPage.tsx` og `LoginPage.css`: tekstknappen «Vis passord» / «Skjul passord» (`type="button"`, `aria-controls`) står på samme linje som etiketten «Passord». Den bytter feltet mellom `password` og `text`.
+  - KI-en valgte plasseringen ved etiketten og ikke inni feltet, så knappen ikke dekker teksten og den synlige teksten er knappens navn (WCAG 2.5.3).
+  - Passordet skjules igjen ved innsending.
+  - Skjermbildet `docs/media/2026-11-26-innlogging.png` er oppdatert, og DESIGN.md (`login-card`) beskriver knappen.
+- **Verifisering**: `npm run build`, `npx biome check` og `npm run test` (10 tester) gir 0 feil. Skjermbildet fra Edge uten vindu viser knappen til høyre for etiketten.
+- **Commit**: commiten med koden og skjermbildet, og commiten med DESIGN.md og denne oppføringen.

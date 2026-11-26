@@ -328,7 +328,7 @@ Flatt. Dybde lages med `{colors.surface}` mot `{colors.background}` og tynne `{c
 - **Rad under redigering (`editing-row`).** Raden får `{colors.surface-muted}`. Feltene er smale `input`-er med «Lagre» (liten primær) og «Avbryt» (liten sekundær) til høyre.
 - **Tom tilstand (`empty-state`).** Hvitt kort med sentrert tekst: overskrift i `{typography.section-title}`, én setning i dempet tekst og eventuelt én primærknapp.
 - **Feillinje (`error-banner`).** Rød flate med kant til venstre, øverst i innholdet. Tekst og knappen «Prøv igjen» (sekundær).
-- **Innloggingskort (`login-card`).** Sentrert hvitt kort (ca. 320 px) med stablet logo, to felt, en primærknapp over hele bredden og hjelpeteksten «Demobrukeren står i README».
+- **Innloggingskort (`login-card`).** Sentrert hvitt kort (ca. 320 px) med stablet logo, to felt, en primærknapp over hele bredden og hjelpeteksten «Demobrukeren står i README». Til høyre for etiketten «Passord» står tekstknappen «Vis passord» / «Skjul passord» i aksentfargen, så brukeren kan se det som er skrevet. Passordet skjules igjen når skjemaet sendes (lagt til etter ønske fra brukeren 2026-11-26).
 - **Velkomstflate (`welcome-overlay`).** Lys flate oppå fotografiet, øverst til venstre, med «Velkommen» (`{typography.welcome-title}`) og «Hva vil du gjøre?».
 - **Hopp til innhold (`skip-link`).** Usynlig til den får fokus. Vises da øverst til venstre i aksentfarge.
 - **Avkrysningsboks (`checkbox`).** Native avkrysningsboks med kant i `{colors.border-strong}` og avkrysning i `{colors.accent}`. Brukes til «Vis verdier fra forrige kjøring» over MRP-tabellen. Påslått vises endrede celler som «24 ← 0», der forrige verdi står i dempet tekst.
