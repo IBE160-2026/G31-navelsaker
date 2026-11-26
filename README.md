@@ -1,12 +1,16 @@
 # G31 — Red Ball Express
 
-Red Ball Express er en MRP-app (materialbehovsplanlegging) for skipsbygging. Den bryter ned stykklista (BOM) for et testfartøy på flere nivåer, regner ut nettobehov uke for uke ut fra hovedplanen (MPS), lager og åpne ordre, og foreslår bestillinger med riktig ledetid. Beregningen testes mot en håndregnet fasit.
+Red Ball Express er en MRP-app (materialbehovsplanlegging) for skipsbygging. Målet er at den skal bryte ned stykklista (BOM) for et testfartøy på flere nivåer, regne ut nettobehov uke for uke ut fra hovedplanen (MPS), lager og åpne ordre, og foreslå bestillinger med riktig ledetid. Beregningen skal testes mot en håndregnet fasit.
 
 Gruppeprosjekt i **IBE160 Programmering med KI** ved Høgskolen i Molde, høsten 2026 (15 studiepoeng). Repoet inneholder appen og dokumentasjon av utvikling, testing og kvalitetssikring med KI.
 
 ![Startsiden etter innlogging](docs/media/2026-11-26-startside.png)
 
 Video: [innlogging, startside og meny](docs/media/2026-11-26-innlogging-og-meny.mp4).
+
+## Status
+
+Dette virker nå: innlogging og utlogging, startsiden, menylinjen, testfartøyet i databasen, fasitparseren og testene. Sidene i menyen er foreløpig plassholdere. MRP-beregningen og skjermbildene for forslag, MRP-tabell, BOM-tre og MPS og lager kommer i senere epics (epic 2–5, se [sprintstatus](_bmad-output/implementation-artifacts/sprint-status.yaml)).
 
 ## Forutsetninger
 
@@ -50,7 +54,7 @@ npm run dev
 | --- | --- |
 | `demo` | `demo` |
 
-Dette er det kjente demopassordet og ingen hemmelighet. Brukernavn og passord kan endres med miljøvariablene `RBE_DEMO_USERNAME` og `RBE_DEMO_PASSWORD`. [backend/.env.example](backend/.env.example) lister alle variablene, og alle er valgfrie.
+Dette er det kjente demopassordet og ingen hemmelighet. Brukernavn og passord kan endres med miljøvariablene `RBE_DEMO_USERNAME` og `RBE_DEMO_PASSWORD`. [backend/.env.example](backend/.env.example) lister alle variablene, og alle er valgfrie. Kopier den til `backend/.env` for å sette variablene. Sett `RBE_SESSION_SECRET` hvis du ikke vil bli logget ut hver gang backend starter på nytt, også når `fastapi dev` laster koden på nytt. Endrer du `RBE_DEMO_USERNAME`, lages en ny bruker, og den gamle står igjen til databasen tilbakestilles.
 
 ## Tester og kvalitetssjekk
 
@@ -58,8 +62,8 @@ Backend, i `backend/`:
 
 ```sh
 uv run python -m pytest
-uv run ruff check
-uv run ruff format --check
+uv run python -m ruff check
+uv run python -m ruff format --check
 ```
 
 På en maskin uten sperren som er beskrevet under [Feilsøking](#feilsøking), gir `uv run pytest` det samme.
@@ -72,14 +76,15 @@ npx biome check
 npm run build
 ```
 
-Beregningstestene leser den håndregnede fasiten i [testdata/testfartoy-v1/](testdata/testfartoy-v1/README.md) direkte.
+Testene for fasitparseren og seed leser den håndregnede fasiten i [testdata/testfartoy-v1/](testdata/testfartoy-v1/README.md) direkte. Beregningstestene mot fasiten kommer i epic 2.
 
 ## Feilsøking
 
 - **«Fikk ikke kontakt med serveren. Prøv igjen.»** ved innlogging betyr at backend ikke kjører. Start den i terminal 1 og prøv igjen.
 - **Port 5173 er opptatt:** Vite velger da en annen port og skriver adressen i terminalen. Bruk den adressen. Backend må likevel kjøre på port 8000, fordi frontend sender `/api` dit.
-- **Tilbakestill databasen:** stopp backend, slett `backend/data/rbe.db` og start backend igjen. Testfartøyet og demobrukeren legges da inn på nytt.
-- **«Filename too long» fra git, eller `ModuleNotFoundError` i testene, på Windows:** stien til repoet er for lang for grensen på 260 tegn i Windows. Klon på nytt i en mappe med kortere sti, for eksempel `C:\Users\<navn>\Documents`.
+- **Port 8000 er opptatt:** stopp prosessen som bruker porten, fordi frontend alltid sender `/api` til port 8000.
+- **Tilbakestill databasen:** stopp backend, slett `backend/data/rbe.db` (eller fila `RBE_DATABASE_URL` peker på) og start backend igjen. Testfartøyet og demobrukeren legges da inn på nytt.
+- **«Filename too long» fra git, eller `ModuleNotFoundError` i testene, på Windows:** stien til repoet er for lang for grensen på 260 tegn i Windows. Klon på nytt i en kort mappe utenfor OneDrive, for eksempel `C:\dev`.
 - **«os error 5» (tilgang nektet) på Windows:** noen maskiner nekter å kjøre de kjørbare filene uv lager (`Failed to spawn … os error 5`). Kommandoene over bruker `python -m …`, så de virker selv om `pytest.exe` og `fastapi.exe` er sperret. Gjelder sperren også selve Python i `backend/.venv`, lag `.venv` med Pythons egen `venv` før `uv sync`. I PowerShell, i `backend/`:
 
   ```powershell
