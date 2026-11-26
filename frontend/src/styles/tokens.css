@@ -1,0 +1,82 @@
+/*
+ * Designtokens (UX-DR1).
+ * Kilde: frontmatter i _bmad-output/planning-artifacts/ux-designs/ux-Red Ball Express-2026-11-24/DESIGN.md
+ * (colors, typography, rounded, spacing). Endres tokens der, oppdateres denne fila.
+ * Komponentene bruker bare disse variablene, aldri hex-verdier.
+ */
+:root {
+  /* colors */
+  --color-background: #faf8f5;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f3ee;
+  --color-border: #ece6dd;
+  --color-border-strong: #8c857a;
+  --color-text: #2b2a28;
+  --color-text-muted: #6e6a63;
+  --color-accent: #3f4a5a;
+  --color-accent-foreground: #ffffff;
+  --color-accent-subtle: #eef0f3;
+  --color-brand-red: #b5402f;
+  --color-danger: #a8392b;
+  --color-danger-subtle: #fbece9;
+  --color-warning: #8a5300;
+  --color-warning-subtle: #fcf1df;
+  --color-success: #2e6b3a;
+  --color-success-subtle: #e5f2e8;
+
+  /* typography */
+  --font-family: "Manrope", system-ui, sans-serif;
+
+  --font-size-page-title: 22px;
+  --font-weight-page-title: 700;
+  --line-height-page-title: 1.25;
+
+  --font-size-welcome-title: 24px;
+  --font-weight-welcome-title: 700;
+  --line-height-welcome-title: 1.25;
+
+  --font-size-section-title: 15px;
+  --font-weight-section-title: 700;
+  --line-height-section-title: 1.35;
+
+  --font-size-wordmark: 16px;
+  --font-weight-wordmark: 700;
+  --line-height-wordmark: 1.2;
+
+  --font-size-body: 14px;
+  --font-weight-body: 400;
+  --line-height-body: 1.5;
+
+  --font-size-body-strong: 14px;
+  --font-weight-body-strong: 600;
+  --line-height-body-strong: 1.5;
+
+  --font-size-small: 13px;
+  --font-weight-small: 400;
+  --line-height-small: 1.45;
+
+  --font-size-label: 12px;
+  --font-weight-label: 700;
+  --line-height-label: 1.3;
+
+  --font-size-table-numeric: 14px;
+  --font-weight-table-numeric: 400;
+  --line-height-table-numeric: 1.4;
+
+  /* rounded */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-page-gutter: 24px;
+  --space-content-max: 1280px;
+}

@@ -232,3 +232,22 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet, selv om den var over anbefalt lengde.
   - Ingen skjermbilder, fordi storyen ikke har noe brukergrensesnitt.
 - **Commit**: `eef5a41`, `6970659`, `22912e3`, `29d942e` (AD-8), `56d2387`, pluss commiten som inneholder denne oppdateringen.
+
+## 2026-11-26 — Story 1.5: frontend-oppsett, designtokens og innloggingsside
+
+- **Hvorfor**: Det fantes ingen frontend. Sensor skal åpne appen i nettleseren, bli sendt til innlogging og logge inn med demobrukeren mot API-et fra story 1.4 (FR-1, NFR-6, AD-11, UX-DR1, UX-DR2, UX-DR5, UX-DR20).
+- **Prompt(er)**: «Les spec-1-5-frontend-oppsett-designtokens-og-innloggingsside.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte de festede versjonene, Biome i stedet for ESLint, proxyen, tokennavnene, oppførselen til klienten ved 401 og nettverksfeil, at adressen brukeren ba om ligger i routerens `state` (ikke i et søkeparameter, for å unngå åpen omdirigering), og alle tekstene og ARIA-attributtene på innloggingssiden.
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`. Edge uten vindu for skjermbilde og nettlesertest.
+- **Endringer**: ny mappe `frontend/` fra `create-vite` 9.4.0 (`react-ts`): `package.json` med nøyaktige versjoner, `biome.json`, `vite.config.ts` (proxy), `index.html` (`lang="no"`, favicon), `src/styles/tokens.css` og `global.css`, `src/components/Logo.tsx`, `src/api/client.ts`, `src/auth/AuthProvider.tsx` (tilstand, `RequireAuth`), `src/pages/LoginPage.tsx` og `SignedInPage.tsx`, `src/App.tsx` og `main.tsx`. Skjermbildet `docs/media/2026-11-26-innlogging.png`.
+- **Verifisering**:
+  - `npm run build` og `npx biome check` gir 0 feil. Backend har fortsatt 107 tester som består.
+  - `curl -i http://localhost:5173/api/health` gir 200 og `{"status":"ok"}` gjennom proxyen.
+  - Alle radene i I/O-matrisen er prøvd i Edge uten vindu, styrt over DevTools-protokollen med ekte Tab og Enter. Et innloggingskall ble holdt igjen for å se «Logger inn …», og utløpt sesjon ble laget ved å logge ut i backend uten at frontend visste det. Med backend stoppet svarer Vite-proxyen 502. Steg og utfall står i specens Implementation Notes.
+  - **Avvik fra specen:** malen lager ikke lenger ESLint, men oxlint. Det ble fjernet i stedet. Biome fikk `lineEnding: "auto"` etter at testen viste at filer med CRLF, som git sjekker ut med `core.autocrlf=true` på Windows, ga formateringsfeil.
+  - Skjermbildet er tatt med Edge uten vindu (1280 × 800), beskåret til kortet og komprimert til 6 kB.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 21 funn.
+    - Rettet: Vitest 5.1.1 og 8 enhetstester for fetch-klienten (`7d659c7`). Det er prøvd at testen for 504 feiler når sjekken smalnes. I tillegg er manglende hash i denne oppføringen rettet.
+    - Utsatt: en automatisk test av flyten for innlogging. Story 1.6 bygger om rutene, og arkitekturen bruker den manuelle testplanen for flyten (`deferred-work.md`).
+    - Avvist: 18 funn med begrunnelse i specens Review Triage Log, blant annet mobilbredde, `vite preview` og README, som er story 1.7.
+  - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet, selv om den var godt over anbefalt lengde (ca. 2 800 tokens). Før storyen ba brukeren KI-en flette PR #4 uten egen gjennomgang. Valget ble gitt eksplisitt, med at det da ikke blir noen menneskelig gjennomgang av PR-en.
+- **Commit**: `6f85d01`, `46b4734`, `f8c2c4b` (Biomes linjeskift), `7ae7734` (skjermbilde og AI-logg), `7d659c7` (Vitest), pluss commiten som inneholder denne oppdateringen.

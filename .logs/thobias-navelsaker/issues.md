@@ -17,3 +17,5 @@
 - [ ] 2026-11-24 [story-1-1-backend-oppsett](991-2026-11-24-16-03-49-story-1-1-backend-oppsett.md) — `uv run pytest` og `uv run fastapi dev` er ikke prøvd pga. Windows-sperre (os error 5); prøv på annen maskin senest i story 1.7
 - [x] 2026-11-24 [story-1-1-backend-oppsett](991-2026-11-24-16-03-49-story-1-1-backend-oppsett.md) — story 1.3 må opprette `backend/data/` og sjekke `fixture_path` ved oppstart (deferred-work.md) (løst 2026-11-26 i story 1.3)
 - [ ] 2026-11-26 [story-1-3-database-og-seed](989-2026-11-26-11-38-24-story-1-3-database-og-seed.md) — story 4.6 må gi tydelig melding når en gammel databasefil møter et nytt skjema (deferred-work.md)
+- [ ] 2026-11-26 [story-1-5-frontend-og-innloggingsside](987-2026-11-26-13-42-59-story-1-5-frontend-og-innloggingsside.md) — innloggingsflyten i frontend er bare prøvd manuelt; prøv på nytt i story 1.6 og før i testplanen i 3.2 (deferred-work.md)
+- [ ] 2026-11-26 [story-1-5-frontend-og-innloggingsside](987-2026-11-26-13-42-59-story-1-5-frontend-og-innloggingsside.md) — README må nevne demobrukeren (innloggingssiden viser til den), dekkes i story 1.7

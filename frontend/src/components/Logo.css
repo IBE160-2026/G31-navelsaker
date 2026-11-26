@@ -1,0 +1,26 @@
+.logo {
+  display: block;
+}
+
+.logo__loop {
+  fill: none;
+  stroke: var(--color-accent);
+}
+
+.logo__ball {
+  fill: var(--color-brand-red);
+}
+
+.logo--horizontal .logo__ball {
+  stroke: var(--color-background);
+}
+
+.logo--stacked .logo__ball {
+  stroke: var(--color-surface);
+}
+
+.logo__wordmark {
+  fill: var(--color-text);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-wordmark);
+}

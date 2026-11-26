@@ -1,0 +1,92 @@
+.login {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-page-gutter);
+}
+
+.login-card {
+  width: 320px;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.login-card__notice {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+  text-align: center;
+}
+
+.login-card__logo {
+  margin: 0 auto;
+}
+
+.login-card__title {
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+.login-card__banner-slot:empty {
+  display: none;
+}
+
+.login-card__banner-slot {
+  margin-bottom: var(--space-4);
+}
+
+.login-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field__label {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-body-strong);
+}
+
+.field__input {
+  width: 100%;
+  min-height: 36px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+/* input-error: 2 px kant i danger. Skyggen gir den andre pikselen uten at layouten flytter seg. */
+.field__input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 1px var(--color-danger);
+}
+
+.login-card__submit {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.login-card__error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.login-card__hint {
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+  text-align: center;
+}
