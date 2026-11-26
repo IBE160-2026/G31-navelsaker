@@ -182,4 +182,12 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Renhetstesten ble prøvd med en midlertidig `import pathlib` i `rbe/mrp/types.py`. Den feilet med `{'rbe.mrp.types': ['import pathlib (forbudt)']}`, og linjen ble fjernet før commit.
   - En test skanner `src/rbe` for varenumrene i fasiten og finner ingen.
   - **Utover specen:** parseren avviser også ukjente override-nøkler, feil felttyper, ukjent partiregel eller varetype og scenarioer i ring. Det står i specens Implementation Notes.
-- **Commit**: `38f2ef1`, `852af8a`, pluss commiten som inneholder denne oppføringen.
+  - **Gjennomgang av koden etterpå:** tre uavhengige lag (blind-hunter, edge-case-hunter, verification-gap) ga 12 funn etter sammenslåing. 6 ble rettet i `2329d35`:
+    - flere av avvisningene parseren gjorde, var ikke testet, og kunne fjernes uten at noen test feilet
+    - et feilstavet `overide` på scenarionivå ga stille en kopi av A
+    - renhetsvakten slapp gjennom `builtins`, `importlib`, `__import__`, `eval` og `exec`
+
+    6 ble avvist med begrunnelse i specens triagelogg, blant annet full validering av grunndataene. Den hører til API-et (AD-7) og kjernen (story 2.1).
+  - Til slutt består 78 tester, og ruff gir 0 funn.
+  - Specen ble godkjent uten egen gjennomgang. Brukeren valgte å beholde den samlet selv om den var på omtrent 2000 tokens.
+- **Commit**: `38f2ef1`, `852af8a`, `cdf0bb9`, `2329d35`, pluss commiten som inneholder denne oppføringen.
