@@ -29,6 +29,9 @@ __pycache__/
 .ipynb_checkpoints/
 pip-wheel-metadata/
 
+# Backend: lokal SQLite-database
+backend/data/
+
 # Tests / coverage
 coverage/
 htmlcov/

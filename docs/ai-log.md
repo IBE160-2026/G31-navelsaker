@@ -152,3 +152,20 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Skriptet validerte fila etter skriving. De tre advarslene gjaldt overskrifter som ikke er epics (dekningskart, epic-liste, sporbarhet), og de ble ignorert med vilje.
   - Skriptet kunne ikke startes via uv sitt skriptmiljø (Windows: «Ingen tilgang»). Det ble kjørt med `uv run --no-project --with ruamel.yaml python`.
 - **Commit**: `d6c0931`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-24 — Story 1.1: backend-oppsett med helsesjekk og konfigurasjon
+
+- **Hvorfor**: Første story i epic 1. Sensor skal kunne starte backend og kjøre testene med én kommando hver, uten manuelt oppsett og uten hemmeligheter i repoet (NFR-1, NFR-2, AD-9–AD-11).
+- **Prompt(er)**: «Les spec-1-1-backend-oppsett-med-helsesjekk-og-konfigurasjon.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte blant annet versjoner, stier, at tom `RBE_SESSION_SECRET` regnes som manglende, `basicConfig` i stedet for `dictConfig`, og demobrukeren `demo`/`demo` (Thobias' beslutning).
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`.
+- **Endringer**: Nytt uv-prosjekt `backend/` (`pyproject.toml`, `.python-version`, `uv.lock`, `.env.example`), `src/rbe/config.py`, `src/rbe/main.py`, `src/rbe/api/health.py`, `tests/test_config.py`, `tests/api/test_health.py`. `.gitignore` har fått `backend/data/`.
+- **Verifisering**:
+  - `uv lock` løste alle festede versjoner mot Python 3.14.7.
+  - AST-sjekken av at bare `config.py` leser miljøet ble prøvd med en forbudt import lagt inn midlertidig, og den feilet som den skulle.
+  - `GET /api/health` svarte `{"status":"ok"}`, og advarselen om tilfeldig nøkkel kom i loggen.
+  - `git check-ignore` bekreftet at `backend/.env` og `backend/data/` ikke spores.
+  - **Gjennomgang av specen før godkjenning:** to runder med en subagent ga 15 funn, og alle ble tatt inn etter brukerens valg. Eksempler: `[build-system]` manglet, og `import rbe` ville derfor feilet i testene. En lokal `.env` kunne lekke inn i testene. Logging med `dictConfig` ville slått av loggeren som testene sjekker.
+  - **Gjennomgang av koden etterpå:** tre uavhengige lag (blind-hunter, edge-case-hunter, verification-gap) ga 24 funn. 10 ble rettet i `ec068af`, blant annet at standardplasseringen av `.env` og advarselen ved oppstart ikke var testet. 2 er utsatt til story 1.3 i `deferred-work.md`, og 12 ble avvist med begrunnelse i specens triagelogg.
+  - Til slutt består 15 tester, og ruff gir 0 funn.
+  - **Avvik:** på denne maskinen nekter Windows å kjøre filer som uv lager (`uv venv`, `pytest.exe`, `fastapi.exe`: os error 5). Løsningen var å lage `backend/.venv` med Pythons egen `venv` og bruke `uv run python -m pytest` og `uv run python -m fastapi dev`. `uv run pytest` og `uv run fastapi dev` slik de står i README-flyten, er ikke prøvd ennå. Det må gjøres på en annen maskin senest i story 1.7.
+- **Commit**: `5202b6c`, `95fb071`, `29711fa`, `ec068af`, pluss commiten som inneholder denne oppføringen.
