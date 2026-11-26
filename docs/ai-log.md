@@ -245,4 +245,9 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Alle radene i I/O-matrisen er prøvd i Edge uten vindu, styrt over DevTools-protokollen med ekte Tab og Enter. Et innloggingskall ble holdt igjen for å se «Logger inn …», og utløpt sesjon ble laget ved å logge ut i backend uten at frontend visste det. Med backend stoppet svarer Vite-proxyen 502. Steg og utfall står i specens Implementation Notes.
   - **Avvik fra specen:** malen lager ikke lenger ESLint, men oxlint. Det ble fjernet i stedet. Biome fikk `lineEnding: "auto"` etter at testen viste at filer med CRLF, som git sjekker ut med `core.autocrlf=true` på Windows, ga formateringsfeil.
   - Skjermbildet er tatt med Edge uten vindu (1280 × 800), beskåret til kortet og komprimert til 6 kB.
-- **Commit**: `6f85d01`, `46b4734`, commiten med Biomes linjeskift, pluss commiten som inneholder denne oppføringen og skjermbildet.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 21 funn.
+    - Rettet: Vitest 5.1.1 og 8 enhetstester for fetch-klienten (`7d659c7`). Det er prøvd at testen for 504 feiler når sjekken smalnes. I tillegg er manglende hash i denne oppføringen rettet.
+    - Utsatt: en automatisk test av flyten for innlogging. Story 1.6 bygger om rutene, og arkitekturen bruker den manuelle testplanen for flyten (`deferred-work.md`).
+    - Avvist: 18 funn med begrunnelse i specens Review Triage Log, blant annet mobilbredde, `vite preview` og README, som er story 1.7.
+  - **Brukerens styring:** brukeren godkjente specen uten endringer og valgte å beholde den samlet, selv om den var godt over anbefalt lengde (ca. 2 800 tokens). Før storyen ba brukeren KI-en flette PR #4 uten egen gjennomgang. Valget ble gitt eksplisitt, med at det da ikke blir noen menneskelig gjennomgang av PR-en.
+- **Commit**: `6f85d01`, `46b4734`, `f8c2c4b` (Biomes linjeskift), `7ae7734` (skjermbilde og AI-logg), `7d659c7` (Vitest), pluss commiten som inneholder denne oppdateringen.
