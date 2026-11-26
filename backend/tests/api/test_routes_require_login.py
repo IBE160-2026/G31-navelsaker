@@ -9,11 +9,12 @@ får dermed testen til å feile og nevne ruten.
 
 import re
 
+from fastapi import FastAPI
 from fastapi.dependencies.models import Dependant
 from fastapi.routing import APIRoute, RouteContext, iter_route_contexts
 from fastapi.testclient import TestClient
 
-from rbe.api.deps import require_user
+from rbe.api.deps import CurrentUser, require_user
 
 PUBLIC_ROUTES = {("GET", "/api/health"), ("POST", "/api/auth/login")}
 
@@ -72,3 +73,16 @@ def test_ad8_route_check_finds_open_route(client: TestClient) -> None:
         "GET /api/open-items/{item_id}: mangler require_user",
         "GET /api/open-items/{item_id}: ga 200 uten innlogging, ikke 401",
     ]
+
+
+def test_ad8_current_user_without_require_user_gives_401() -> None:
+    """Reserveveien: en rute med ``CurrentUser`` på en ruter uten ``require_user`` avviser."""
+    app = FastAPI()
+
+    @app.get("/api/whoami")
+    def whoami(user: CurrentUser) -> dict[str, str]:
+        return {"username": user.username}
+
+    response = TestClient(app).get("/api/whoami")
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Du er ikke logget inn."}

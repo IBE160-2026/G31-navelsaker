@@ -5,14 +5,17 @@ Testene bruker ``client`` og ``logged_in_client`` fra ``conftest.py``, som kjør
 """
 
 import logging
+from pathlib import Path
 
 import pytest
+from fastapi import Request
 from fastapi.testclient import TestClient
 from sqlalchemy import delete
 
 from rbe.api import auth
+from rbe.config import Settings, get_settings
 from rbe.db.models import UserRow
-from rbe.main import SESSION_COOKIE
+from rbe.main import SESSION_COOKIE, create_app
 
 WRONG = {"detail": "Feil brukernavn eller passord."}
 NOT_LOGGED_IN = {"detail": "Du er ikke logget inn."}
@@ -116,3 +119,48 @@ def test_fr1_cookie_for_deleted_user_gives_401(logged_in_client: TestClient) -> 
     response = logged_in_client.get("/api/auth/me")
     assert response.status_code == 401
     assert response.json() == NOT_LOGGED_IN
+
+
+def test_fr1_login_clears_existing_session(client: TestClient) -> None:
+    """Sesjonen tømmes før ``user_id`` settes, så ingenting fra en tidligere sesjon blir med."""
+
+    @client.app.post("/test/session/extra")
+    def set_extra(request: Request) -> None:
+        request.session["extra"] = "gammel"
+
+    @client.app.get("/test/session")
+    def read_session(request: Request) -> dict:
+        return dict(request.session)
+
+    client.post("/test/session/extra")
+    assert client.get("/test/session").json() == {"extra": "gammel"}
+    assert _login(client, "demo", "demo").status_code == 200
+    assert set(client.get("/test/session").json()) == {"user_id"}
+
+
+def test_ad9_session_cookie_signed_with_configured_secret(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Cookien signeres med RBE_SESSION_SECRET: samme nøkkel godtar den, en annen avviser den."""
+    monkeypatch.setitem(Settings.model_config, "env_file", None)
+    monkeypatch.setenv("RBE_DATABASE_URL", f"sqlite:///{(tmp_path / 'rbe.db').as_posix()}")
+    monkeypatch.setenv("RBE_SESSION_SECRET", "nøkkel-en")
+    get_settings.cache_clear()
+    with TestClient(create_app()) as first:
+        assert _login(first, "demo", "demo").status_code == 200
+        cookie = first.cookies[SESSION_COOKIE]
+
+    get_settings.cache_clear()
+    with TestClient(create_app()) as same_secret:
+        same_secret.cookies.set(SESSION_COOKIE, cookie)
+        response = same_secret.get("/api/auth/me")
+        assert response.status_code == 200
+        assert response.json() == {"username": "demo"}
+
+    monkeypatch.setenv("RBE_SESSION_SECRET", "nøkkel-to")
+    get_settings.cache_clear()
+    with TestClient(create_app()) as other_secret:
+        other_secret.cookies.set(SESSION_COOKIE, cookie)
+        response = other_secret.get("/api/auth/me")
+        assert response.status_code == 401
+        assert response.json() == NOT_LOGGED_IN

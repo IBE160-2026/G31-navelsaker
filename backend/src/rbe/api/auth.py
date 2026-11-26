@@ -43,7 +43,7 @@ def login(credentials: LoginRequest, request: Request, session: DbSession) -> Us
     else:
         valid = password_hash.verify(credentials.password, user.password_hash)
     if user is None or not valid:
-        logger.info("Mislykket innlogging for «%s».", credentials.username)
+        logger.info("Mislykket innlogging for %r.", credentials.username)
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=WRONG_CREDENTIALS)
     request.session.clear()
     request.session["user_id"] = user.id
