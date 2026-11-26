@@ -15,4 +15,5 @@
 - [x] 2026-11-24 [ux-v1](993-2026-11-24-14-48-42-ux-v1.md) — krediter fotografen av havbildet (Oleksii Topolianskyi / Unsplash) i README og på startsiden ved implementasjon (løst 2026-11-24: README gjort; startsiden er spesifisert i EXPERIENCE.md)
 - [x] 2026-11-24 [epics-og-stories-v1](992-2026-11-24-15-34-28-epics-og-stories-v1.md) — GitHub CLI (`gh`) er ikke installert; installer og logg inn, eller lag PR-ene i nettleseren, før story 1.1 (løst 2026-11-25: gh 2.105.0 installert for brukeren, innlogget)
 - [ ] 2026-11-24 [story-1-1-backend-oppsett](991-2026-11-24-16-03-49-story-1-1-backend-oppsett.md) — `uv run pytest` og `uv run fastapi dev` er ikke prøvd pga. Windows-sperre (os error 5); prøv på annen maskin senest i story 1.7
-- [ ] 2026-11-24 [story-1-1-backend-oppsett](991-2026-11-24-16-03-49-story-1-1-backend-oppsett.md) — story 1.3 må opprette `backend/data/` og sjekke `fixture_path` ved oppstart (deferred-work.md)
+- [x] 2026-11-24 [story-1-1-backend-oppsett](991-2026-11-24-16-03-49-story-1-1-backend-oppsett.md) — story 1.3 må opprette `backend/data/` og sjekke `fixture_path` ved oppstart (deferred-work.md) (løst 2026-11-26 i story 1.3)
+- [ ] 2026-11-26 [story-1-3-database-og-seed](989-2026-11-26-11-38-24-story-1-3-database-og-seed.md) — story 4.6 må gi tydelig melding når en gammel databasefil møter et nytt skjema (deferred-work.md)
