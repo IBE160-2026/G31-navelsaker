@@ -27,7 +27,7 @@ Fortsette med story 1.4: demobrukeren skal kunne logge inn og ut med signert ses
 - **Avvik ført tilbake:** FastAPI 0.165 flater ikke ut inkluderte rutere, så rutetesten bruker `iter_route_contexts`. Rutene leser brukeren med `CurrentUser`, ikke med `require_user`. Begge deler er presisert i AD-8 i arkitekturen (`29d942e`).
 - **Gjennomgang:** 15 funn. 5 ble rettet, og 10 ble avvist med begrunnelse i triageloggen i specen. Ingenting ble utsatt.
 - **Verifisering:** 107 tester består, og `ruff check` og `ruff format --check` gir 0 funn. Akseptansekriteriet er prøvd: uten `require_user` feiler rutetesten og nevner begge rutene.
-- **Status:** AI-logg, spec og sprintstatus (1.4 → review) ligger i `2be743c`. Ingen skjermbilder, fordi storyen ikke har noe brukergrensesnitt. Branchen ble pushet til origin etter at brukeren ba om det. Ingen PR er laget ennå.
+- **Status:** AI-logg, spec og sprintstatus (1.4 → review) ligger i `2be743c`. Ingen skjermbilder, fordi storyen ikke har noe brukergrensesnitt. Branchen ble pushet til origin etter at brukeren ba om det. PR #4 er opprettet mot `main` (https://github.com/IBE160-2026/G31-navelsaker/pull/4).
 
 ### Åpne punkter
 - Ingen.
