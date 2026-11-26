@@ -52,6 +52,7 @@ Gi lenke til appen, forklare hva videoen skal vise, og legge til en knapp for å
 - `LoginPage.tsx` og `.css` har fått «Vis passord» / «Skjul passord» ved etiketten, og passordet skjules igjen ved innsending. Skjermbildet `docs/media/2026-11-26-innlogging.png` er oppdatert. Begge deler ligger i commiten «FR-1: legg til knapp for å vise og skjule passordet».
 - DESIGN.md (`login-card`) og AI-loggen er oppdatert i en egen commit.
 - Build, Biome og Vitest (10 tester) gir 0 feil.
+- Brukeren tok opp en video, og den ble lagret i prosjektroten (`Spiller inn 2026-11-26 151023.mp4`, 43 MB). Den er komprimert til `docs/media/2026-11-26-innlogging-og-meny.mp4` (0,4 MB, 1280 px), sjekket bilde for bilde og committet. Originalen er ikke committet og kan slettes.
 
 ### Åpne punkter
-- Ingen nye. Videoen står fortsatt som valgfritt punkt i `issues.md`.
+- Ingen.
