@@ -300,3 +300,23 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - CLAUDE.md, under «Skjermbilder og video», sier nå at skjermbilder av appen skal vise den i en ekte nettleser i full skjerm.
 - **Verifisering**: Bildene er sjekket visuelt: ingen cursor, ingen nettleserramme og ingen hemmeligheter.
 - **Commit**: commiten som inneholder bildene, CLAUDE.md og denne oppføringen.
+
+## 2026-11-26 — Story 1.7: README v1 med oppstart og tester
+
+- **Hvorfor**: README sa ingenting om oppstart, innlogging eller tester. Sensor skal klone repoet og få app og tester til å kjøre med bare README, på under 15 minutter og uten kontoer eller hemmeligheter (NFR-1, NFR-2, SM-3).
+- **Prompt(er)**: «Les spec-1-7-readme-v1-med-oppstart-og-tester.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte innholdet og rekkefølgen i README, og at README skulle prøves bokstavelig fra en ny klone i en mappe med mellomrom.
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`. Edge uten vindu over DevTools-protokollen for innloggingen.
+- **Endringer**:
+  - `README.md` er skrevet om: hva appen gjør, skjermbilde og video, forutsetninger, oppstart i to terminaler, demobrukeren, tester og kvalitetssjekk, feilsøking og lenker til planleggingsdokumentene.
+  - ARCHITECTURE-SPINE.md: AD-10 og AD-11 forklarer hvorfor README bruker `uv run python -m …`.
+  - Specen har fått steg og utfall fra prøven i Implementation Notes.
+- **Verifisering**:
+  - Ny klone fra GitHub i en mappe med mellomrom: 107 backendtester består med `uv run python -m pytest`, og ruff gir 0 funn. Frontend har 10 tester som består, `biome` gir 0 funn, og bygget lykkes.
+  - Første start av backend opprettet databasen med testfartøyet og demobrukeren, og `demo`/`demo` ga startsiden i Edge uten vindu.
+  - Et lite skript fant 0 døde relative lenker i README.
+  - **Prøven rettet README to steder:**
+    - En klone i scratchpad feilet med «Filename too long» og manglende moduler, fordi stien ble over 260 tegn. README ber nå om en kort sti og forklarer feilen.
+    - `uv python install` ble fjernet fra løsningen på os error 5, fordi den bare ga en advarsel.
+  - **Avvik:** å stoppe serverne fra økten på 8000 og 5173 ble nektet av tillatelsessystemet. Backend fra klonen ble derfor prøvd på port 8001, og frontend fra klonen fikk port 5175. Raden «Backend kjører ikke» ble ikke prøvd på nytt.
+  - **Brukerens styring:** brukeren valgte alternativ B for kommandoene, «den som er best og oppfyller kravene sensor stiller». Det ble `python -m`-formen, og prøven bekreftet valget: `uv run pytest` ga os error 5 i den nye klonen, mens `uv run python -m pytest` virket.
+- **Commit**: `8225c6b` (README v1), `7466eac` (rettelser etter prøven), `f3518eb` (AD-10 og AD-11), pluss commiten som inneholder denne oppføringen og specen.
