@@ -105,6 +105,7 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 - **Binds:** FR-1, NFR-2
 - **Prevents:** ruter som glemmer innloggingssjekken, og token-håndtering i frontend
 - **Rule:** Starlette `SessionMiddleware` gir en signert cookie (httpOnly, SameSite=Lax). Passord hashes med `pwdlib` (argon2). Alle rutere under `/api` får avhengigheten `require_user`. De eneste unntakene er `POST /api/auth/login` og `GET /api/health`. En test går gjennom `app.routes` og sjekker at alle andre ruter gir 401 uten innlogging. Feil brukernavn og feil passord gir samme feilmelding.
+- **Presisert i story 1.4:** `require_user` settes når ruteren tas med i `create_app()`, ikke på hver rute. Rutene leser brukeren med `CurrentUser` (`current_user`, som leser `request.state.user` og gir 401 hvis den mangler), og avhenger aldri av `require_user` selv. Gjorde de det, ville rutetesten ikke oppdage en ruter som er tatt med uten innloggingskravet. Rutetesten bruker `fastapi.routing.iter_route_contexts`, fordi FastAPI 0.165 ikke flater ut inkluderte rutere i `app.routes`. Sesjonscookien heter `rbe_session` og varer 8 timer.
 
 ### AD-9 — Konfigurasjon fra miljøvariabler med trygge standardverdier [ADOPTED]
 
