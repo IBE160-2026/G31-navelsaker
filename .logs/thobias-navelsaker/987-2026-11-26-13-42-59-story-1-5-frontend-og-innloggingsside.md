@@ -25,7 +25,7 @@ Gå til neste steg etter story 1.4: flette PR #4 og implementere story 1.5. Sens
   - Alle radene i I/O-matrisen er prøvd i Edge uten vindu med ekte Tab og Enter, og tabellen står i specen.
 - **Gjennomgang:** 21 funn. 2 ble rettet (Vitest-testene og hashen i AI-loggen), 1 ble utsatt og 18 ble avvist.
 - **Commit:** AI-logg, spec, utsatt arbeid og sprintstatus (1.5 → review) ligger i `a70064c`.
-- Ikke pushet, og ingen PR ennå.
+- Branchen er pushet, og PR #5 er opprettet mot `main` (https://github.com/IBE160-2026/G31-navelsaker/pull/5).
 
 ### Åpne punkter
 - Flyten for innlogging i frontend (adressen i routerens `state`, meldingen om utløpt sesjon) er bare prøvd manuelt. Prøv den på nytt når story 1.6 bygger om rutene, og før den i testplanen i story 3.2 (`deferred-work.md`).
