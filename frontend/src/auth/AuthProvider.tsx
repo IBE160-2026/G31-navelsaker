@@ -16,9 +16,10 @@ export type User = { username: string };
 /**
  * Melding innloggingssiden skal vise uten at brukeren har gjort noe:
  * `expired` når et kall ga 401 etter at innloggingen var bekreftet,
- * `server-error` når `me` ikke fikk svar ved oppstart.
+ * `server-error` når `me` ikke fikk svar ved oppstart,
+ * `signed-out` når brukeren selv logget ut (ingen melding, og ingen adresse å komme tilbake til).
  */
-export type AuthNotice = "expired" | "server-error" | null;
+export type AuthNotice = "expired" | "server-error" | "signed-out" | null;
 
 /** Adressen brukeren ba om, lagt i routerens `state` av ruteverneren. */
 export type LoginLocationState = {
@@ -30,6 +31,11 @@ type AuthContextValue = {
   user: User | null | undefined;
   notice: AuthNotice;
   login: (username: string, password: string) => Promise<void>;
+  /**
+   * Logger ut med `POST /api/auth/logout`. 204 og 401 gir utlogget uten melding.
+   * `NetworkError` (og andre feil) kastes videre, og brukeren er da fortsatt innlogget.
+   */
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -39,6 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [notice, setNotice] = useState<AuthNotice>(null);
   const userRef = useRef(user);
   userRef.current = user;
+  const loggingOutRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -61,7 +68,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setUnauthorizedHandler(() => {
       // Bare en bekreftet innlogging kan utløpe. Uinnlogget gir ingen melding.
-      if (userRef.current) {
+      // 401 på utlogging er ikke en utløpt sesjon: `logout` tar hånd om den selv.
+      if (userRef.current && !loggingOutRef.current) {
         setUser(null);
         setNotice("expired");
       }
@@ -78,7 +86,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(me);
   }, []);
 
-  const value = useMemo(() => ({ user, notice, login }), [user, notice, login]);
+  const logout = useCallback(async () => {
+    loggingOutRef.current = true;
+    try {
+      await apiFetch<void>("/api/auth/logout", { method: "POST" });
+    } catch (error: unknown) {
+      // 401: sesjonen var allerede borte på serveren, og brukeren er like fullt logget ut.
+      if (!(error instanceof ApiError && error.status === 401)) throw error;
+    } finally {
+      loggingOutRef.current = false;
+    }
+    setNotice("signed-out");
+    setUser(null);
+  }, []);
+
+  const value = useMemo(
+    () => ({ user, notice, login, logout }),
+    [user, notice, login, logout],
+  );
 
   return (
     <AuthContext value={value}>
@@ -106,11 +131,17 @@ export function AuthLoading() {
   );
 }
 
-/** Ruteverneren: uinnloggede sendes til /logg-inn med adressen de ba om. */
+/**
+ * Ruteverneren: uinnloggede sendes til /logg-inn med adressen de ba om.
+ * Etter egen utlogging huskes ingen adresse, så neste innlogging går til `/`.
+ */
 export function RequireAuth() {
-  const { user } = useAuth();
+  const { user, notice } = useAuth();
   const location = useLocation();
 
+  if (!user && notice === "signed-out") {
+    return <Navigate to="/logg-inn" replace />;
+  }
   if (!user) {
     const state: LoginLocationState = {
       from: {
