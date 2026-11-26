@@ -191,3 +191,16 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Til slutt består 78 tester, og ruff gir 0 funn.
   - Specen ble godkjent uten egen gjennomgang. Brukeren valgte å beholde den samlet selv om den var på omtrent 2000 tokens.
 - **Commit**: `38f2ef1`, `852af8a`, `cdf0bb9`, `2329d35`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-26 — Story 1.3: database og seed ved tom database
+
+- **Hvorfor**: Sensor skal møte testfartøyet og demobrukeren uten å legge inn noe selv, og passordet skal ikke lagres i klartekst (FR-2, FR-1, AD-4, AD-5).
+- **Prompt(er)**: «Les spec-1-3-database-og-seed-ved-tom-database.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte tabellene, rekkefølgen i oppstarten og I/O-matrisen. Brukeren hadde på forhånd besluttet at et endret demopassord skal oppdatere hashen ved oppstart (alternativ b), så databasefila aldri må slettes for å bytte passord.
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`.
+- **Endringer**: `backend/pyproject.toml` og `uv.lock` (`sqlalchemy==2.1.9`, `pwdlib[argon2]==0.4.2`), ny pakke `backend/src/rbe/db/` (`models.py`, `session.py`, `seed.py`, `repository.py`), `backend/src/rbe/main.py` (`lifespan` som kjører oppstarten og legger engine og sessionmaker på `app.state`) og `backend/tests/api/test_seed.py` (ny).
+- **Verifisering**:
+  - 87 tester består (9 nye), og `ruff check` og `ruff format --check` gir 0 funn. Testene dekker alle radene i I/O-matrisen mot en midlertidig SQLite-fil i en mappe med mellomrom som ikke finnes på forhånd.
+  - `read_input` sammenlignes med `load_input(..., "A")` etter at begge er sortert likt. Fasiten har ikke varene og BOM-linjene sortert, mens specen krever at `read_input` sorterer på id og (forelder, barn).
+  - Backend ble startet to ganger lokalt (`uv run python -m fastapi run`). Første gang logget den seed av scenario A og opprettelse av demobrukeren, andre gang «Databasen har allerede data» og at demobrukeren finnes. `backend/data/` ble slettet etterpå.
+  - SQLite håndhever fremmednøklene (`PRAGMA foreign_keys=ON`).
+- **Commit**: `5bc79c3`, `1746ff5`, pluss commiten som inneholder denne oppføringen.
