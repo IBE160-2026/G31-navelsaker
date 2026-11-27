@@ -31,6 +31,13 @@ CASES = {
         def test_it():
             assert False
     """,
+    "xpass": """
+        import pytest
+
+        @pytest.mark.xfail(reason="ikke ferdig")
+        def test_it():
+            pass
+    """,
     "modulniva": """
         import pytest
 
@@ -50,5 +57,6 @@ def test_sm1_skip_becomes_failure(pytester: pytest.Pytester, source: str) -> Non
     outcomes = result.parseoutcomes()
     assert outcomes.get("skipped", 0) == 0, outcomes
     assert outcomes.get("xfailed", 0) == 0, outcomes
+    assert outcomes.get("xpassed", 0) == 0, outcomes
     assert outcomes.get("failed", 0) + outcomes.get("errors", 0) >= 1, outcomes
     result.stdout.fnmatch_lines(["*skip og xfail er ikke lov (SM-1)*ikke ferdig*"])

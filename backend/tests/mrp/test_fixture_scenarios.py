@@ -67,7 +67,11 @@ def test_fasit_exceptions(
     scenario: str, kind: str, result_for: ResultFor, expected: dict[str, Any]
 ) -> None:
     """E1 (FR-13) og E2 (FR-14) som usortert multimengde, så rekkefølgen ikke teller."""
-    actual = _exception_counter(result_for(scenario)["exceptions"], kind)
+    result = result_for(scenario)["exceptions"]
+    known = set(EXCEPTION_FR)
+    assert {e["type"] for e in result} <= known, "ukjent meldingstype i resultatet"
+    assert {e["type"] for e in expected[scenario]["exceptions"]} <= known, "ukjent type i fasiten"
+    actual = _exception_counter(result, kind)
     fasit = _exception_counter(expected[scenario]["exceptions"], kind)
     missing = fasit - actual
     extra = actual - fasit

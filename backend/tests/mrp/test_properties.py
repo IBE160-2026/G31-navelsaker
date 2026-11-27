@@ -74,9 +74,9 @@ def test_fr12_no_requirements_are_lost(
 def test_fr14_past_due_fields_agree(scenario: str, result_for: ResultFor) -> None:
     """For hver E2: tidligste mottak − mottaksuke = uker forfalt, og frigivelse = 1 − uker
     forfalt."""
-    for e in result_for(scenario)["exceptions"]:
-        if e["type"] != "PAST_DUE_RELEASE":
-            continue
+    e2 = [e for e in result_for(scenario)["exceptions"] if e["type"] == "PAST_DUE_RELEASE"]
+    assert e2, scenario
+    for e in e2:
         assert e["earliest_receipt_week"] - e["receipt_week"] == e["weeks_past_due"], e
         assert e["release_week"] == 1 - e["weeks_past_due"], e
 
