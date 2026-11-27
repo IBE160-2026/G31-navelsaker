@@ -17,15 +17,16 @@ from rbe.mrp.run import WEEK_FIELDS
 
 ResultFor = Callable[[str], dict[str, Any]]
 
-BALANCE_SCENARIOS = ("A", "B", "C", "E")
-"""D venter på R11 (story 2.3): uten den går barnas behov fra forfalte frigivelser tapt."""
 SCENARIOS = ("A", "B", "C", "D", "E")
 
 
-@pytest.mark.parametrize(
-    "scenario", BALANCE_SCENARIOS, ids=[f"{s}-FR-11-massebalanse" for s in BALANCE_SCENARIOS]
-)
+@pytest.mark.parametrize("scenario", SCENARIOS, ids=[f"{s}-FR-11-massebalanse" for s in SCENARIOS])
 def test_fr11_mass_balance_per_item(scenario: str, result_for: ResultFor) -> None:
+    """Gjelder hver vare for seg, så den går opp også i D uten R11.
+
+    Tapte behov mellom forelder og barn fanges ikke her, men av egenskapen «ingen behov går
+    tapt» i story 2.3 (FR-12).
+    """
     for item_id, values in result_for(scenario)["items"].items():
         balance = (
             values["on_hand"]

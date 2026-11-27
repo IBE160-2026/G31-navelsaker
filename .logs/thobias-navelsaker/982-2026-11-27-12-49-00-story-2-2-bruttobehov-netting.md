@@ -41,3 +41,35 @@ Føre inn refleksjonsnotatet for story 2.2 etter Thobias sine stikkord, skrevet 
 
 ### Åpne punkter
 - Thobias går gjennom PR-en for 2.2 (`bmad-walkthrough`) og skriver én egen observasjon før fletting (står allerede i issues.md).
+
+## 2026-11-27 kl. 13:10 — Thobias Navelsaker
+
+### Oppgave
+Pushe branchen og lage PR for story 2.2.
+
+### Plan
+- Push `story/2.2-bruttobehov-netting` og PR mot `main` med beskrivelse og en tom seksjon for Thobias sin gjennomgang.
+
+### Resultat
+- Branchen er pushet med fem commits (`6989d94`, `414d436`, `ab22f52`, `e6dabe5`, `779d1d4`).
+- PR #12: https://github.com/IBE160-2026/G31-navelsaker/pull/12.
+
+### Åpne punkter
+- Thobias går gjennom PR #12 (`bmad-walkthrough`) og skriver én egen observasjon før fletting (står allerede i issues.md).
+
+## 2026-11-27 kl. 13:30 — Thobias Navelsaker
+
+### Oppgave
+Gå gjennom PR #12 med `bmad-walkthrough`, grave i unntakene for scenario D, og rette det gjennomgangen fant.
+
+### Plan
+- Walkthrough i fire steg: orientering, gjennomgang per tema, risikosteder og graving i unntakene for D.
+- Rette funnet i PR-en og føre resten for 2.3 i `deferred-work.md`.
+
+### Resultat
+- Gjennomgangen viste at begrunnelsen for å holde D utenfor massebalansetesten ikke holdt. Massebalansen gjelder hver vare for seg og går opp i D uten R11. D er tatt med i `tests/mrp/test_properties.py`, og docstringen er rettet. 533 tester består (77 skipped), og ruff gir 0 funn.
+- Ingenting tvinger 2.3 til å fjerne skip-regelen. Uten R11 er summen av bruttobehov for PLT-900 i D 30, mot 66 i fasiten. Egenskapen «ingen behov går tapt», fjerning av skip-regelen og FR-12 i D-id-ene er ført i `deferred-work.md` for 2.3.
+- Funnet er Thobias sin observasjon i PR #12, formulert av Claude og godkjent av Thobias.
+
+### Åpne punkter
+- Flett PR #12 (merge-commit, ikke squash) og sett 2.2 til `done` i spec-commiten for 2.3.
