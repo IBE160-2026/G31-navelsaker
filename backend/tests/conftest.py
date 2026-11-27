@@ -65,15 +65,23 @@ def fasit_cases(field_fr: dict[str, str]) -> list[FasitCase]:
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
-    """Parametriser ``fasit_case`` fra fasiten med modulens tabell ``FIELD_FR``."""
+    """Parametriser ``fasit_case`` fra fasiten med modulens tabell ``FIELD_FR``.
+
+    Har modulen funksjonen ``fasit_marks(case)``, får hvert tilfelle marks fra den (f.eks.
+    ``skip`` for felt som en senere story fyller inn).
+    """
     if "fasit_case" not in metafunc.fixturenames:
         return
-    cases = fasit_cases(metafunc.module.FIELD_FR)
-    metafunc.parametrize(
-        "fasit_case",
-        cases,
-        ids=[f"{c.scenario}-{c.fr}-{c.item}-{c.field}" for c in cases],
-    )
+    marks_for = getattr(metafunc.module, "fasit_marks", None)
+    params = [
+        pytest.param(
+            case,
+            id=f"{case.scenario}-{case.fr}-{case.item}-{case.field}",
+            marks=marks_for(case) if marks_for else (),
+        )
+        for case in fasit_cases(metafunc.module.FIELD_FR)
+    ]
+    metafunc.parametrize("fasit_case", params)
 
 
 @pytest.fixture(scope="session")

@@ -54,6 +54,9 @@ class ScheduledReceipt:
 
 @dataclass(frozen=True, slots=True)
 class Horizon:
+    """Planhorisonten. ``first_week`` er alltid 1 (ellers ``MrpInputError``), og uke *t* har
+    indeks *t* − 1 i ukesarrayene. En frigivelse før uke 1 er forfalt (R1, R9)."""
+
     first_week: int
     weeks: int
 
