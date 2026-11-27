@@ -30,6 +30,10 @@ Jeg lot KI-en flette PR #4–#6 uten egen gjennomgang. Det var ikke planlagt som
 
 *(Avsnittet over er formulert av Claude etter at jeg spurte om påstanden var gyldig, og jeg har godkjent det som mitt.)*
 
+### Om økten
+
+Jeg ble overrasket over hvor mye retrospektiven fant etter at alt var testet og så bra ut. Jeg har lært at jeg må prøve appen selv ofte og se på helheten, ikke bare stole på at KI-gjennomgangen tar alt.
+
 ### Læringspunkter fra retrospektiven av epic 1
 
 Stikkordene er mine. Claude har skrevet forklaringene etter at jeg ba om det, og jeg har valgt punktene. Kilde: [retrospektiven av epic 1](../_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md).
