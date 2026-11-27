@@ -38,3 +38,4 @@
 - [ ] 2026-11-27 [story-2-3-r11-forfalte-ordre](981-2026-11-27-13-23-32-story-2-3-r11-forfalte-ordre.md) — Thobias går gjennom PR-en for 2.3 (bmad-walkthrough) og skriver én egen observasjon før fletting (tiltak 7)
 - [x] 2026-11-27 [story-2-3-r11-forfalte-ordre](981-2026-11-27-13-23-32-story-2-3-r11-forfalte-ordre.md) — refleksjonsnotat for økten om story 2.3 venter på Thobias sine egne ord (løst 2026-11-27)
 - [ ] 2026-11-27 [story-2-3-r11-forfalte-ordre](981-2026-11-27-13-23-32-story-2-3-r11-forfalte-ordre.md) — flett PR-en for 2.3 og sett 2.3 til done i spec-commiten for 2.4
+- [ ] 2026-11-27 [story-2-3-r11-forfalte-ordre](981-2026-11-27-13-23-32-story-2-3-r11-forfalte-ordre.md) — avgjør etter gjennomgangen av 2.3: samle alle avvik i egenskapen «ingen behov går tapt», test for FR-nummer i id-ene, og om kjøpte foreldre med BOM skal avvises

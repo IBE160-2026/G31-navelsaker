@@ -465,3 +465,21 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Brukeren ba igjen om gjennomgang av specen før godkjenning. Den fant avviket i AC 3 før koden ble skrevet.
   - Claude valgte selv at R11 gjelder alle foreldre og at LLC i D beholder FR-10, og la begge valgene fram ved sjekkpunktet. Brukeren godkjente uten å endre dem.
 - **Commit**: `1c7690d` (spec), `51c43c7` (kode med tester), `84fb59e` (retting etter gjennomgangen), pluss dokumentasjonscommiten som inneholder denne oppføringen.
+
+## 2026-11-27 — Gjennomgang av story 2.3 før fletting (bmad-walkthrough)
+
+- **Hvorfor**: Tiltak 7 fra retrospektiven av epic 1: Thobias går selv gjennom PR-en og skriver én egen observasjon før fletting. Gjennomgangen viste at FR-12 i PRD-en og første AC for story 2.3 i `epics.md` fortsatt sa «produksjonsvare», mens kjernen bruker R11 på alle foreldre.
+- **Prompt(er)**:
+  - «/bmad-walkthrough Gå gjennom story 2.3 (R11, FR-12) … Hjelp meg å forstå og teste endringen selv, så jeg kan skrive én egen observasjon i PR-en før fletting», med fem punkter: R11 med scenario D, utvidelsen til kjøpte foreldre, egenskapen «ingen behov går tapt», `fasit_fr` og avvikene fra planleggingen.
+  - «Rett epics.md:444 og første setning i FR-12».
+- **Verktøy/modell**: Claude Code (Opus 5.5) med `bmad-walkthrough`, uten subagenter. Mutantene ble kjørt som et pytest-plugin i scratchpad, uten å endre filene i repoet.
+- **Endringer**:
+  - `prd.md`, FR-12: første setning gjelder nå «en vare med BOM-linjer under seg», og at det også gjelder kjøpte varer, står rett etter. Den doble formuleringen fra rettingen er fjernet.
+  - `epics.md`, story 2.3: første AC sier «en vare med BOM-linjer under seg (produksjonsvare eller kjøpt vare)».
+- **Verifisering**:
+  - `uv run python -m pytest` gir 619 tester som består og 0 skipped. `--collect-only` gir 77 id-er med `D-FR-12-` og 12 med `D-FR-10-` (11 for LLC og 1 for varesettet).
+  - Uten R11 feiler 41 tester, ikke 40 som i Implementation Notes: testen for kjøpt forelder kom til i rettingen. Med en vakt som bare tar med `make`-foreldre, feiler bare `test_fr12_r11_purchased_parent_past_due`, så utvidelsen holdes oppe av én test.
+  - Egenskapen «ingen behov går tapt» stopper ved første avvik (GIR-220). De fem varene i Implementation Notes ble bekreftet med et eget skript. PRF-910 og VIN-920 slår ikke ut fordi foreldrene deres ikke har forfalte forslag igjen uten R11.
+- **Brukerens styring**:
+  - Thobias valgte de fem punktene selv, og valgte å rette bare de to stedene i planleggingen. Andre svakheter (egenskapen viser bare første avvik, id-ene er ikke testet, alternativet å avvise kjøpte foreldre med BOM) ble lagt fram uten å bli rettet.
+- **Commit**: `9e47420` (retting i PRD og epics), pluss dokumentasjonscommiten som inneholder denne oppføringen.
