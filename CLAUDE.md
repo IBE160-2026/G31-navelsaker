@@ -29,6 +29,7 @@ Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til e
   2. **Kode med tester,** 1–2 commits som viser til FR-nummeret, for eksempel «FR-5: beregn lavnivåkoder».
   3. **Retting etter gjennomgangen:** alle funn som rettes, i én commit, for eksempel «Rett funn fra gjennomgangen av story 2.1».
   4. **Dokumentasjon samlet:** AI-logg, sesjonslogg, triageloggen i specen, sprintstatus `review` og eventuelt refleksjonsnotat i én commit, for eksempel «Dokumenter story 2.1 i AI-logg og sesjonslogg».
+- **All gjennomgang er ferdig før dokumentasjonscommiten,** også Thobias sin egen (innført etter Thobias sin observasjon i PR #13, der gjennomgangen etter dokumentasjonscommiten ga to commits til). Rekkefølgen: kode, kodegjennomgang og retting, så pusher Claude branchen og oppretter PR-en, så går Thobias gjennom den (`bmad-walkthrough`) og skriver observasjonen i PR-en. Rettinger fra Thobias sin gjennomgang går inn i rettingscommiten eller en commit rett etter. Dokumentasjonscommiten kommer til slutt, med AI-logg og sesjonslogg for hele storyen, også gjennomgangen.
 - Status `done` etter flettingen blir ikke en egen commit på `main`. Den tas med i spec-commiten til neste story.
 - Ikke slå sammen PR-er med «squash merge». Merge-commit beholder sporet fra spec via kode til retting.
 - Endringer utenfor en story, som tiltak fra en retrospektiv, følger samme tanke: én commit per sak, og dokumentasjonen samlet i én commit til slutt.

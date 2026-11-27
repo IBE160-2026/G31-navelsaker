@@ -83,3 +83,9 @@ Gjennomgangen av specen fant to feil før koden ble skrevet: en vakt som ikke ku
 I gjennomgangen av PR #12 fant jeg at de 77 testene for scenario D som sto som skipped i 2.2, aldri ville feilet om skip-regelen ble glemt etter at R11 var på plass. Verken jeg eller KI-gjennomgangen i 2.2 hadde sett det, og det ble rettet i 2.3. Lærdommen er å følge nøye med på at testene faktisk kjøres, ikke bare at de er grønne. Nok en gang så jeg at gjennomgang av specen før koding er avgjørende, og at mine egne gjennomganger finner feil som subagentene ikke fant.
 
 *(Formulert av Claude etter mine stikkord «Jeg fant 77 tester med skip-regel so jeg og KI overså i 2.2 Fant det i PR # 12 og rettet det. Læring-> Være nøye på å følge med på at tester faktisk kjøres. Nok en gang samme lærdom: Gjennomgang før koding er avgjørende. Jeg fant feil som subagentene i 2.2 ikke fant.» (skriv bedre, og si fra hvis noe er feil). Claude rettet to punkter: skip-regelen var lagt inn med vilje i 2.2, og det som ble oversett, var at ingenting ville feilet om den ble stående. Den ble fjernet i 2.3, ikke i PR #12.)*
+
+### Om gjennomgangen av PR #13
+
+Gjennomgangen viste at PRD-en og epics.md fortsatt sa «produksjonsvare», selv om koden var endret. Den viste også at noen tester sjekket mindre enn det så ut til, og at én regel bare var dekket av én test som ikke fanget alle feil. Alt så grønt og ferdig ut, men det var det ikke før gjennomgangen.
+
+*(Skrevet etter en oppsummering fra Claude av hva gjennomgangen fant.)*
