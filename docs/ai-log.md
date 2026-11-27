@@ -375,3 +375,20 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - De tre nye rutetestene feilet når `docs_url`, `redoc_url` og `openapi_url` ble fjernet midlertidig, og besto igjen etter at de ble satt tilbake.
   - Feilmeldingen «Fant ikke fasitfila» i README er sjekket mot `rbe/db/seed.py:37`.
 - **Commit**: `61e80fb`, `6cd68d9`, `fd86f0f`, pluss commiten som inneholder denne oppføringen.
+
+## 2026-11-27 — Fast commitmønster per story og læringspunkter i refleksjonsnotatene
+
+- **Hvorfor**: Retrospektiven av epic 1 viste at PR-ene hadde 8–14 commits mot regelen om 2–5 (funn V7). Brukeren spurte hvordan det kan unngås, og ba om at læringspunktene fra retrospektiven føres inn i refleksjonsnotatene.
+- **Prompt(er)**:
+  - «Du kan skrive dette under refleksjonsnotat om læringspunkter, og skriv det ut med bedre forklaring: …», med brukerens fem stikkord.
+  - «Hvordan kan vi unngå at det blir for mange commits igjen?»
+  - «Ja, legg det inn i CLAUDE.md. Legg det også til i refleksjonsnotatet som læringspunkt»
+- **Verktøy/modell**: Claude Code (Opus 5.5).
+- **Endringer**:
+  - `docs/refleksjonsnotater.md` har fått seksjonen «Læringspunkter fra retrospektiven av epic 1». Stikkordene er brukerens, og forklaringene er skrevet av Claude og merket som det (`71520af`, `585fee5`).
+  - CLAUDE.md: et fast mønster med 4–5 commits per story-PR. Sesjonsloggen committes én gang per story, status `done` tas med i neste spec-commit, og squash merge brukes ikke. epics.md er avstemt (`e9ac439`).
+- **Verifisering**: Claude telte commitene i PR #4 for å finne årsaken. Av 11 commits var 3 loggcommits, 1–2 AI-logg, 2 overført fra forrige story og bare rundt 3 kode.
+- **Brukerens styring**:
+  - Brukeren valgte selv hvilke læringspunkter som skulle med.
+  - Brukeren skrev at det å flette uten gjennomgang «førte til at feil ikke ble oppdaget». Claude endret det til «feil gikk videre uten at jeg så dem», fordi det ikke er sikkert at en menneskelig gjennomgang ville funnet `get_session`-feilen. Brukeren ble gjort oppmerksom på endringen.
+- **Commit**: `71520af`, `e9ac439`, `585fee5`, pluss dokumentasjonscommiten som inneholder denne oppføringen.

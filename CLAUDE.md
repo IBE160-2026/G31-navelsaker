@@ -1,15 +1,15 @@
 ## Sesjonslogg
 
-Når en oppgave eller økt avsluttes, før sluttoppsummeringen, bruk `sesjonslogg`-skillen: dokumenter Oppgave + Plan + Resultat + åpne punkter i `.logs/<bruker>/`, og før åpne punkter i `.logs/<bruker>/issues.md`. Skillen committer loggfila lokalt; push gjør du selv. Gruppens egne regler for commit og språk gjelder foran dette.
+Når en oppgave eller økt avsluttes, før sluttoppsummeringen, bruk `sesjonslogg`-skillen: dokumenter Oppgave + Plan + Resultat + åpne punkter i `.logs/<bruker>/`, og før åpne punkter i `.logs/<bruker>/issues.md`. Skillen committer loggfila lokalt; push gjør du selv. Gruppens egne regler for commit og språk gjelder foran dette. På en story-branch committes sesjonsloggen bare én gang, i dokumentasjonscommiten (se «Commits»), ikke hver gang den oppdateres.
 
 ## AI-logg
 
-Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til en oppføring i [docs/ai-log.md](docs/ai-log.md) etter formatet som står der: hvorfor, prompter, verktøy/modell, endringer, verifisering og commit. Ta med konkrete eksempler der brukeren presiserte, avviste eller rettet KI-forslag. Hopp over trivielle rettelser (skrivefeil, formatering). Rekkefølge ved avslutning: AI-logg → commit av arbeidet → sesjonslogg → sluttoppsummering.
+Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til en oppføring i [docs/ai-log.md](docs/ai-log.md) etter formatet som står der: hvorfor, prompter, verktøy/modell, endringer, verifisering og commit. Ta med konkrete eksempler der brukeren presiserte, avviste eller rettet KI-forslag. Hopp over trivielle rettelser (skrivefeil, formatering). Rekkefølge ved avslutning: commit av arbeidet → AI-logg og sesjonslogg → sluttoppsummering. På en story-branch er AI-logg og sesjonslogg samlet i dokumentasjonscommiten (se «Commits»).
 
 ## Refleksjonsnotater
 
 - På slutten av hver økt som endret noe, ber Claude i sluttoppsummeringen brukeren om to–tre setninger om egne erfaringer: hva som fungerte og ikke fungerte med KI, hvor brukeren rettet eller avviste noe, og hva brukeren lærte.
-- Svaret føres **ordrett** i [docs/refleksjonsnotater.md](docs/refleksjonsnotater.md) under datoen for økten det gjelder, med lenke til sesjonsloggen, og committes for seg. Svarer brukeren i neste økt, føres det inn da.
+- Svaret føres **ordrett** i [docs/refleksjonsnotater.md](docs/refleksjonsnotater.md) under datoen for økten det gjelder, med lenke til sesjonsloggen. Det committes sammen med dokumentasjonscommiten hvis den ikke er laget ennå, og ellers for seg. Svarer brukeren i neste økt, føres det inn da.
 - Claude skriver aldri notater på vegne av brukeren og pynter ikke teksten. Hopper brukeren over, står det «(hoppet over)».
 
 ## Retrospektiv etter hver epic
@@ -24,6 +24,14 @@ Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til e
 - Commit avgrensede endringer underveis, ikke alt i én stor commit til slutt. Hver commit skal gjelde én sak.
 - Commit-meldinger skrives på norsk, i imperativ og beskrivende (f.eks. «Legg til netting og partiregel i MRP-kjernen»).
 - Push bare når brukeren ber om det.
+- **Fast mønster per story-PR, 4–5 commits** (innført etter retrospektiven av epic 1, der PR-ene hadde 8–14 commits, mest av like loggcommits):
+  1. **Spec:** specen, sprintstatus `in-progress` for storyen og `done` for forrige story, hvis den ikke er satt ennå. For eksempel «Legg til spec for story 2.1».
+  2. **Kode med tester,** 1–2 commits som viser til FR-nummeret, for eksempel «FR-5: beregn lavnivåkoder».
+  3. **Retting etter gjennomgangen:** alle funn som rettes, i én commit, for eksempel «Rett funn fra gjennomgangen av story 2.1».
+  4. **Dokumentasjon samlet:** AI-logg, sesjonslogg, triageloggen i specen, sprintstatus `review` og eventuelt refleksjonsnotat i én commit, for eksempel «Dokumenter story 2.1 i AI-logg og sesjonslogg».
+- Status `done` etter flettingen blir ikke en egen commit på `main`. Den tas med i spec-commiten til neste story.
+- Ikke slå sammen PR-er med «squash merge». Merge-commit beholder sporet fra spec via kode til retting.
+- Endringer utenfor en story, som tiltak fra en retrospektiv, følger samme tanke: én commit per sak, og dokumentasjonen samlet i én commit til slutt.
 
 ## Sporbarhet fra krav til kode
 
