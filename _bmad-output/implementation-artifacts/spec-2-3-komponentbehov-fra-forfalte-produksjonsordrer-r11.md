@@ -3,7 +3,7 @@ title: 'Story 2.3: Komponentbehov fra forfalte produksjonsordrer (R11)'
 type: 'feature'
 created: '2026-11-27'
 baseline_commit: 'b61dc1177871a0e26bf55467b85e66d24e7bed57'
-status: 'in-progress'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 context:
@@ -60,14 +60,14 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `backend/src/rbe/mrp/plan.py` -- R11: forfalte forslag gir barna behov i uke 1, med docstring om at det gjelder alle foreldre -- FR-12
-- [ ] `backend/src/rbe/mrp/run.py` -- docstringen til `run_mrp` får R11 -- FR-12
-- [ ] `backend/tests/conftest.py` -- erstatt kroken `fasit_marks` med `fasit_fr` -- AD-10
-- [ ] `backend/tests/mrp/test_fixture_scenarios.py` -- fjern skip, FR-12 for D -- FR-12
-- [ ] `backend/tests/mrp/test_properties.py` -- «ingen behov går tapt» for A–E, docstringene -- FR-12, SM-C2
-- [ ] `backend/tests/mrp/test_plan.py` -- `source` i `_item`, kjede i tre ledd og blandet forelder (to tilfeller) -- FR-12
-- [ ] `_bmad-output/planning-artifacts/epics.md` -- AC 3 i story 2.3 per vare, med MPS -- sporbarhet
-- [ ] Prøv vakten: sett tilbake `if order.release_week >= 1`, se at D-tilfellene (spec-gjennomgangen regnet 36 av 77), egenskapen for D (PLT-900 30 mot 66, PRF-910 30 mot 70) og kjedetestene feiler, tilbakestill og før tallene i Implementation Notes -- SM-C2
+- [x] `backend/src/rbe/mrp/plan.py` -- R11: forfalte forslag gir barna behov i uke 1, med docstring om at det gjelder alle foreldre -- FR-12
+- [x] `backend/src/rbe/mrp/run.py` -- docstringen til `run_mrp` får R11 -- FR-12
+- [x] `backend/tests/conftest.py` -- erstatt kroken `fasit_marks` med `fasit_fr` -- AD-10
+- [x] `backend/tests/mrp/test_fixture_scenarios.py` -- fjern skip, FR-12 for D -- FR-12
+- [x] `backend/tests/mrp/test_properties.py` -- «ingen behov går tapt» for A–E, docstringene -- FR-12, SM-C2
+- [x] `backend/tests/mrp/test_plan.py` -- `source` i `_item`, kjede i tre ledd og blandet forelder (to tilfeller) -- FR-12
+- [x] `_bmad-output/planning-artifacts/epics.md` -- AC 3 i story 2.3 per vare, med MPS -- sporbarhet
+- [x] Prøv vakten: sett tilbake `if order.release_week >= 1`, se at D-tilfellene (spec-gjennomgangen regnet 36 av 77), egenskapen for D og kjedetestene feiler (tallene i egenskapen ble andre enn ventet, se Implementation Notes), tilbakestill og før tallene i Implementation Notes -- SM-C2
 
 **Prosess (tiltak 7–9 fra retrospektiven av epic 1):** 4–5 commits etter CLAUDE.md på branchen `story/2.3-r11-forfalte-ordre`. Spec-commiten setter også 2.2 til `done` og 2.3 til `in-progress` i sprintstatus og lukker punktet om fletting av PR #12 i issues.md. Thobias går gjennom PR-en (`bmad-walkthrough`) og skriver én egen observasjon før fletting. Claude ber om refleksjonsnotat i sluttoppsummeringen. Dokumentasjonscommiten markerer punktet for 2.3 i `deferred-work.md` som løst.
 
@@ -76,6 +76,14 @@ context:
 - Given pytest med `-v`, when fasittestene for D listes, then har de 77 tilfellene for feltene fra 2.2 id-er med `D-FR-12-`, og de 11 for `low_level_code` har `D-FR-10-`.
 
 ## Implementation Notes
+
+- R11 er én linje i `plan_items`: `week = max(order.release_week, 1)`. `planned_order_releases` regnes som før i `_plan_item` (R9).
+- `fasit_fr(scenario, field, fr)` erstatter `fasit_marks`. Kroken i `conftest.py` bruker `case._replace(fr=...)`, så id-en og `case.fr` har samme FR. `pytest --collect-only` gir 77 id-er med `D-FR-12-` og 11 med `D-FR-10-…-low_level_code`.
+- `_item` i `test_plan.py` fikk `source: Literal["make", "purchase"]`. Ny hjelper `_chain` bygger `MrpInput` med BOM. Testene: `test_fr12_r11_past_due_in_three_levels` og `test_fr12_r11_parent_with_past_due_and_valid_orders` (to tilfeller).
+- Resultat: 618 tester består, 0 skipped. `ruff check` og `ruff format --check` gir 0 funn.
+- **Vaktprøven** (`if order.release_week >= 1` satt tilbake, så tilbakestilt): 40 feil. 36 av 77 fasittilfeller for D (som i spec-gjennomgangen), egenskapen for D og de tre kjedetestene. A, B, C, E og LLC i D besto.
+- **Tallene i egenskapen avviker fra det specen forventet.** Uten R11 har PLT-900 30 i BB (fasit 66) og PRF-910 30 (fasit 70), men egenskapen sammenligner mot foreldrenes forslag i samme kjøring, ikke mot fasiten. Den slår ut for fem varer: GIR-220, MOT-210 og STY-310 (1 mot 2), SEK-110 (4 mot 8) og PLT-900 (30 mot 38). PRF-910 slår ikke ut, fordi forelderen SEK-110 allerede har mistet behovet og har færre forslag (3 × 10 = 30). Egenskapen finner tapet der det skjer, i leddet under den forfalte forelderen, og fasiten for D fanger følgefeilene lenger ned.
+- AC 3 i `epics.md` er skrevet om til formen per vare, med MPS.
 
 ## Spec Change Log
 
@@ -87,6 +95,19 @@ Spec-gjennomgang før godkjenning (2026-11-27, én subagent). Den regnet R1–R1
 - `fasit_fr` gjelder både id-en og `case.fr` (3). Docstringene i `conftest.py`, `run.py` og `test_properties.py` er gjort til faste oppgaver (4–6).
 - `_item` får `source` (7). Blandet forelder har konkrete inndata og et tilfelle der forfalt og gyldig summeres i uke 1 (8). `MpsLine` og `BomLine` er nevnt i Code Map (9).
 - Utvidelsen til alle foreldre står som bevisst avvik (10). Vaktprøven har tall som kan sjekkes (11).
+
+Runde 1 av kodegjennomgangen (2026-11-27, lagene blind-hunter (BH), edge-case-hunter (ECH) og verification-gap (VG), mot `51c43c7`). ECH fant ingenting. Rute: patch (P) eller avvist (A). Ingen funn var `intent_gap` eller `bad_spec`.
+
+| # | Lag | Funn | Vurdering | Begrunnelse | Rute |
+|---|---|---|---|---|---|
+| 1 | VG, BH | Ingen test har en kjøpt forelder med barn. En vakt `if parent.source == "make"` består alt | medium | Alle foreldre i testene er `make`, og fasiten har ingen kjøpte foreldre. Utvidelsen er bevisst, men kan forsvinne stille | P |
+| 2 | BH | Utvidelsen til alle foreldre står ikke i PRD-en (FR-12 sier «produksjonsvare») | medium | CLAUDE.md krever at avvik føres tilbake i planleggingsdokumentet. Én setning i FR-12. Fasitens README endres ikke, fordi den bare endres sammen med `input.json` og `expected.json` | P |
+| 3 | BH | Docstringen til massebalansen sier «går opp også i D uten R11» | low | Beskriver en tilstand som ikke finnes lenger. Direkte retting | P |
+| 4 | BH | Egenskapstesten kjører `run_mrp` selv i stedet for `result_for` | low | To veier til samme resultat, og kjøringen gjøres på nytt. Direkte retting | P |
+| 5 | BH | `fasit_fr` gir FR-12 også til varer R11 ikke berører (f.eks. RBE-000) | low | FR-12 på de sju feltene i D er låst i specen. Å avgrense per vare krever en liste med varenummer i testen | A |
+| 6 | BH | Egenskapen sjekker summer, ikke at behovet havner i uke 1 | low | Står i Design Notes. Uka dekkes av fasiten for D og av kjedetestene. Rettingen legger til ny logikk i testen | A |
+| 7 | BH | Ingen enhetstest for et barn med én forfalt og én gyldig forelder | false | PLT-900 i D har tre forfalte foreldre (byggenr. 1) og gyldige forslag (byggenr. 2), og fasittesten sammenligner hele arrayen | A |
+| 8 | BH | `fasit_marks` er fjernet uten erstatning for senere stories | false | Ingen bruker kroken. 2.4 tester meldingene i en egen test (deferred-work.md), og git-historikken har kroken | A |
 
 ## Design Notes
 

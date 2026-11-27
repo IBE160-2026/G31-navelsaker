@@ -440,3 +440,28 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Brukeren ba om gjennomgang av specen før godkjenning, som i 2.1. Den fant regnefeilen i sikkerhetslageret før koden ble skrevet.
   - Claude beholdt `skip` for D, mot subagentens forslag om `xfail`, og la begrunnelsen fram ved sjekkpunktet. Brukeren godkjente specen uten å endre det.
 - **Commit**: `6989d94` (spec), `414d436` (kode med tester), `ab22f52` (retting etter gjennomgangen), pluss dokumentasjonscommiten som inneholder denne oppføringen.
+
+## 2026-11-27 — Story 2.3: komponentbehov fra forfalte produksjonsordrer (R11)
+
+- **Hvorfor**: Story 2.3 i epic 2. Uten R11 mistet barna behovet fra forslag med frigivelsesuke < 1, og i scenario D hadde PLT-900 30 i bruttobehov mot 66 i fasiten (FR-12). Thobias sin gjennomgang av PR #12 viste at ingenting ville feilet om skip-regelen for D ble stående, og at bare egenskapen «ingen behov går tapt» fanger tapet mellom forelder og barn.
+- **Prompt(er)**:
+  - «Fortsett med story 2.3. Les CLAUDE.md, åpne tiltak i sprint-status.yaml, issues.md … og punktene for 2.3 i deferred-work.md (særlig «ingen behov går tapt», skip-regelen for D og FR-12 i id-ene). Spec-commiten skal også sette 2.2 til done og lukke punktet om fletting av PR #12 i issues.md.»
+  - Svarene på sjekkpunktene: «Gå gjennom specen» og «Godkjenn og fortsett».
+- **Verktøy/modell**: Claude Code (Opus 5.5) med `bmad-build`. Én subagent gikk gjennom specen og regnet R1–R11 uavhengig, én implementerte, og tre gikk gjennom koden (blind-hunter, edge-case-hunter, verification-gap).
+- **Endringer**:
+  - `backend/src/rbe/mrp/plan.py`: R11 er én linje, `week = max(order.release_week, 1)`. Regelen gjelder alle foreldre uansett `source`, en bevisst utvidelse av «produksjonsvare». `run.py` har oppdatert docstring.
+  - `backend/tests/conftest.py`: kroken `fasit_marks` er byttet ut med en valgfri `fasit_fr`, som setter FR-nummeret både i id-en og i `case.fr`.
+  - `backend/tests/mrp/test_fixture_scenarios.py`: skip for D er fjernet. De 77 D-tilfellene for feltene fra 2.2 har `D-FR-12-` i id-en, og `low_level_code` beholder FR-10.
+  - `backend/tests/mrp/test_properties.py`: ny `test_fr12_no_requirements_are_lost` for A–E. `test_plan.py`: R11 i tre ledd, forelder med forfalt og gyldig forslag (to tilfeller) og kjøpt forelder.
+  - AC 3 for story 2.3 i `epics.md` sjekker per vare med MPS, ikke per BOM-linje. FR-12 i PRD-en nevner utvidelsen til kjøpte foreldre. `deferred-work.md`: punktet for 2.3 er lukket.
+- **Verifisering**:
+  - `uv run python -m pytest` gir 619 tester som består og 0 skipped. Ruff gir 0 funn.
+  - Vakten (SM-C2) er prøvd. Med R11 fjernet feilet 40 tester: 36 av 77 D-tilfeller, egenskapen for D og kjedetestene. A, B, C og E besto.
+  - Egenskapen slo ut for andre varer enn specen ventet: GIR-220, MOT-210, STY-310, SEK-110 og PLT-900, ikke PRF-910. Den sammenligner med forelderens forslag i samme kjøring, så den finner tapet i leddet rett under den forfalte forelderen. Følgefeilene lenger ned fanges av fasiten for D. Tallene i specen ble rettet.
+  - Spec-gjennomgangen regnet R1–R11 i et eget skript og fikk 0 avvik mot `expected.json` for A–E. Den fant 11 svakheter. Den viktigste var at AC 3 i epics («for hver BOM-linje», uten MPS) ikke kan sjekkes slik: PLT-900 har tre foreldre, og RBE-000 har MPS uten foreldre.
+  - Kodegjennomgangen gav 8 rader (edge-case-hunter fant ingenting): 4 rettet og 4 avvist med begrunnelse. Viktigst var at ingen test hadde en kjøpt forelder med barn, så utvidelsen av R11 kunne forsvunnet stille.
+- **Brukerens styring**:
+  - Omfanget kom fra Thobias sin egen gjennomgang av PR #12: egenskapen «ingen behov går tapt», fjerning av skip-regelen og FR-12 i id-ene.
+  - Brukeren ba igjen om gjennomgang av specen før godkjenning. Den fant avviket i AC 3 før koden ble skrevet.
+  - Claude valgte selv at R11 gjelder alle foreldre og at LLC i D beholder FR-10, og la begge valgene fram ved sjekkpunktet. Brukeren godkjente uten å endre dem.
+- **Commit**: `1c7690d` (spec), `51c43c7` (kode med tester), `84fb59e` (retting etter gjennomgangen), pluss dokumentasjonscommiten som inneholder denne oppføringen.
