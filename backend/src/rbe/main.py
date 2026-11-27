@@ -33,7 +33,15 @@ def create_app() -> FastAPI:
     logging.basicConfig(level=logging.INFO)
     # Hentes her, så advarselen om manglende sesjonsnøkkel kommer ved oppstart (AD-9).
     settings = get_settings()
-    app = FastAPI(title="Red Ball Express", lifespan=lifespan)
+    # Ingen /docs, /redoc eller /openapi.json: AD-8 tillater bare /api/health og innloggingen
+    # uten innlogging, og rutetesten krever at alle ruter ligger under /api/.
+    app = FastAPI(
+        title="Red Ball Express",
+        lifespan=lifespan,
+        docs_url=None,
+        redoc_url=None,
+        openapi_url=None,
+    )
     # Signert cookie, alltid httpOnly. https_only=False fordi appen kjøres lokalt over http (AD-11).
     app.add_middleware(
         SessionMiddleware,

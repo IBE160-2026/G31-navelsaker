@@ -24,8 +24,8 @@
 - [x] 2026-11-26 [story-1-6-menylinje-og-startside](986-2026-11-26-14-30-30-story-1-6-menylinje-og-startside.md) — valgfri kort video av innlogging → startside → meny → utlogging (docs/media/2026-11-26-innlogging-og-meny.mp4); demovideo av UJ-1 senere (løst 2026-11-26: docs/media/2026-11-26-innlogging-og-meny.mp4)
 - [ ] 2026-11-26 [story-1-7-readme-v1](985-2026-11-26-15-33-38-story-1-7-readme-v1.md) — slett det rå opptaket `Spiller inn 2026-11-26 151023.mp4` i prosjektroten (43 MB, ikke committet)
 - [x] 2026-11-26 [story-1-7-readme-v1](985-2026-11-26-15-33-38-story-1-7-readme-v1.md) — flett PR #7 og sett story 1.7 (og epic 1) til done; start epic 2 i ny økt (løst 2026-11-27: PR #7 flettet, 1.7 og epic 1 done)
-- [ ] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — tiltak 1, 2 og 5 fra retrospektiven før story 2.1: epics.md med python -m, cookie og /docs i AD-8, feilsøking i README
+- [x] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — tiltak 1, 2 og 5 fra retrospektiven før story 2.1: epics.md med python -m, cookie og /docs i AD-8, feilsøking i README (løst 2026-11-27: 61e80fb, 6cd68d9, fd86f0f; status i sprint-status.yaml venter på bekreftelse)
 - [ ] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — tiltak 3: get_session med begin() og test for skriving før første skrivende rute i 3.1
 - [x] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — oppdater vurderingen i epic-1-retro til accepted-with-open-items når PR #7 er flettet (løst 2026-11-27)
-- [ ] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — flett PR #8 (retrospektiv av epic 1)
-- [ ] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — første refleksjonsnotat (denne økten og tilbakeblikk på epic 1) venter på brukerens egne ord
+- [x] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — flett PR #8 (retrospektiv av epic 1) (løst 2026-11-27)
+- [x] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — første refleksjonsnotat (denne økten og tilbakeblikk på epic 1) venter på brukerens egne ord (løst 2026-11-27)

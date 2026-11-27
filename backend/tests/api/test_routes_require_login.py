@@ -4,7 +4,9 @@ Testen går gjennom ``app.routes``. FastAPI 0.165 legger en inkludert ruter inn 
 så rutene og avhengighetene de får fra ``include_router`` hentes med ``iter_route_contexts``.
 For hver rute under ``/api`` som ikke er unntatt, sjekkes at ``require_user`` finnes i
 avhengighetstreet, og at et kall uten innlogging gir 401. En ny rute som glemmer innloggingen,
-får dermed testen til å feile og nevne ruten.
+får dermed testen til å feile og nevne ruten. Ingen ruter får ligge utenfor ``/api/``, så
+FastAPIs ``/docs``, ``/redoc`` og ``/openapi.json`` er skrudd av, og en ny rute utenfor
+``/api/`` blir fanget.
 """
 
 import re
@@ -51,6 +53,15 @@ def find_open_routes(client: TestClient) -> list[str]:
     return problems
 
 
+def routes_outside_api(client: TestClient) -> list[str]:
+    """Alle ruter, også FastAPIs egne, som ikke ligger under ``/api/``."""
+    return sorted(
+        route.path
+        for route in iter_route_contexts(client.app.routes)
+        if not route.path.startswith("/api/")
+    )
+
+
 def test_ad8_all_api_routes_require_login(client: TestClient) -> None:
     assert find_open_routes(client) == []
 
@@ -86,3 +97,23 @@ def test_ad8_current_user_without_require_user_gives_401() -> None:
     response = TestClient(app).get("/api/whoami")
     assert response.status_code == 401
     assert response.json() == {"detail": "Du er ikke logget inn."}
+
+
+def test_ad8_no_routes_outside_api(client: TestClient) -> None:
+    assert routes_outside_api(client) == []
+
+
+def test_ad8_api_docs_are_disabled(client: TestClient) -> None:
+    """``/docs``, ``/redoc`` og ``/openapi.json`` finnes ikke (retrospektiven av epic 1, R4)."""
+    for path in ("/docs", "/redoc", "/openapi.json"):
+        assert client.get(path).status_code == 404, path
+
+
+def test_ad8_route_check_finds_route_outside_api(client: TestClient) -> None:
+    """Sjekken fanger en rute som er lagt til utenfor ``/api/``."""
+
+    @client.app.get("/status")
+    def status_route() -> dict[str, str]:
+        return {"status": "ok"}
+
+    assert routes_outside_api(client) == ["/status"]

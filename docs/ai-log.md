@@ -357,3 +357,21 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Brukeren godtok forslaget om refleksjonsnotater (tiltak 9). Det er laget [docs/refleksjonsnotater.md](refleksjonsnotater.md) med mal, og CLAUDE.md har fått en regel: Claude ber om to–tre setninger ved slutten av hver økt og fører dem inn ordrett (`ea544c0`).
   - `/docs`: Claude anbefalte å skru den av. Brukeren har ikke bestemt seg ennå, og det gjøres i tiltak 2.
 - **Commit**: `d33e523` (retrospektiv og sprintstatus), `b89003f` (regel i CLAUDE.md), `e2ac951` (denne oppføringen), `3506901` og `ea544c0` (oppfølging), pluss commiten som inneholder denne oppdateringen.
+
+## 2026-11-27 — Tiltak 1, 2 og 5 fra retrospektiven av epic 1
+
+- **Hvorfor**: Retrospektiven av epic 1 fant at epics.md brukte utdaterte kommandoer (V5), at `/docs` var åpen uten innlogging og ikke ble sjekket av rutetesten (R4), at avveiningen om kopiert cookie manglet i AD-8 (V6), og at feilsøkingen i README var for snever (R5). Tiltakene skulle gjøres før story 2.1.
+- **Prompt(er)**: «Gjør tiltak 1, 2 og 5». Før det spurte brukeren «Hva anbefaler du?» om `/docs`. Claude anbefalte å skru den av, og brukeren sa ikke imot.
+- **Verktøy/modell**: Claude Code (Opus 5.5), gjort direkte uten `bmad-build`. Begrunnelse: endringene er små, avgrenset av retrospektiven, og har test.
+- **Endringer**:
+  - Tiltak 1 (`61e80fb`): epics.md og tabellene i arkitekturen bruker `uv run python -m …`. AD-11 i epics.md forklarer hvorfor.
+  - Tiltak 2 (`6cd68d9`):
+    - `create_app()` skrur av `/docs`, `/redoc` og `/openapi.json`.
+    - Rutetesten har tre nye tester: ingen ruter utenfor `/api/`, dokumentasjonssidene gir 404, og sjekken fanger en ny rute utenfor `/api/`.
+    - AD-8 forklarer valget og avveiningen om den tilstandsløse cookien.
+  - Tiltak 5 (`fd86f0f`): README forklarer de tre årsakene til «Fikk ikke kontakt med serveren»: backend er ikke startet, backend har stoppet med en feil, eller en annen backend svarer på port 8000.
+- **Verifisering**:
+  - `uv run python -m pytest` ga 110 tester som består, og ruff ga 0 funn.
+  - De tre nye rutetestene feilet når `docs_url`, `redoc_url` og `openapi_url` ble fjernet midlertidig, og besto igjen etter at de ble satt tilbake.
+  - Feilmeldingen «Fant ikke fasitfila» i README er sjekket mot `rbe/db/seed.py:37`.
+- **Commit**: `61e80fb`, `6cd68d9`, `fd86f0f`, pluss commiten som inneholder denne oppføringen.

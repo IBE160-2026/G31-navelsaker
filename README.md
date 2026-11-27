@@ -80,7 +80,10 @@ Testene for fasitparseren og seed leser den håndregnede fasiten i [testdata/tes
 
 ## Feilsøking
 
-- **«Fikk ikke kontakt med serveren. Prøv igjen.»** ved innlogging betyr at backend ikke kjører. Start den i terminal 1 og prøv igjen.
+- **«Fikk ikke kontakt med serveren. Prøv igjen.»** ved innlogging betyr at frontend ikke når backend på port 8000. Se i terminal 1:
+  - Står det ingen server der, er backend ikke startet. Start den og prøv igjen.
+  - Har backend stoppet med en feilmelding, for eksempel «Fant ikke fasitfila» eller «os error 5», må feilen rettes først (se punktene under).
+  - Kjører backend fra en annen mappe, for eksempel en eldre klone, svarer den i stedet for denne. Stopp den og start backend fra denne mappa.
 - **Port 5173 er opptatt:** Vite velger da en annen port og skriver adressen i terminalen. Bruk den adressen. Backend må likevel kjøre på port 8000, fordi frontend sender `/api` dit.
 - **Port 8000 er opptatt:** stopp prosessen som bruker porten, fordi frontend alltid sender `/api` til port 8000.
 - **Tilbakestill databasen:** stopp backend, slett `backend/data/rbe.db` (eller fila `RBE_DATABASE_URL` peker på) og start backend igjen. Testfartøyet og demobrukeren legges da inn på nytt.
