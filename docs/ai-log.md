@@ -351,4 +351,9 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
     - Prosessdokumentasjonen har ingen egne refleksjoner.
   - Maskinens vurdering er *rejected*, fordi story 1.7 står i review (PR #7 er ikke flettet). Den blir *accepted-with-open-items* når brukeren fletter PR-en og bekrefter.
   - **Sensorveiledningen:** den ligger i semestermappa utenfor repoet. Den ble flyttet dit med vilje i PRD-økten (kriterium 7). Den sier at refleksjonen vurderes i del 2, som er refleksjonsrapporten og teller 30 %. Veiledningen for del 2 finnes ikke i repoet eller i semestermappa.
-- **Commit**: `d33e523` (retrospektiv og sprintstatus), `b89003f` (regel i CLAUDE.md), pluss commiten som inneholder denne oppføringen.
+- **Oppfølging samme dag**:
+  - Prompt: «1. Ja 2. Hva anbefaler du? 3. Ja»
+  - PR #7 er flettet (`8784631`). Story 1.7 og epic 1 er satt til done, og vurderingen er endret til *accepted-with-open-items* etter brukerens beslutning (`3506901`).
+  - Brukeren godtok forslaget om refleksjonsnotater (tiltak 9). Det er laget [docs/refleksjonsnotater.md](refleksjonsnotater.md) med mal, og CLAUDE.md har fått en regel: Claude ber om to–tre setninger ved slutten av hver økt og fører dem inn ordrett (`ea544c0`).
+  - `/docs`: Claude anbefalte å skru den av. Brukeren har ikke bestemt seg ennå, og det gjøres i tiltak 2.
+- **Commit**: `d33e523` (retrospektiv og sprintstatus), `b89003f` (regel i CLAUDE.md), `e2ac951` (denne oppføringen), `3506901` og `ea544c0` (oppfølging), pluss commiten som inneholder denne oppdateringen.
