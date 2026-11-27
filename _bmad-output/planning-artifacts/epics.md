@@ -446,8 +446,8 @@ slik at appen gir et forsiktig og synlig resultat også for urealistiske planer.
 **Så** legges behovet (antall × mengde per) i uke 1, i alle ledd nedover
 
 **Gitt** scenario A–E
-**Når** egenskapstesten sjekker hver BOM-linje
-**Så** er summen av barnets bruttobehov lik summen av foreldrenes bestillingsforslag × mengde per (ingen behov går tapt)
+**Når** egenskapstesten sjekker hver vare
+**Så** er summen av varens bruttobehov lik summen av varens MPS pluss, over BOM-linjene der varen er barn, summen av forelderens bestillingsforslag × mengde per (ingen behov går tapt). Sjekken er per vare og ikke per BOM-linje, fordi en vare med flere foreldre (PLT-900) har ett samlet bruttobehov, og nivå 0 får behovet fra MPS (presisert i story 2.3).
 
 ### Story 2.4: Exception-meldinger E1 og E2
 

@@ -1,17 +1,20 @@
-"""Bruttobehov, netting, partiregel og ledetidsoffset (FR-10, FR-11) utenfor fasittabellen.
+"""Bruttobehov, netting, partiregel, ledetidsoffset og R11 (FR-10–FR-12) utenfor fasittabellen.
 
 Fasiten skiller ikke alle reglene: ingen vare har åpen ordre og bruttobehov i samme uke (R2),
-og ingen FOQ-vare trenger mer enn ett parti (R6). Testene her dekker dem med små inndata.
+ingen FOQ-vare trenger mer enn ett parti (R6), og R11 vises bare i to ledd i D. Testene her
+dekker dem med små inndata.
 """
 
 from collections.abc import Callable
 from dataclasses import replace
 from pathlib import Path
+from typing import Literal
 
 import pytest
 
 from rbe.fixture import load_input
 from rbe.mrp import (
+    BomLine,
     Horizon,
     Item,
     ItemResult,
@@ -41,11 +44,12 @@ def _item(
     on_hand: int = 0,
     safety_stock: int = 0,
     lot_sizing: LotSizing | None = None,
+    source: Literal["make", "purchase"] = "purchase",
 ) -> Item:
     return Item(
         id=item_id,
         name=item_id,
-        source="purchase",
+        source=source,
         unit="stk",
         lead_time_weeks=lead_time,
         on_hand=on_hand,
@@ -188,3 +192,46 @@ def test_fr8_week_outside_horizon_is_rejected(
     message = str(info.value)
     assert item in message
     assert f"uke {week}" in message
+
+
+def _chain(
+    items: tuple[Item, ...],
+    bom: tuple[BomLine, ...],
+    mps: tuple[MpsLine, ...],
+    weeks: int = 6,
+) -> dict[str, ItemResult]:
+    data = MrpInput(horizon=Horizon(1, weeks), items=items, bom=bom, mps=mps, scheduled_receipts=())
+    return _by_id(data)
+
+
+def test_fr12_r11_past_due_in_three_levels() -> None:
+    """X → Y → Z, ledetid 2 og mengde per 2: alle frigis i uke −1, og behovet går ned i uke 1."""
+    items = tuple(_item(i, lead_time=2, source="make") for i in ("X", "Y", "Z"))
+    bom = (BomLine("X", "Y", 2), BomLine("Y", "Z", 2))
+    by_id = _chain(items, bom, (MpsLine("X", 1, 1, 1),))
+    assert by_id["X"].planned_orders == (PlannedOrder(1, -1, 1),)
+    assert by_id["Y"].planned_orders == (PlannedOrder(1, -1, 2),)
+    assert by_id["Z"].planned_orders == (PlannedOrder(1, -1, 4),)
+    assert by_id["Y"].gross_requirements == (2, 0, 0, 0, 0, 0)
+    assert by_id["Z"].gross_requirements == (4, 0, 0, 0, 0, 0)
+    for item_id in ("X", "Y", "Z"):
+        assert by_id[item_id].planned_order_releases == (0,) * 6, item_id
+
+
+@pytest.mark.parametrize(
+    ("mps_weeks", "releases", "child_gross"),
+    [
+        ((1, 4), (0, 3), (2, 0, 2, 0, 0, 0)),
+        ((1, 2), (0, 1), (4, 0, 0, 0, 0, 0)),
+    ],
+    ids=["FR-12-forfalt-og-gyldig", "FR-12-forfalt-og-gyldig-samme-uke"],
+)
+def test_fr12_r11_parent_with_past_due_and_valid_orders(
+    mps_weeks: tuple[int, int], releases: tuple[int, int], child_gross: tuple[int, ...]
+) -> None:
+    """P (ledetid 1) → C (mengde per 2): det forfalte forslaget havner i uke 1 hos C."""
+    items = (_item("P", lead_time=1, source="make"), _item("C"))
+    mps = tuple(MpsLine("P", week, 1, n) for n, week in enumerate(mps_weeks, 1))
+    by_id = _chain(items, (BomLine("P", "C", 2),), mps)
+    assert tuple(order.release_week for order in by_id["P"].planned_orders) == releases
+    assert by_id["C"].gross_requirements == child_gross
