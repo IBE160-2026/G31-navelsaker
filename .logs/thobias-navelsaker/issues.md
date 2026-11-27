@@ -30,5 +30,5 @@
 - [x] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — flett PR #8 (retrospektiv av epic 1) (løst 2026-11-27)
 - [x] 2026-11-27 [retro-epic-1](984-2026-11-27-10-27-10-retro-epic-1.md) — første refleksjonsnotat (denne økten og tilbakeblikk på epic 1) venter på brukerens egne ord (løst 2026-11-27)
 - [ ] 2026-11-27 [story-2-1-lavnivakoder](983-2026-11-27-12-12-26-story-2-1-lavnivakoder.md) — Thobias går gjennom PR-en for 2.1 (bmad-walkthrough) og skriver én egen observasjon før fletting (tiltak 7)
-- [ ] 2026-11-27 [story-2-1-lavnivakoder](983-2026-11-27-12-12-26-story-2-1-lavnivakoder.md) — refleksjonsnotat for økten om story 2.1 venter på Thobias sine egne ord
+- [x] 2026-11-27 [story-2-1-lavnivakoder](983-2026-11-27-12-12-26-story-2-1-lavnivakoder.md) — refleksjonsnotat for økten om story 2.1 venter på Thobias sine egne ord (løst 2026-11-27)
 - [ ] 2026-11-27 [story-2-1-lavnivakoder](983-2026-11-27-12-12-26-story-2-1-lavnivakoder.md) — tiltak 4 fra retrospektiven av epic 1 (egen RBE_DEMO_USERNAME og RBE_FIXTURE_PATH) skal inn i specen for 3.1
