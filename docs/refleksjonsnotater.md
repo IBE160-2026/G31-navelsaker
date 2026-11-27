@@ -19,3 +19,9 @@ Mine ord, ordrett.
 ```
 
 ## Notater
+
+## 2026-11-27 — Tilbakeblikk på epic 1 ([sesjonslogg](../.logs/thobias-navelsaker/984-2026-11-27-10-27-10-retro-epic-1.md))
+
+KI rettet innlogginsfeil fra første demoversjon. Her kan du legge til hvordan du rettet det. Deretter la den til vis-passord-funksjon etter mitt ønske
+
+> **Tillegg fra Claude, etter ønske (fakta fra loggene, ikke mine ord):** Feilen var «Fikk ikke kontakt med serveren. Prøv igjen.» da Thobias prøvde innloggingen fra story 1.5. Det var ingen feil i koden. Backend kjørte ikke, fordi `uv run fastapi dev` stoppes av en Windows-sperre på denne maskinen (`os error 5`, tilgang nektet til `fastapi.exe`). KI-en fant årsaken og startet backend med `uv run python -m fastapi dev src/rbe/main.py`, som går utenom sperren. Etter det virket innloggingen. I story 1.7 ble `python -m`-formen hovedkommandoen i README og i arkitekturen (AD-10 og AD-11), og en prøve fra en ny klone bekreftet valget. Se [AI-loggen](ai-log.md) under story 1.6 og 1.7. «Vis passord» ble lagt til på innloggingssiden etter Thobias sitt ønske (AI-loggen, 2026-11-26).
