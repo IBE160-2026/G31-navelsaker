@@ -89,3 +89,9 @@ I gjennomgangen av PR #12 fant jeg at de 77 testene for scenario D som sto som s
 Gjennomgangen viste at PRD-en og epics.md fortsatt sa «produksjonsvare», selv om koden var endret. Den viste også at noen tester sjekket mindre enn det så ut til, og at én regel bare var dekket av én test som ikke fanget alle feil. Alt så grønt og ferdig ut, men det var det ikke før gjennomgangen.
 
 *(Skrevet etter en oppsummering fra Claude av hva gjennomgangen fant.)*
+
+## 2026-11-27 — Story 2.4: exception-meldinger E1 og E2 ([sesjonslogg](../.logs/thobias-navelsaker/980-2026-11-27-15-01-11-story-2-4-exception-meldinger.md))
+
+Det lønner seg å gjennomgå før man dokumenterer, fordi rettingene da kan tas med i dokumentasjonen og historikken blir ryddigere. En test gir bare trygghet hvis den faktisk kan feile, så testdataene må dekke tilfellet den skal fange. Kode som håndterer et spesialtilfelle, er heller ikke testet før en test kjører akkurat den delen av koden.
+
+*(Samme tekst som observasjonen i PR #14.)*

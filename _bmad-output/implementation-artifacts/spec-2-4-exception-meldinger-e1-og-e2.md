@@ -3,7 +3,7 @@ title: 'Story 2.4: Exception-meldinger E1 og E2'
 type: 'feature'
 created: '2026-11-27'
 baseline_commit: 'b7f2e00c3e05e9be3a17cd855c12ab592875d245'
-status: 'in-progress'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 context:
@@ -71,14 +71,14 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `backend/src/rbe/mrp/exceptions.py` -- `find_exceptions` med E1 og E2 -- FR-13, FR-14
-- [ ] `backend/src/rbe/mrp/run.py` -- kall `find_exceptions`, eksplisitt nøkkel per type, docstring -- FR-13, FR-14, AD-3
-- [ ] `backend/tests/mrp/test_fixture_scenarios.py` -- fasittest for meldingene per scenario og type, docstring -- FR-13, FR-14
-- [ ] `backend/tests/mrp/test_llc.py` -- scenario A, tom MPS, ukjent type og tuple-sjekkene -- FR-13, FR-14, AD-2, AD-3
-- [ ] `backend/tests/mrp/test_plan.py` -- grensene for én vare fra matrisen -- FR-13, FR-14
-- [ ] `backend/tests/mrp/test_properties.py` -- alle avvik i én assert, og egenskapen for E2-feltene -- FR-12, FR-14
-- [ ] `backend/tests/conftest.py`, `backend/pyproject.toml` og `backend/tests/test_no_skip.py` -- skip i alle former gir feil -- SM-1
-- [ ] Prøv vaktene: (1) `>=` i stedet for `>` i E1, (2) `<= 1` i stedet for `< 1` i E2, (3) `earliest_receipt_week = receipt_week + 1`, (4) E1 på varer med forslag i stedet for bruttobehov, (5) `pytest.skip` i en fasittest. Se at noe feiler hver gang, tilbakestill og før tallene i Implementation Notes -- SM-C2
+- [x] `backend/src/rbe/mrp/exceptions.py` -- `find_exceptions` med E1 og E2 -- FR-13, FR-14
+- [x] `backend/src/rbe/mrp/run.py` -- kall `find_exceptions`, eksplisitt nøkkel per type, docstring -- FR-13, FR-14, AD-3
+- [x] `backend/tests/mrp/test_fixture_scenarios.py` -- fasittest for meldingene per scenario og type, docstring -- FR-13, FR-14
+- [x] `backend/tests/mrp/test_llc.py` -- scenario A, tom MPS, ukjent type og tuple-sjekkene -- FR-13, FR-14, AD-2, AD-3
+- [x] `backend/tests/mrp/test_plan.py` -- grensene for én vare fra matrisen -- FR-13, FR-14
+- [x] `backend/tests/mrp/test_properties.py` -- alle avvik i én assert, og egenskapen for E2-feltene -- FR-12, FR-14
+- [x] `backend/tests/conftest.py`, `backend/pyproject.toml` og `backend/tests/test_no_skip.py` -- skip i alle former gir feil -- SM-1
+- [x] Prøv vaktene: (1) `>=` i stedet for `>` i E1, (2) `<= 1` i stedet for `< 1` i E2, (3) `earliest_receipt_week = receipt_week + 1`, (4) E1 på varer med forslag i stedet for bruttobehov, (5) `pytest.skip` i en fasittest. Se at noe feiler hver gang, tilbakestill og før tallene i Implementation Notes -- SM-C2
 
 **Prosess:** 4–5 commits etter CLAUDE.md på `story/2.4-exception-meldinger`. Spec-commiten tar med regelen om gjennomgang før dokumentasjon i CLAUDE.md, epic-2-context.md (laget på nytt), setter 2.3 til `done` og 2.4 til `in-progress`, lukker de tre punktene for 2.3 i issues.md (gjennomgang, fletting og vedtakene), legger punktet om kjøpte foreldre med BOM for 4.1 i deferred-work.md og tar med refleksjonsnotatet og loggseksjonen for 2.3 som ikke er committet. Dokumentasjonscommiten markerer de to punktene for 2.4 i deferred-work.md som løst.
 
@@ -89,6 +89,16 @@ context:
 - Given radene i I/O-matrisen, when enhetstestene kjøres, then har hver rad minst én test som gir utfallet i matrisen.
 
 ## Implementation Notes
+
+- `find_exceptions` bruker `horizon.first_week` (alltid 1) i stedet for tallet 1, så ingen uke er hardkodet i kjernen.
+- Kroken importerer `pytest.TestReport` og `pytest.CollectReport` fra det offentlige API-et. `pytest_collectreport` har `tryfirst=True`, ellers rekker terminalrapporten å telle skip på modulnivå som skipped før kroken endrer rapporten. For xfail fjernes `wasxfail`, så rapporten ikke vises som xfailed.
+- Resultat: 645 tester består, 0 skipped. `ruff check` og `ruff format --check` gir 0 funn.
+- Vaktprøver (hver tilbakestilt etterpå):
+  1. `>=` i stedet for `>` i E1: 1 feiler (ledetid lik horisonten).
+  2. `<= 1` i stedet for `< 1` i E2: 1 feiler (frigivelse i uke 1).
+  3. `earliest_receipt_week = receipt_week + 1`: 11 feiler (fasittestene for E2 i A–E, enhetstesten for scenario A og egenskapen i A–E). Testen for ledetid lik horisonten fanger det ikke, fordi 16 + 1 = 1 + 16.
+  4. E1 på varer med forslag i stedet for bruttobehov: 1 feiler (behov dekket av lager).
+  5. `pytest.skip` i fasittesten for meldingene: 10 feiler (alle 10 tilfellene, ingen skipped).
 
 ## Spec Change Log
 
@@ -101,6 +111,23 @@ Spec-gjennomgang før godkjenning (2026-11-27, én subagent). Den lagde E1 og E2
 - Kroken fanget ikke `skipif` (blir error) eller skip på modulnivå. `pytest_collectreport` og fire tilfeller i testen (4, medium).
 - Tuple-sjekkene i testen som erstattes, beholdes (5, medium).
 - `pytester` virker med `-p pytester`. Den indre kjøringen trenger `makeconftest` (6, low). Fil per test (7), sorteringstesten uendret (8), to nye AK (9), egenskap for E2-feltene (10), alle low.
+
+Runde 1 av kodegjennomgangen (2026-11-27, lagene blind-hunter (BH), edge-case-hunter (ECH) og verification-gap (VG), mot `b7f2e00`, uten specen i diffen). Rute: patch (P), utsatt til Thobias (U) eller avvist (A). Ingen funn var `intent_gap` eller `bad_spec`.
+
+| # | Lag | Funn | Vurdering | Begrunnelse | Rute |
+|---|---|---|---|---|---|
+| 1 | VG, BH | xfail som består (XPASS) er ikke testet. En krok som bare ser på `report.skipped`, består alle fire tilfellene | medium | Grenen for `wasxfail` på en bestått rapport er uprøvd, og XPASS teller som grønt | P |
+| 2 | ECH, BH | `test_fasit_exceptions` filtrerer på `kind`, så en melding med ukjent type sees ikke | low | `_ordered` gir `TypeError` for ukjente klasser, men en ny type i fasiten ville forsvunnet stille. Én assert | P |
+| 3 | ECH, BH | `test_fr14_past_due_fields_agree` består uten E2 | low | Fasittestene fanger en tom liste, men egenskapen skal stå på egne ben (SM-C2). Én assert | P |
+| 4 | BH | Ny regel i CLAUDE.md strider mot «Push bare når brukeren ber om det», og «rettinger inn i rettingscommiten» etter push krever force-push | medium | Begge deler stemmer. Rettingen endrer CLAUDE.md, så Thobias avgjorde den: rettes i dokumentasjonscommiten (ja til rekkefølgen i specen er bestilling om push, og rettinger etter push kommer i ny commit) | U |
+| 5 | BH | CLAUDE.md-endringen er utenfor storyen og burde hatt egen commit | false | Thobias valgte spec-commiten (vedtak i specen). AI-loggen kommer i dokumentasjonscommiten | A |
+| 6 | BH | `test_no_skip.py` har ingen kontroll av at vanlige tester består | false | En krok som gjorde alle tester til feil, ville felt de 645 andre testene i samme kjøring | A |
+| 7 | BH | Testen for scenario A har fasitverdiene skrevet inn | low | AC 2 i epics krever nettopp disse verdiene, og fasittesten leser `expected.json`. Rekkefølgen er dekket av `test_ad3_ordered_…` | A |
+| 8 | BH | Kroken erstatter tracebacken for xfail som feiler | low | xfail er forbudt, og tracebacken kommer når markøren fjernes. Å beholde den krever en gren for `longrepr` | A |
+| 9 | BH | Kopien av hele conftest i `test_no_skip.py` burde vært en egen plugin | low | `makeconftest` er valgt i specen etter spec-gjennomgangen, og det virker | A |
+| 10 | BH | Refleksjonsnotatet om PR #13 lenker ikke til sesjonsloggen | false | Overskriften for story 2.3 lenker til `981-…`, der seksjonen kl. 14:21 står. Merknaden er Thobias sin godkjente tekst | A |
+| 11 | BH | E1 er ikke testet med behov bare fra forelder eller fra R11 | false | MOT-210 har bare avhengig behov i fasiten, og i D bare fra R11 i uke 1. Fasittestene for E1 dekker begge | A |
+| 12 | BH | Assert-meldingen i «ingen behov går tapt» mangler scenarioet, og `avvik` er norsk | low | Test-id-en har scenarioet, og navnet `avvik` står i vedtaket | A |
 
 ## Design Notes
 

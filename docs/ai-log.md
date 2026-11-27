@@ -483,3 +483,32 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
 - **Brukerens styring**:
   - Thobias valgte de fem punktene selv, og valgte å rette bare de to stedene i planleggingen. Andre svakheter (egenskapen viser bare første avvik, id-ene er ikke testet, alternativet å avvise kjøpte foreldre med BOM) ble lagt fram uten å bli rettet.
 - **Commit**: `9e47420` (retting i PRD og epics), pluss dokumentasjonscommiten som inneholder denne oppføringen.
+
+## 2026-11-27 — Story 2.4: exception-meldinger E1 og E2
+
+- **Hvorfor**: Story 2.4 i epic 2. Kjernen ga alltid en tom `exceptions`-liste, så planleggeren fikk ikke vite om ledetid lengre enn horisonten (FR-13) eller forslag som skulle vært frigitt før uke 1 (FR-14). To punkter fra Thobias sin gjennomgang av PR #11 (egen fasittest for meldingene, eksplisitt sorteringsnøkkel per type) og to vedtak fra gjennomgangen av PR #13 (alle avvik i én assert, krok mot skipped tester) hørte til storyen.
+- **Prompt(er)**:
+  - «Fortsett med story 2.4. Les CLAUDE.md, åpne tiltak i sprint-status.yaml, issues.md … og punktene for 2.4 i deferred-work.md … Vurder også det åpne punktet fra gjennomgangen av 2.3 … Følg observasjonen min fra PR #13: all gjennomgang, også min egen, skal være ferdig før dokumentasjonscommiten. Spec-commiten skal også sette 2.3 til done og lukke punktene om gjennomgangen og flettingen av PR #13 i issues.md.»
+  - Svar på sjekkpunktene: regelen i CLAUDE.md i spec-commiten, Claude pusher og oppretter PR-en, specen beholdes hel over 1600 tokens, «Gjennomgå specen», «Ja, rett alle ti, ta med egenskapstesten», «Godkjenn og fortsett», og rettingen av CLAUDE.md i dokumentasjonscommiten.
+  - «Hvor kommer anbefalningen om maks 1600 tokens på spec fra?» Svar: fra `bmad-build` sin SCOPE STANDARD og spec-malen, uten oppgitt kilde, og grensen er ikke et krav.
+  - «Start gjennomgangen av PR #14 med bmad-walkthrough» og «Oppsummer hva vi har gjort som er relevant for observasjonene min».
+- **Verktøy/modell**: Claude Code (Opus 5.5) med `bmad-build` og `bmad-walkthrough`. Subagenter: én laget epic-2-konteksten på nytt, én gikk gjennom specen og regnet E1 og E2 uavhengig, én implementerte, og tre gikk gjennom koden (blind-hunter, edge-case-hunter, verification-gap).
+- **Endringer**:
+  - `backend/src/rbe/mrp/exceptions.py` (ny): `find_exceptions` gir E1 per vare med bruttobehov og ledetid > horisont, og E2 per forslag med frigivelsesuke < 1, for alle varer uansett `source`.
+  - `backend/src/rbe/mrp/run.py`: `run_mrp` sender meldingene til `_ordered`, og `_exception_key` har en gren per type med `match`. En ukjent type gir `TypeError`.
+  - `backend/tests/mrp/test_fixture_scenarios.py`: `test_fasit_exceptions` sammenligner som multimengde per scenario og type (10 tilfeller) og feiler på ukjent type. `test_llc.py`: scenario A, tom MPS, ukjent type og tuple-sjekkene. `test_plan.py`: fire grensetilfeller fasiten ikke har. `test_properties.py`: alle avvik i én assert, og egenskapen `{s}-FR-14-forfalt-forsinkelse`.
+  - `backend/tests/conftest.py`: kroker som gjør skip, `skipif`, xfail, XPASS og skip på modulnivå til feil. `tests/test_no_skip.py` prøver alle fem med `pytester` (`-p pytester` i `pyproject.toml`).
+  - `CLAUDE.md`: regelen om at all gjennomgang er ferdig før dokumentasjonscommiten, og i dokumentasjonscommiten presisert mot «Push bare når brukeren ber om det» og uten force-push. `epic-2-context.md` er laget på nytt. `deferred-work.md`: avvisning av kjøpte foreldre med BOM ført for 4.1, og de to punktene for 2.4 lukket.
+- **Verifisering**:
+  - `uv run python -m pytest` gir 646 tester som består og 0 skipped. Ruff gir 0 funn.
+  - Vaktprøvene (SM-C2) slår alle ut: `>=` i E1 (1 feil), `<= 1` i E2 (1), feil `earliest_receipt_week` (11), E1 på forslag i stedet for bruttobehov (1) og `pytest.skip` i fasittesten (10 feil, 0 skipped).
+  - Spec-gjennomgangen lagde E1 og E2 etter reglene i specen og fikk 0 avvik mot `expected.json` for A–E. Den fant 10 svakheter. To var alvorlige: vaktprøven `<= 1` kunne aldri slå ut fordi ingen forslag hadde frigivelse i uke 1, og raden for ledetid lik horisonten ventet ingen meldinger, mens den gir én E2.
+  - Kodegjennomgangen gav 12 rader: 3 rettet (blant annet manglende test for XPASS), 1 avgjort av Thobias (CLAUDE.md strider mot push-regelen og åpnet for force-push), 8 avvist med begrunnelse.
+  - Thobias gikk gjennom PR #14 med `bmad-walkthrough` før dokumentasjonscommiten, uten nye rettinger. Observasjonen står i PR-en.
+- **Brukerens styring**:
+  - Rekkefølgen med gjennomgang før dokumentasjon kom fra Thobias sin observasjon i PR #13, og han valgte at den skulle stå i CLAUDE.md fra spec-commiten.
+  - Thobias ba om gjennomgang av specen og godkjente alle ti rettinger, også den valgfrie egenskapstesten.
+  - Thobias spurte hvor grensen på 1600 tokens kom fra, i stedet for å ta den for gitt.
+  - Da kodegjennomgangen fant at regelen hans strider mot push-regelen, valgte han å rette den i dokumentasjonscommiten, uten ekstra commit.
+  - Thobias ba om en oppsummering før han skrev observasjonen. Claude ga fakta som stikkord og ikke ferdige setninger, fordi teksten i PR #13 ble nesten ordrett lik oppsummeringen.
+- **Commit**: `f81b899` (spec), `4e90236` og `8549abb` (kode med tester), `443f7ea` (retting etter gjennomgangen), pluss dokumentasjonscommiten som inneholder denne oppføringen.

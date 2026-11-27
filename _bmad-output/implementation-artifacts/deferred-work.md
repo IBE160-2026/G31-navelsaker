@@ -29,11 +29,11 @@
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 3. `_check_input` i `backend/src/rbe/mrp/llc.py` sjekker bare duplikater og referanser. Horisont ≤ 0 ble avvist i triage nr. 7, fordi tilstanden ikke kan nås før epic 4.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
-  summary: Story 2.4 må gjøre sorteringsnøkkelen for meldinger eksplisitt per type, i stedet for `getattr(e, "receipt_week", 0)`, så en ny meldingstype ikke kan sorteres feil uten at noe sier fra.
+  summary: Story 2.4 må gjøre sorteringsnøkkelen for meldinger eksplisitt per type, i stedet for `getattr(e, "receipt_week", 0)`, så en ny meldingstype ikke kan sorteres feil uten at noe sier fra. *Løst i story 2.4 (2026-11-27):* `_exception_key` i `run.py` har en gren per type med `match`, og en ukjent type gir `TypeError` (`test_ad3_unknown_exception_type_is_rejected`).
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 4 (`_ordered` i `backend/src/rbe/mrp/run.py`). I dag finnes bare E1 og E2, og testen for `_ordered` dekker begge.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
-  summary: Story 2.4 trenger en egen fasittest for `exceptions`, sammenlignet som usortert mengde per scenario, fordi `pytest_generate_tests` i `tests/conftest.py` bare lager tilfeller for felt per vare.
+  summary: Story 2.4 trenger en egen fasittest for `exceptions`, sammenlignet som usortert mengde per scenario, fordi `pytest_generate_tests` i `tests/conftest.py` bare lager tilfeller for felt per vare. *Løst i story 2.4 (2026-11-27):* `test_fasit_exceptions` i `tests/mrp/test_fixture_scenarios.py` sammenligner meldingene som multimengde per scenario og type, med id-er fra `A-FR-13-meldinger` til `E-FR-14-meldinger`, og feiler på ukjent type.
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 5. `fasit_cases` leser bare `result["items"]`.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`

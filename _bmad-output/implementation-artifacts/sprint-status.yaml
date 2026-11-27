@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-24-2026 15:36
-last_updated: 11-27-2026 15:40
+last_updated: 11-27-2026 15:01
 project: Red Ball Express
 project_key: NOKEY
 tracking_system: file-system
@@ -49,7 +49,7 @@ development_status:
   2-1-lavnivåkoder-og-resultatform: done
   2-2-bruttobehov-netting-partiregel-og-ledetidsoffset: done
   2-3-komponentbehov-fra-forfalte-produksjonsordrer-r11: done
-  2-4-exception-meldinger-e1-og-e2: in-progress
+  2-4-exception-meldinger-e1-og-e2: review
   2-5-skalatest-med-generert-bom: backlog
   epic-2-retrospective: optional
 
