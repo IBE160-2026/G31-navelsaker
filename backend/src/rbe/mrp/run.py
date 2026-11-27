@@ -1,14 +1,15 @@
 """Inngangen til MRP-kjernen: ``run_mrp`` og ``result_to_dict`` (AD-2, AD-3).
 
-``run_mrp`` beregner lavnivåkodene (som også sjekker inndataene) og gir resultatet i fast
-rekkefølge. Ukesarrayene er foreløpig nuller, og forslag og meldinger er tomme. Story 2.2–2.4
-fyller dem inn i den samme formen.
+``run_mrp`` beregner lavnivåkodene (som også sjekker inndataene), planlegger varene i
+LLC-rekkefølge med ``plan_items`` (bruttobehov, netting, partiregel og ledetidsoffset) og gir
+resultatet i fast rekkefølge. Meldingene er foreløpig tomme (story 2.4), og R11 kommer i 2.3.
 """
 
 from dataclasses import fields, replace
 from typing import Any
 
 from .llc import low_level_codes
+from .plan import plan_items
 from .types import ItemResult, MrpException, MrpInput, MrpResult
 
 WEEK_FIELDS = (
@@ -24,24 +25,26 @@ WEEK_FIELDS = (
 def run_mrp(data: MrpInput) -> MrpResult:
     """Kjør MRP på ``data``. Ugyldige inndata gir ``MrpInputError``."""
     codes = low_level_codes(data)
-    zeros = (0,) * data.horizon.weeks
-    items = [
-        ItemResult(
-            id=item.id,
-            name=item.name,
-            unit=item.unit,
-            on_hand=item.on_hand,
-            low_level_code=codes[item.id],
-            gross_requirements=zeros,
-            scheduled_receipts=zeros,
-            projected_on_hand=zeros,
-            net_requirements=zeros,
-            planned_order_receipts=zeros,
-            planned_order_releases=zeros,
-            planned_orders=(),
+    plans = plan_items(data, codes)
+    items = []
+    for item in data.items:
+        plan = plans[item.id]
+        items.append(
+            ItemResult(
+                id=item.id,
+                name=item.name,
+                unit=item.unit,
+                on_hand=item.on_hand,
+                low_level_code=codes[item.id],
+                gross_requirements=plan.gross_requirements,
+                scheduled_receipts=plan.scheduled_receipts,
+                projected_on_hand=plan.projected_on_hand,
+                net_requirements=plan.net_requirements,
+                planned_order_receipts=plan.planned_order_receipts,
+                planned_order_releases=plan.planned_order_releases,
+                planned_orders=plan.planned_orders,
+            )
         )
-        for item in data.items
-    ]
     return _ordered(items, [])
 
 

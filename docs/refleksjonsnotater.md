@@ -69,3 +69,11 @@ Stikkordene er mine. Claude har skrevet forklaringene etter at jeg ba om det, og
 Gjennomgangen av specen før godkjenning fant 12 svakheter, som ble rettet før koden ble skrevet. Den alvorligste ville fått alle sammenligningene mot fasiten til å feile i neste story. Det viser verdien av å gjennomgå arbeidet hele veien, ikke bare koden til slutt.
 
 *(Formulert av Claude etter mine stikkord «Gjennomgang av spec fant 12 svakheter som ble rettet (skriv bedre). Viser verdi av konstant gjennomgang», og jeg har godkjent det som mitt.)*
+
+## 2026-11-27 — Story 2.2: bruttobehov, netting, partiregel og ledetidsoffset ([sesjonslogg](../.logs/thobias-navelsaker/982-2026-11-27-12-49-00-story-2-2-bruttobehov-netting.md))
+
+I gjennomgangen av PR #11 fant jeg at det ikke var bestemt hvordan uke gjøres om til arrayindeks, og jeg ba om at story 2.2 tok det opp. Undersøkelsen før specen viste at fasiten ikke skiller åpne ordre i samme uke fra flere FOQ-partier, så en kjerne med feil i disse reglene ville bestått alle fasittestene. Det viser at jeg ikke kan stole blindt på at testene består.
+
+Gjennomgangen av specen fant to feil før koden ble skrevet: en vakt som ikke kunne fått noen test til å feile, og en feilberegning av sikkerhetslageret. Begge ble funnet av KI, men bare fordi jeg ba om gjennomgangen i stedet for å godkjenne direkte. Det gjorde dem enkle å rette. Kodegjennomgangen fant etterpå to tilfeller som manglet test. Bruken av fem subagenter gjorde at arbeidet gikk raskere.
+
+*(Formulert av Claude etter mine stikkord «Skriv bedre og før inn, og si fra dersom noe er feil. Jeg ba om en gjennomgang av uke -> indeks som jeg fant i PR # 11. En feil jeg ikke ville funnet selv. Undersøkelsen viste at fasiten ikke skiller åpne ordrer i samme uke og flere FOQ-partier. Viser viktigheten av at å ikke stole blindt på tester. Gjennomgang fant to feil KI ikke fanget opp: En test som ikke kunne vist feil, og feil beregning av sikkerhetslager. Alle feil ble funnet før koden ble skrevet, og kunne dermed rettes enkelt. Bruk av fem subagenter gjorde at det gikk raskere». Claude rettet tre punkter: jeg fant uke → indeks selv, begge feilene ble funnet av KI, og kodegjennomgangen fant to manglende tester etter at koden var skrevet.)*

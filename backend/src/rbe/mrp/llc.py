@@ -6,11 +6,16 @@ gjennomgang (Kahn) uten rekursjon, så dype BOM-er ikke når rekursjonsgrensen.
 
 from collections import Counter, deque
 
-from .types import MrpInput
+from .types import Item, MrpInput
 
 
 class MrpInputError(ValueError):
-    """Inndataene kan ikke planlegges: ukjente varer, duplikater eller en sykel i BOM-en."""
+    """Inndataene kan ikke planlegges.
+
+    Grunner: ukjente varer, duplikater, en sykel i BOM-en, første uke ≠ 1, en MPS-linje eller
+    åpen ordre utenfor horisonten, negativ ledetid, ukjent partiregel eller FOQ uten kvantum ≥ 1.
+    Mengde per < 1 og negative mengder avvises av API-et (FR-8), ikke av kjernen.
+    """
 
 
 def low_level_codes(data: MrpInput) -> dict[str, int]:
@@ -46,7 +51,11 @@ def low_level_codes(data: MrpInput) -> dict[str, int]:
 
 
 def _check_input(data: MrpInput) -> None:
-    """Avvis like vare-id-er, like BOM-linjer og linjer mot varer som ikke finnes."""
+    """Avvis ugyldige inndata med ``MrpInputError`` (se klassen for grunnene)."""
+    if data.horizon.first_week != 1:
+        raise MrpInputError(
+            f"Første planuke er {data.horizon.first_week}, men kjernen krever uke 1."
+        )
     id_counts = Counter(item.id for item in data.items)
     duplicates = sorted(item_id for item_id, count in id_counts.items() if count > 1)
     if duplicates:
@@ -77,6 +86,34 @@ def _check_input(data: MrpInput) -> None:
                 f"Den åpne ordren i uke {receipt.week} gjelder varen {receipt.item}, "
                 "som ikke finnes."
             )
+
+    weeks = data.horizon.weeks
+    for mps in data.mps:
+        if not 1 <= mps.week <= weeks:
+            raise MrpInputError(
+                f"MPS-linjen for varen {mps.item} har uke {mps.week}, "
+                f"som er utenfor horisonten (uke 1–{weeks})."
+            )
+    for receipt in data.scheduled_receipts:
+        if not 1 <= receipt.week <= weeks:
+            raise MrpInputError(
+                f"Den åpne ordren for varen {receipt.item} har uke {receipt.week}, "
+                f"som er utenfor horisonten (uke 1–{weeks})."
+            )
+    for item in data.items:
+        _check_item(item)
+
+
+def _check_item(item: Item) -> None:
+    """Avvis negativ ledetid, ukjent partiregel og FOQ uten kvantum ≥ 1."""
+    if item.lead_time_weeks < 0:
+        raise MrpInputError(f"Varen {item.id} har negativ ledetid ({item.lead_time_weeks}).")
+    rule = item.lot_sizing.rule
+    if rule not in ("L4L", "FOQ"):
+        raise MrpInputError(f"Varen {item.id} har ukjent partiregel «{rule}».")
+    quantity = item.lot_sizing.quantity
+    if rule == "FOQ" and (quantity is None or quantity < 1):
+        raise MrpInputError(f"Varen {item.id} har FOQ uten kvantum ≥ 1 (kvantum {quantity}).")
 
 
 def _find_cycle(parents: dict[str, set[str]], remaining: set[str]) -> list[str]:

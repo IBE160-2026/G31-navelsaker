@@ -21,11 +21,11 @@
   evidence: Retrospektiven la tiltaket til «neste backend-story». Thobias valgte 2026-11-27 å flytte det fra 2.1, som bare gjelder den rene kjernen, til 3.1, som uansett endrer deps.py og legger til API-tester.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
-  summary: Story 2.2 må bestemme hvordan uke gjøres om til arrayindeks. `Horizon.first_week` brukes ikke i dag, mens `ItemResult` sier at indeks 0 er uke 1.
+  summary: Story 2.2 må bestemme hvordan uke gjøres om til arrayindeks. `Horizon.first_week` brukes ikke i dag, mens `ItemResult` sier at indeks 0 er uke 1. *Løst i story 2.2 (2026-11-27):* Thobias valgte at kjernen krever første uke 1 og gir `MrpInputError` ellers. Indeks = uke − 1 (AD-2).
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 2 (`backend/src/rbe/mrp/types.py`, docstringen til `ItemResult`). Fasiten har `first_week` 1, så en kode som antar uke 1 består fasittestene uansett.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
-  summary: Verdiene i inndataene (negativ `qty_per` eller ledetid, MPS-uker utenfor horisonten, horisont ≤ 0) sjekkes ikke av kjernen. Avklar i specen for 4.1 at API-et avviser dem (AD-7, FR-8), og vurder om kjernen skal gi `MrpInputError` i tillegg.
+  summary: Verdiene i inndataene (negativ `qty_per` eller ledetid, MPS-uker utenfor horisonten, horisont ≤ 0) sjekkes ikke av kjernen. Avklar i specen for 4.1 at API-et avviser dem (AD-7, FR-8), og vurder om kjernen skal gi `MrpInputError` i tillegg. *Oppdatert i story 2.2:* kjernen avviser nå første uke ≠ 1, MPS-linjer og åpne ordre utenfor horisonten, negativ ledetid, ukjent partiregel og FOQ uten kvantum. Mengde per < 1 og negative mengder sjekkes fortsatt bare av API-et i 4.1. Horisont ≤ 0 sjekkes ikke, fordi horisonten ikke kan redigeres.
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 3. `_check_input` i `backend/src/rbe/mrp/llc.py` sjekker bare duplikater og referanser. Horisont ≤ 0 ble avvist i triage nr. 7, fordi tilstanden ikke kan nås før epic 4.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
@@ -39,3 +39,7 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
   summary: Vakten for FR-10 i fasittesten hviler på én vare. PLT-900 er den eneste der lengste og korteste vei gir ulik LLC, så skalatesten i 2.5 må ha flere varer med flere veier av ulik lengde og sjekke LLC mot en uavhengig beregning.
   evidence: Thobias sin gjennomgang av PR #11: korteste vei gir 6 feil av 112, alle på PLT-900 og rekkefølgetesten. Endres BOM-en i fasiten, kan vakten forsvinne uten at noe feiler.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-2-bruttobehov-netting-partiregel-og-ledetidsoffset.md`
+  summary: Story 2.3 må legge til egenskapen «ingen behov går tapt» (sum av barnets bruttobehov = sum av foreldrenes `planned_orders` × mengde per, for A–E), fjerne `fasit_marks` og `R11_SKIP` i `tests/mrp/test_fixture_scenarios.py`, og gi D-tilfellene FR-12 i test-id-en.
+  evidence: Thobias sin gjennomgang av PR #12. Ingenting feiler hvis skip-regelen blir stående etter at R11 er på plass: de 77 tilfellene forblir skipped og alt er grønt. Uten R11 er summen av bruttobehov for PLT-900 i D 30, mens fasiten har 66. Behovet forsvinner mellom forelder og barn, så bare egenskapen over fanger det. Massebalansen per vare går opp i D også uten R11, og D er derfor tatt med i den testen.

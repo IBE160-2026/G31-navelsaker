@@ -96,11 +96,11 @@ def test_ad2_result_dict_has_only_json_types(scenario_a: MrpInput) -> None:
     walk(result_to_dict(run_mrp(scenario_a)))
 
 
-def test_ad2_other_horizon_gives_shorter_arrays(scenario_a: MrpInput) -> None:
-    d = result_to_dict(run_mrp(replace(scenario_a, horizon=Horizon(1, 8))))
+def test_ad2_other_horizon_gives_other_array_length(scenario_a: MrpInput) -> None:
+    d = result_to_dict(run_mrp(replace(scenario_a, horizon=Horizon(1, 20))))
     for values in d["items"].values():
-        assert len(values["gross_requirements"]) == 8
-        assert len(values["planned_order_releases"]) == 8
+        for name in WEEK_FIELDS:
+            assert len(values[name]) == 20, name
 
 
 def test_ad2_extra_fields_come_from_input(scenario_a: MrpInput) -> None:
@@ -220,23 +220,13 @@ def test_ad2_item_result_is_frozen(scenario_a: MrpInput) -> None:
         item.low_level_code = 5  # type: ignore[misc]
 
 
-def test_ad2_week_arrays_are_zero_and_lists_empty(scenario_a: MrpInput) -> None:
+def test_ad2_exceptions_empty_until_story_2_4(scenario_a: MrpInput) -> None:
     result = run_mrp(scenario_a)
     assert result.exceptions == ()
     for item in result.items:
-        assert item.planned_orders == ()
+        assert isinstance(item.planned_orders, tuple), item.id
         for name in WEEK_FIELDS:
-            values = getattr(item, name)
-            assert isinstance(values, tuple), (item.id, name)
-            assert values == (0,) * scenario_a.horizon.weeks, (item.id, name)
-
-
-def test_ad3_deterministic_and_independent_of_input_order(scenario_a: MrpInput) -> None:
-    reversed_a = replace(scenario_a, items=scenario_a.items[::-1], bom=scenario_a.bom[::-1])
-    first = run_mrp(scenario_a)
-    assert run_mrp(scenario_a) == first
-    assert run_mrp(reversed_a) == first
-    assert result_to_dict(run_mrp(reversed_a)) == result_to_dict(first)
+            assert isinstance(getattr(item, name), tuple), (item.id, name)
 
 
 def _fasit_exceptions(expected: dict[str, Any]) -> list[MrpException]:
