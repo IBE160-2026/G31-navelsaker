@@ -415,3 +415,28 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Brukeren valgte ikke mellom «behold» og «kort ned» da specen var for lang, men spurte om det var trygt å korte den ned. Claude svarte at feltlistene er kontrakten for de neste storyene. Specen ble ikke kortet ned for å nå en lengde.
   - Brukeren ba om at specen ble gjennomgått før godkjenning, i stedet for å godkjenne direkte. Det fant feilen med tupler før koden ble skrevet.
 - **Commit**: `69c8ea0` (spec), `0710d01` (kode med tester), `37f552c` (retting etter gjennomgangen), pluss dokumentasjonscommiten som inneholder denne oppføringen.
+
+## 2026-11-27 — Story 2.2: bruttobehov, netting, partiregel og ledetidsoffset
+
+- **Hvorfor**: Story 2.2 i epic 2. Kjernen ga bare lavnivåkoder, og ukesarrayene var nuller. Planleggeren trenger bruttobehov, nettobehov og bestillingsforslag per vare og uke (FR-10, FR-11, FR-9).
+- **Prompt(er)**:
+  - «Fortsett med story 2.2. Les CLAUDE.md, åpne tiltak i sprint-status.yaml, issues.md … og punktene fra spec 2.1 i deferred-work.md (særlig uke → indeks og FIELD_FR). Spec-commiten skal også sette 2.1 til done og lukke punktet om min observasjon i issues.md.»
+  - Svarene på sjekkpunktene: «Krev first_week = 1», «MrpInputError nå» (uker utenfor horisonten), «Behold hele specen», «Gå gjennom specen» og «Godkjenn og fortsett».
+- **Verktøy/modell**: Claude Code (Opus 5.5) med `bmad-build`. Én subagent gikk gjennom specen, én implementerte, og tre gikk gjennom koden (blind-hunter, edge-case-hunter, verification-gap).
+- **Endringer**:
+  - `backend/src/rbe/mrp/plan.py` (ny): planlegger varene i LLC-rekkefølge etter R2, R3 og R5–R9. Barna leser forelderens `planned_orders`, så R11 kan legges til i 2.3.
+  - `backend/src/rbe/mrp/llc.py`: kjernen avviser første uke ≠ 1, MPS-linjer og åpne ordre utenfor horisonten, negativ ledetid, ukjent partiregel og FOQ uten kvantum. `run.py` bruker `plan.py`.
+  - `backend/tests/conftest.py`: valgfri `fasit_marks` per fasittilfelle. `tests/mrp/conftest.py` (ny) har `result_for`.
+  - `backend/tests/mrp/test_fixture_scenarios.py`: alle åtte feltene for A–E. D er skipped (77 tilfeller) til R11 finnes. Nye `test_plan.py` og `test_properties.py`.
+  - AD-2 i `ARCHITECTURE-SPINE.md` og `epic-2-context.md`: første uke er 1, og kjernen avviser de nye inndataene. `deferred-work.md`: punktet om uke → indeks er lukket, og punktet for 4.1 er oppdatert.
+- **Verifisering**:
+  - `uv run python -m pytest` gir 532 tester som består og 77 skipped. Ruff gir 0 funn.
+  - Vakten (SM-C2) er prøvd. Med forfalte frigivelser lagt i uke 1 feilet 9 fasittilfeller (MOT-210, VIN-920 og GIR-220 i C) og tre enhetstester.
+  - Undersøkelsen fant at fasiten ikke skiller to av reglene: ingen vare har åpen ordre og bruttobehov i samme uke (R2), og PLT-900 trenger aldri mer enn ett parti (R6). Det er sjekket med skript mot `expected.json`. Begge har nå egne enhetstester. Vakten Claude først foreslo, ville ikke fått noen test til å feile, og ble byttet før godkjenning.
+  - Spec-gjennomgangen fant 15 svakheter. Den alvorligste var at Claude hadde regnet sikkerhetslageret feil i matrisen (NB 5 i uke 2 i stedet for 2 i uke 1 og 3 i uke 2).
+  - Kodegjennomgangen gav 13 rader: 5 rettet og 8 avvist med begrunnelse. Viktigst var at åpne ordre i uke 0 og to åpne ordre i samme uke ikke var testet.
+- **Brukerens styring**:
+  - Brukeren pekte selv på uke → indeks og `FIELD_FR` som det viktigste fra 2.1, og valgte at kjernen krever første uke 1 og avviser uker utenfor horisonten.
+  - Brukeren ba om gjennomgang av specen før godkjenning, som i 2.1. Den fant regnefeilen i sikkerhetslageret før koden ble skrevet.
+  - Claude beholdt `skip` for D, mot subagentens forslag om `xfail`, og la begrunnelsen fram ved sjekkpunktet. Brukeren godkjente specen uten å endre det.
+- **Commit**: `6989d94` (spec), `414d436` (kode med tester), `ab22f52` (retting etter gjennomgangen), pluss dokumentasjonscommiten som inneholder denne oppføringen.

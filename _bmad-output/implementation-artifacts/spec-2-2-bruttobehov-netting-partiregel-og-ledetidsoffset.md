@@ -2,7 +2,8 @@
 title: 'Story 2.2: Bruttobehov, netting, partiregel og ledetidsoffset'
 type: 'feature'
 created: '2026-11-27'
-status: 'ready-for-dev'
+baseline_commit: '6989d94dc375f00fbfc522fa9a7c52dcce6f40a4'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 context:
@@ -69,16 +70,16 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `backend/src/rbe/mrp/plan.py` -- bruttobehov, netting, partiregel og ledetidsoffset per vare i LLC-rekkefølge -- FR-10, FR-11
-- [ ] `backend/src/rbe/mrp/llc.py` -- nye inndatasjekker i `_check_input` -- FR-11, FR-8
-- [ ] `backend/src/rbe/mrp/run.py` -- bruk `plan.py`, oppdater docstringen -- FR-9, AD-2
-- [ ] `backend/tests/conftest.py` -- valgfri `fasit_marks` per fasittilfelle -- AD-10
-- [ ] `backend/tests/mrp/conftest.py` -- `result_for` flyttet hit -- AD-10
-- [ ] `backend/tests/mrp/test_fixture_scenarios.py` -- utvid `FIELD_FR`, skip for D -- FR-10, FR-11
-- [ ] `backend/tests/mrp/test_properties.py` -- massebalanse, determinisme, horisont fra inndata -- FR-9, SM-C2
-- [ ] `backend/tests/mrp/test_plan.py` -- resten av I/O-matrisen (FOQ, R9, samme uke, R2, FOQ flere partier, sikkerhetslager, ugyldig vare, første uke, uker utenfor horisonten) -- FR-10, FR-11
-- [ ] `backend/tests/mrp/test_llc.py` -- skriv om og flytt testene som Code Map nevner
-- [ ] Prøv vakten: legg midlertidig forfalte frigivelser i uke 1 i `planned_order_releases` (brudd på R9), se at fasittilfellene for MOT-210 og VIN-920 (A, B, C, E) og GIR-220 (C) og R9-testen feiler, tilbakestill og før det i Implementation Notes -- SM-C2
+- [x] `backend/src/rbe/mrp/plan.py` -- bruttobehov, netting, partiregel og ledetidsoffset per vare i LLC-rekkefølge -- FR-10, FR-11
+- [x] `backend/src/rbe/mrp/llc.py` -- nye inndatasjekker i `_check_input` -- FR-11, FR-8
+- [x] `backend/src/rbe/mrp/run.py` -- bruk `plan.py`, oppdater docstringen -- FR-9, AD-2
+- [x] `backend/tests/conftest.py` -- valgfri `fasit_marks` per fasittilfelle -- AD-10
+- [x] `backend/tests/mrp/conftest.py` -- `result_for` flyttet hit -- AD-10
+- [x] `backend/tests/mrp/test_fixture_scenarios.py` -- utvid `FIELD_FR`, skip for D -- FR-10, FR-11
+- [x] `backend/tests/mrp/test_properties.py` -- massebalanse, determinisme, horisont fra inndata -- FR-9, SM-C2
+- [x] `backend/tests/mrp/test_plan.py` -- resten av I/O-matrisen (FOQ, R9, samme uke, R2, FOQ flere partier, sikkerhetslager, ugyldig vare, første uke, uker utenfor horisonten) -- FR-10, FR-11
+- [x] `backend/tests/mrp/test_llc.py` -- skriv om og flytt testene som Code Map nevner
+- [x] Prøv vakten: legg midlertidig forfalte frigivelser i uke 1 i `planned_order_releases` (brudd på R9), se at fasittilfellene for MOT-210 og VIN-920 (A, B, C, E) og GIR-220 (C) og R9-testen feiler, tilbakestill og før det i Implementation Notes -- SM-C2
 
 **Prosess (tiltak 7–9 fra retrospektiven av epic 1):** 4–5 commits etter CLAUDE.md. Spec-commiten setter også 2.1 til `done` i sprintstatus og lukker punktet om Thobias sin observasjon i issues.md (observasjonen står i PR #11). Thobias går gjennom PR-en (`bmad-walkthrough`) og skriver én egen observasjon før fletting. Claude ber om refleksjonsnotat i sluttoppsummeringen. Dokumentasjonscommiten lukker punktet om uke → indeks i `deferred-work.md` og fører inn i punktet for 4.1 at kjernen nå avviser første uke ≠ 1, uker utenfor horisonten, negativ ledetid og ukjent partiregel.
 
@@ -87,6 +88,11 @@ context:
 - Given pytest med `-v`, when fasittestene listes, then har hver id scenario, FR-10 eller FR-11, vare og felt (f.eks. `B-FR-11-PLT-900-planned_orders`).
 
 ## Implementation Notes
+
+- **Vakten (SM-C2), prøvd 2026-11-27:** `plan.py` ble midlertidig endret så forfalte frigivelser ble lagt i uke 1 i `planned_order_releases` (`releases[max(order.release_week, 1) - 1]`). Da feilet fasittilfellene `planned_order_releases` for MOT-210 og VIN-920 i A, B, C og E og for GIR-220 i C (9 tilfeller), R9-testen i `test_plan.py`, sikkerhetslagertesten (frigivelse i uke 0) og horisonttesten i `test_properties.py`. Barnas bruttobehov ble ikke påvirket, fordi barna leser `planned_orders`. Endringen ble tilbakestilt, og alt består igjen.
+- **Resultat:** 530 passed, 77 skipped (D × 11 varer × 7 felt, grunn «R11 (FR-12) kommer i story 2.3»). Uten R11 avviker 36 av de 77 D-tilfellene, som spec-gjennomgangen regnet ut.
+- `test_ad2_other_horizon_gives_shorter_arrays` heter nå `test_ad2_other_horizon_gives_other_array_length` (Horizon(1, 20) gir lengre arrayer), og `test_ad2_week_arrays_are_zero_and_lists_empty` heter `test_ad2_exceptions_empty_until_story_2_4`.
+- `FIELD_FR` er skrevet ut felt for felt i testen i stedet for å avledes fra `WEEK_FIELDS` i kjernen, så testen ikke arver en feil i kjernens feltliste.
 
 ## Spec Change Log
 
@@ -102,6 +108,24 @@ Spec-gjennomgang før godkjenning (2026-11-27, én subagent). Den regnet reglene
 - Determinismetesten flyttes i stedet for å dupliseres (11), og massebalansens svakhet står i specen (12).
 - Omskrivingen av `test_llc.py` er konkretisert (13). `deferred-work.md` oppdateres i dokumentasjonscommiten (14).
 - Barna leser forelderens `planned_orders`, så 2.3 kan legge til R11 uten ny struktur (15).
+
+Runde 1 av kodegjennomgangen (2026-11-27, lagene blind-hunter (BH), edge-case-hunter (ECH) og verification-gap (VG), mot `414d436`). Rute: patch (P) eller avvist (A). Ingen funn var `intent_gap` eller `bad_spec`.
+
+| # | Lag | Funn | Vurdering | Begrunnelse | Rute |
+|---|---|---|---|---|---|
+| 1 | VG | Åpen ordre i uke 0 testes ikke. Løsnes nedre grense, havner ordren stille i siste uke (negativ indeks) | medium | Sjekken finnes, men bare MPS-sjekken har et tilfelle med uke 0. Data fra databasen kan nå kjernen uten grensesjekk i dag (`repository.py`) | P |
+| 2 | VG | To åpne ordre for samme vare og uke summeres ikke i noen test. `+=` → `=` består alt | medium | Fasiten har to åpne ordre på ulike varer, og massebalansen summerer utdataarrayen. Realistisk for kjøpte varer | P |
+| 3 | BH | `WEEK_FIELDS` er kopiert i `test_properties.py` | low | `test_llc.py` importerer den fra `run.py`. To lister kan spriker. Direkte retting: importer | P |
+| 4 | BH | `run_mrp` slår opp `plans[item.id]` sju ganger | low | Direkte retting med én lokal variabel. Resten av funnet (`ItemPlan` gjentar feltene, `fasit_marks` typet som `Any`, `receipts` kopieres ikke) avvises: `FasitCase` kan ikke importeres fra `conftest.py` med `--import-mode=importlib`, og lista endres aldri | P |
+| 5 | BH | Kravet om første uke 1 og de nye avvisningene står ikke i arkitekturen | medium | CLAUDE.md krever at presiseringer føres tilbake i planleggingsdokumentet. AD-2 og epic-2-konteksten har fått én setning | P |
+| 6 | ECH, BH | `horizon.weeks` ≤ 0 sjekkes ikke, og forslag kan «forsvinne stille» | false | Med 0 uker avvises hver MPS-linje og åpen ordre (uke 1 > 0), så forslag kan ikke oppstå. Uten MPS er et tomt resultat riktig. Horisonten redigeres ikke (som triage nr. 7 i 2.1) | A |
+| 7 | BH | Ingen test av kortere horisont under en MPS-linje | false | Det er samme sjekk som `mps-uke-17` mot 16 uker: uka sammenlignes med `horizon.weeks` | A |
+| 8 | BH | `xfail(strict=True)` i stedet for skip for D | false | 41 av 77 D-tilfeller stemmer allerede, så `strict=True` ville feilet i dag. Valget står i Design Notes | A |
+| 9 | BH, VG | Skip for D gjelder også varer som ikke berøres av R11 (RBE-000 og nivå 1) | low | Logikken for disse varene dekkes av A, B, C og E. Å begrense skip krever en liste med varenummer i testen, og 2.3 fjerner regelen uansett | A |
+| 10 | BH | `test_plan.py` har tallene fra scenario A skrevet inn i stedet for å lese `expected.json` | low | Testene gjengir AC-ene i epics ordrett (partier på 25 med NB 2, `release_week` −8). Fasittestene leser fasiten direkte. Endres fasiten, feiler disse høyt, ikke stille | A |
+| 11 | BH | Negativt lager, sikkerhetslager, mengder og mengde per < 1 avvises ikke av kjernen | false | Bevisst grense i specen: de krasjer ikke beregningen, og API-et avviser dem i 4.1 (FR-8). Står i docstringen til `MrpInputError` | A |
+| 12 | BH | L4L med `quantity` godtas stille | low | `rbe.fixture` avviser det, og databasen har ikke feltet for L4L. Bare mulig ved direkte konstruksjon, og rettingen er en ny vakt | A |
+| 13 | BH | `test_ad2_exceptions_empty_until_story_2_4` sjekker ikke lengden lenger | false | Lengden sjekkes i `test_ad2_json_shape_matches_fasit` (16) og `test_ad2_other_horizon_gives_other_array_length` (20) | A |
 
 ## Design Notes
 
