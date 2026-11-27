@@ -19,3 +19,23 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
   summary: Tiltak 4 fra retrospektiven av epic 1 (tester for egen RBE_DEMO_USERNAME og egen RBE_FIXTURE_PATH gjennom seed og innlogging, R2 og R3) tas inn i specen for story 3.1.
   evidence: Retrospektiven la tiltaket til «neste backend-story». Thobias valgte 2026-11-27 å flytte det fra 2.1, som bare gjelder den rene kjernen, til 3.1, som uansett endrer deps.py og legger til API-tester.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
+  summary: Story 2.2 må bestemme hvordan uke gjøres om til arrayindeks. `Horizon.first_week` brukes ikke i dag, mens `ItemResult` sier at indeks 0 er uke 1.
+  evidence: Thobias sin gjennomgang av PR #11, risikopunkt 2 (`backend/src/rbe/mrp/types.py`, docstringen til `ItemResult`). Fasiten har `first_week` 1, så en kode som antar uke 1 består fasittestene uansett.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
+  summary: Verdiene i inndataene (negativ `qty_per` eller ledetid, MPS-uker utenfor horisonten, horisont ≤ 0) sjekkes ikke av kjernen. Avklar i specen for 4.1 at API-et avviser dem (AD-7, FR-8), og vurder om kjernen skal gi `MrpInputError` i tillegg.
+  evidence: Thobias sin gjennomgang av PR #11, risikopunkt 3. `_check_input` i `backend/src/rbe/mrp/llc.py` sjekker bare duplikater og referanser. Horisont ≤ 0 ble avvist i triage nr. 7, fordi tilstanden ikke kan nås før epic 4.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
+  summary: Story 2.4 må gjøre sorteringsnøkkelen for meldinger eksplisitt per type, i stedet for `getattr(e, "receipt_week", 0)`, så en ny meldingstype ikke kan sorteres feil uten at noe sier fra.
+  evidence: Thobias sin gjennomgang av PR #11, risikopunkt 4 (`_ordered` i `backend/src/rbe/mrp/run.py`). I dag finnes bare E1 og E2, og testen for `_ordered` dekker begge.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
+  summary: Story 2.4 trenger en egen fasittest for `exceptions`, sammenlignet som usortert mengde per scenario, fordi `pytest_generate_tests` i `tests/conftest.py` bare lager tilfeller for felt per vare.
+  evidence: Thobias sin gjennomgang av PR #11, risikopunkt 5. `fasit_cases` leser bare `result["items"]`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
+  summary: Vakten for FR-10 i fasittesten hviler på én vare. PLT-900 er den eneste der lengste og korteste vei gir ulik LLC, så skalatesten i 2.5 må ha flere varer med flere veier av ulik lengde og sjekke LLC mot en uavhengig beregning.
+  evidence: Thobias sin gjennomgang av PR #11: korteste vei gir 6 feil av 112, alle på PLT-900 og rekkefølgetesten. Endres BOM-en i fasiten, kan vakten forsvinne uten at noe feiler.
