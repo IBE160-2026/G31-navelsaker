@@ -172,7 +172,7 @@ Den manuelle testplanen er gjennomført og dokumentert, sporbarheten fra FR til 
 - Sammenligningen av kjøringer (FR-17, AD-6) er første story i epic 5, slik at epicen leverer hele FR-17.
 - Ikke-kjørte endringer telles med en revisjonsteller: `input_revision` i `planning_settings` økes ved hver lagring, og hver `mrp_run` lagrer revisjonen den ble kjørt på. Ført tilbake i AD-6.
 - Den manuelle testplanen dekker også UJ-2 (FR-1, FR-4, FR-8 i grensesnittet). Ført tilbake i PRD SM-2.
-- Én story er én branch og én PR, med 2–5 commits. Stories kan bygges i rekkefølge uten å vente på senere stories.
+- Én story er én branch og én PR, med 4–5 commits etter mønsteret i CLAUDE.md (endret fra 2–5 etter retrospektiven av epic 1). Stories kan bygges i rekkefølge uten å vente på senere stories.
 - Etter pre-mortem og gjennomgang av grensetilfeller: story 3.2 er delt i to (forslag og meldinger), testplanstegene gjennomføres per PR, stier regnes ut fra pakkens plassering, og 4.6 er den eneste storyen som kan kuttes. Grensene for uke, sletting av hele hovedplanen, to byggenumre i samme uke, bytte fra FOQ til L4L og E1 ved endret ledetid er lagt til i akseptansekriteriene.
 - Byggenummeret er unikt i hovedplanen, og duplikat avvises (FR-8). Ført tilbake i PRD FR-8.
 - Sluttvalidering: NFR-4 har fått et akseptansekriterium i 3.1, `POST /api/reset` er merket som et bevisst endepunkt for en handling, og henvisningen framover fra 1.5 til testplanen er fjernet.
@@ -181,7 +181,7 @@ Den manuelle testplanen er gjennomført og dokumentert, sporbarheten fra FR til 
 
 Dette gjelder hver story i tillegg til egne akseptansekriterier, så det ikke gjentas:
 
-- Storyen bygges på egen branch (`story/<n.m>-<kort-navn>`) og leveres som én pull request med 2–5 commits. Commit-meldingene er på norsk i imperativ og viser til FR-nummeret.
+- Storyen bygges på egen branch (`story/<n.m>-<kort-navn>`) og leveres som én pull request med 4–5 commits etter mønsteret i CLAUDE.md: spec, kode med tester, retting etter gjennomgangen og samlet dokumentasjon. Commit-meldingene er på norsk i imperativ og viser til FR-nummeret.
 - `uv run python -m pytest`, `uv run python -m ruff check` og `uv run python -m ruff format --check` i `backend/` og `npx biome check` i `frontend/` gir 0 feil.
 - Nye API-ruter har `require_user`, og rutetesten (AD-8) består uten nye unntak.
 - Automatiske tester har FR-nummeret og eventuelt scenarioet i navnet eller test-id-en (NFR-7).
