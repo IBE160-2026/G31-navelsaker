@@ -44,6 +44,13 @@ Stikkordene er mine. Claude har skrevet forklaringene etter at jeg ba om det, og
 
 - **PR-ene hadde for mange commits.** Regelen vår er 2–5 commits per PR, men PR #1–#7 hadde 8–14. Mye av det var like loggcommits (for eksempel tre med meldingen `Logg: story-1-4-innlogging-i-backend`), som ikke sier noe om hva som ble endret. Sensor leser commit-historikken og ser etter små, avgrensede commits med beskrivende meldinger. Støy gjør det vanskeligere å se de commitene som betyr noe. *Tiltak:* én loggcommit per story, og jeg sprer arbeidet over flere dager i stedet for å gjøre det meste på én dag.
 
+- **Hvorfor det ble for mange commits, og hvordan vi unngår det.** Jeg spurte Claude hvordan vi kan unngå det. Svaret var å se på hvor commitene kom fra. I PR #4, med 11 commits, var bare rundt 3 kode. Resten var dokumentasjon delt opp i mange små commits:
+  - Sesjonslogg-skillen committet hver gang loggen ble oppdatert, tre ganger i samme story.
+  - AI-loggen ble committet for seg og så oppdatert igjen.
+  - Statusen «done» og loggen fra forrige story ble med inn i neste PR som egne commits.
+
+  Verktøyet gjorde det det var laget for, men ingen hadde sett på hva det ga i sum. Nå følger hver story et fast mønster med 4–5 commits: spec, kode med tester, retting etter gjennomgangen, og én samlet commit for dokumentasjonen. Mønsteret står i CLAUDE.md under «Commits», så det gjelder fra story 2.1. Vi valgte bort «squash merge», som slår alt sammen til én commit, fordi da forsvinner sporet av hvordan arbeidet gikk fram. *Lærdom:* når KI-verktøy jobber automatisk, må jeg av og til se på helheten de lager, ikke bare på hvert steg.
+
 **Det som fungerte:**
 
 - **Det jeg prøvde selv, fant det automatikken ikke fant.**
