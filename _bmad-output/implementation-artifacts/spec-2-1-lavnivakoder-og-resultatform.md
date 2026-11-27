@@ -2,7 +2,8 @@
 title: 'Story 2.1: Lavnivåkoder og resultatform'
 type: 'feature'
 created: '2026-11-27'
-status: 'in-progress'
+status: 'done'
+baseline_commit: '69c8ea0b63376a9d831e9b4a3bc74facb1136017'
 route: 'dispatch'
 review_loop_iteration: 0
 context:
@@ -62,14 +63,14 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `backend/src/rbe/mrp/types.py` -- resultattypene og `MrpException` -- AD-2
-- [ ] `backend/src/rbe/mrp/llc.py` -- `MrpInputError`, `low_level_codes` -- FR-10
-- [ ] `backend/src/rbe/mrp/run.py` -- inndatasjekk, `run_mrp` og `result_to_dict` -- AD-2, AD-3
-- [ ] `backend/src/rbe/mrp/__init__.py` -- eksportene
-- [ ] `backend/tests/conftest.py` -- felles fasitsti og `pytest_generate_tests` for fasittestene -- AD-4, AD-10
-- [ ] `backend/tests/mrp/test_fixture_scenarios.py` -- LLC for A–E × alle varer, og varesettet per scenario -- FR-10
-- [ ] `backend/tests/mrp/test_llc.py` -- resten av I/O-matrisen -- FR-10, AD-2, AD-3
-- [ ] Prøv vakten: endre LLC midlertidig til korteste vei, se at PLT-900-testene feiler, og tilbakestill. Før det i Implementation Notes -- SM-C2
+- [x] `backend/src/rbe/mrp/types.py` -- resultattypene og `MrpException` -- AD-2
+- [x] `backend/src/rbe/mrp/llc.py` -- `MrpInputError`, `low_level_codes` -- FR-10
+- [x] `backend/src/rbe/mrp/run.py` -- inndatasjekk, `run_mrp` og `result_to_dict` -- AD-2, AD-3
+- [x] `backend/src/rbe/mrp/__init__.py` -- eksportene
+- [x] `backend/tests/conftest.py` -- felles fasitsti og `pytest_generate_tests` for fasittestene -- AD-4, AD-10
+- [x] `backend/tests/mrp/test_fixture_scenarios.py` -- LLC for A–E × alle varer, og varesettet per scenario -- FR-10
+- [x] `backend/tests/mrp/test_llc.py` -- resten av I/O-matrisen -- FR-10, AD-2, AD-3
+- [x] Prøv vakten: endre LLC midlertidig til korteste vei, se at PLT-900-testene feiler, og tilbakestill. Før det i Implementation Notes -- SM-C2
 
 **Prosess (tiltak 7–9 fra retrospektiven av epic 1):** 4–5 commits etter CLAUDE.md. I tillegg kommer de to doc-commitene fra main (`cbb059c`, `5c68730`), som PR-beskrivelsen forklarer. Thobias går gjennom PR-en (`bmad-walkthrough`) og skriver én egen observasjon i PR-en før fletting. Claude ber om refleksjonsnotat i sluttoppsummeringen. Tiltak 4 er flyttet til 3.1 (deferred-work.md).
 
@@ -79,11 +80,35 @@ context:
 
 ## Implementation Notes
 
+- **Vakten prøvd (SM-C2):** LLC ble midlertidig endret til korteste vei (`min` i stedet for `max` over foreldrene). Da feilet `test_fasit_field[A–E-FR-10-PLT-900-low_level_code]` (5 stk.) og `test_fr10_scenario_a_item_order`. Endringen ble tilbakestilt, og alle tester består igjen.
+- **Sykelmeldingen:** varene som står igjen etter Kahn, har alle minst én forelder som også står igjen. `_find_cycle` går derfor oppover fra minste gjenværende id via minste gjenværende forelder til en vare gjentas, snur sykelen til retningen forelder → barn og starter den i minste id (f.eks. «PLT-900 → SEK-110 → PLT-900»). Det gir én sykel i fast rekkefølge uten å nevne varer under sykelen.
+- **Sortering på ett sted:** `_ordered` i `run.py` sorterer varer, `planned_orders` og meldinger. Meldinger uten `receipt_week` (E1) får 0 i sorteringsnøkkelen, som bare skiller innen samme `type`.
+- **`low_level_codes`** sjekker inndataene selv (`_check_input` i `llc.py`), før LLC. `run_mrp` får sjekken gjennom den, så rekkefølgen «sjekk før LLC» i specen holder. Flyttet fra `run.py` etter gjennomgangen (triage nr. 2).
+- **Etter gjennomgangen (`37f552c`):** 195 tester består, og ruff gir 0 funn. Nye tester for sorteringen i `_ordered`, alle seks ukesarrayer, sykel med en vare under, selvsykelens form og `low_level_codes` kalt direkte.
+- **Fasittesten:** `conftest.py` har `FIXTURE_DIR`, `expected_scenarios()` (lest én gang), fixturen `expected` og `pytest_generate_tests`, som leser `FIELD_FR` fra testmodulen og lager `fasit_case`. 2.2–2.4 utvider bare `FIELD_FR` i `test_fixture_scenarios.py`. Varesettet testes med id-er som `A-FR-10-varesett`.
+
 ## Spec Change Log
 
 ## Review Triage Log
 
 Spec-gjennomgang før godkjenning (2026-11-27, én subagent). Alle funn ble rettet i specen før godkjenning: tupler i `result_to_dict` (1), nøkler og `ClassVar` for `type` (2), duplikater (3), ukjente varer i BOM, MPS og åpne ordre før sykelsjekken (4), sykelmeldingen bare med varene i sykelen (5), test av dyp kjede (6), fasitsti fra `conftest.py` etter AD-4 (7), FR-tabell og varesett i fasittesten (8), sortering på ett sted (9), rekkefølgen i dicten (10), commitantallet og prosessen ut av den frosne delen (11), retningslinje og algoritmevalg (12).
+
+Runde 1 av kodegjennomgangen (2026-11-27, lagene blind-hunter (BH), edge-case-hunter (ECH) og verification-gap (VG), mot `0710d01`). Rute: patch (P) eller avvist (A). Ingen funn var `intent_gap` eller `bad_spec`.
+
+| # | Lag | Funn | Vurdering | Begrunnelse | Rute |
+|---|---|---|---|---|---|
+| 1 | VG, BH | Sorteringen av meldinger og `planned_orders` i `_ordered` testes ikke. Endret eller fjernet sorteringsnøkkel består hele testsettet | medium | `run_mrp` sender alltid tomme lister, og formtesten bygger `MrpResult` direkte. Fasittestene i 2.4 sammenligner som mengde (fasitens README), så de fanger det heller ikke. Brudd på AD-3 ville gitt ulik JSON for like kjøringer | P |
+| 2 | ECH, BH | `low_level_codes` er eksportert, men gir `KeyError` for en ukjent vare og slår sammen like id-er når den kalles direkte | medium | Story 4.4 henter LLC til BOM-treet fra kjernen og kan kalle funksjonen direkte. Retting: inndatasjekken flyttes inn i `low_level_codes`, uten nytt eksportert navn | P |
+| 3 | ECH, BH | `test_fr10_item_outside_bom_gets_zero` sjekker `items[0]` (RBE-000) i stedet for ZZZ-999 gjennom `run_mrp` | low | Påstanden består uansett hva ZZZ-999 får. Direkte retting: slå opp på id | P |
+| 4 | BH | Formtesten for meldinger hopper over fasitens melding nr. 2 (E2 for MOT-210, negativ `release_week`) og bruker skjøre indekser | low | Direkte retting, tatt sammen med nr. 1: sammenlign med hele lista | P |
+| 5 | BH | Bare `gross_requirements` sjekkes for nuller og `tuple` | low | Direkte retting: løkke over `WEEK_FIELDS` | P |
+| 6 | BH | Ingen test av sykelmeldingen når en vare med lavere id henger under sykelen, og selvsykelen sjekkes ikke på form | medium | Det er grunnen til at `_find_cycle` kutter stien, og ingen test viser at kuttet virker. Retting: to tester | P |
+| 7 | ECH | Horisont 0 eller negativ gir tomme arrayer uten feil | low | Horisonten kommer fra fasiten og redigeres ikke av brukeren (FR-8 har ikke horisont). Rettingen legger til en vakt for en tilstand som ikke kan nås | A |
+| 8 | ECH, BH | `pytest_generate_tests` gir `AttributeError` hvis `FIELD_FR` mangler, og `KeyError` ved samlingen hvis et felt mangler i fasiten | low | Bare for utviklere, og feilen nevner allerede attributtet eller feltet. Fasiten har alle feltene for alle varer. Rettingen legger til vakter | A |
+| 9 | BH | `SCENARIOS` er hardkodet ved siden av scenarioene fra fasiten | low | `test_fasit_covers_all_scenarios` feiler hvis de spriker, så avviket kan ikke gå stille | A |
+| 10 | BH | Feilmeldingen for ukjente varer nevner den første i inndatarekkefølgen | low | Feilen er riktig og nevner en ukjent vare. Å samle og sortere alle gir mer kode for en melding om ugyldige data | A |
+| 11 | BH | Specen har `status: 'in-review'`, mens sprintstatus bruker `review` | false | Malen for specen har `in-review` som gyldig verdi, og sprintstatus har sitt eget skjema med `review`. Det er to ulike felt | A |
+| 12 | VG | B–E gir ingen ny LLC-dekning utover A, fordi LLC er lik i alle scenarioene | false | Ikke en feil. BOM-strukturen er den samme i A–E, og vakten (korteste vei) fanges av PLT-900. LLC-reglene dekkes ellers av testene for kjede og sykel | A |
 
 ## Design Notes
 
