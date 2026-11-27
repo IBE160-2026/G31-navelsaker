@@ -1,10 +1,15 @@
 """Felles testoppsett: hver test starter uten RBE_-variabler og med tom innstillingscache.
 
 Fixturene ``client`` og ``logged_in_client`` gir appen mot en midlertidig database (AD-8).
+Fasitstien har én kilde her (``FIXTURE_DIR``, AD-4). ``pytest_generate_tests`` lager ett
+fasittilfelle per scenario × FR × vare × felt for tester som tar argumentet ``fasit_case``.
 """
 
+import json
 from collections.abc import Iterator
+from functools import cache
 from pathlib import Path
+from typing import Any, NamedTuple
 
 import pytest
 from fastapi.testclient import TestClient
@@ -28,10 +33,59 @@ def clean_env(monkeypatch: pytest.MonkeyPatch):
     get_settings.cache_clear()
 
 
+FIXTURE_DIR = Path(__file__).resolve().parents[2] / "testdata" / "testfartoy-v1"
+"""Mappa med fasiten for testfartøyet (AD-4). Testene leser fasiten direkte herfra."""
+
+
+class FasitCase(NamedTuple):
+    """Én forventet verdi i ``expected.json``: scenario, FR, vare, felt og verdien."""
+
+    scenario: str
+    fr: str
+    item: str
+    field: str
+    expected: Any
+
+
+@cache
+def expected_scenarios() -> dict[str, Any]:
+    """``scenarios`` fra ``expected.json``, lest én gang per testkjøring."""
+    text = (FIXTURE_DIR / "expected.json").read_text(encoding="utf-8")
+    return json.loads(text)["scenarios"]
+
+
+def fasit_cases(field_fr: dict[str, str]) -> list[FasitCase]:
+    """Ett tilfelle per scenario × vare × felt i ``field_fr`` (felt → FR-nummer)."""
+    return [
+        FasitCase(scenario, fr, item_id, field, values[field])
+        for scenario, result in expected_scenarios().items()
+        for item_id, values in result["items"].items()
+        for field, fr in field_fr.items()
+    ]
+
+
+def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
+    """Parametriser ``fasit_case`` fra fasiten med modulens tabell ``FIELD_FR``."""
+    if "fasit_case" not in metafunc.fixturenames:
+        return
+    cases = fasit_cases(metafunc.module.FIELD_FR)
+    metafunc.parametrize(
+        "fasit_case",
+        cases,
+        ids=[f"{c.scenario}-{c.fr}-{c.item}-{c.field}" for c in cases],
+    )
+
+
 @pytest.fixture(scope="session")
 def fixture_dir() -> Path:
     """Mappa med fasiten for testfartøyet (AD-4). Testene leser fasiten direkte herfra."""
-    return Path(__file__).resolve().parents[2] / "testdata" / "testfartoy-v1"
+    return FIXTURE_DIR
+
+
+@pytest.fixture(scope="session")
+def expected() -> dict[str, Any]:
+    """``scenarios`` fra ``expected.json`` (AD-4)."""
+    return expected_scenarios()
 
 
 @pytest.fixture(scope="session")

@@ -30,6 +30,10 @@ Jeg lot KI-en flette PR #4–#6 uten egen gjennomgang. Det var ikke planlagt som
 
 *(Avsnittet over er formulert av Claude etter at jeg spurte om påstanden var gyldig, og jeg har godkjent det som mitt.)*
 
+### Om økten
+
+Jeg ble overrasket over hvor mye retrospektiven fant etter at alt var testet og så bra ut. Jeg har lært at jeg må prøve appen selv ofte og se på helheten, ikke bare stole på at KI-gjennomgangen tar alt.
+
 ### Læringspunkter fra retrospektiven av epic 1
 
 Stikkordene er mine. Claude har skrevet forklaringene etter at jeg ba om det, og jeg har valgt punktene. Kilde: [retrospektiven av epic 1](../_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md).
@@ -59,3 +63,9 @@ Stikkordene er mine. Claude har skrevet forklaringene etter at jeg ba om det, og
   - Skjermbildene KI-en tok med en usynlig nettleser, viste tekst utenfor boksene. Jeg krevde bilder fra en ekte nettleser, og regelen er nå endret.
 
   Ingen av disse tingene ble fanget av testene eller KI-gjennomgangene, fordi de bare synes når et menneske faktisk bruker appen. *Lærdom:* KI kan teste koden, men jeg må teste opplevelsen.
+
+## 2026-11-27 — Story 2.1: lavnivåkoder og resultatform ([sesjonslogg](../.logs/thobias-navelsaker/983-2026-11-27-12-12-26-story-2-1-lavnivakoder.md))
+
+Gjennomgangen av specen før godkjenning fant 12 svakheter, som ble rettet før koden ble skrevet. Den alvorligste ville fått alle sammenligningene mot fasiten til å feile i neste story. Det viser verdien av å gjennomgå arbeidet hele veien, ikke bare koden til slutt.
+
+*(Formulert av Claude etter mine stikkord «Gjennomgang av spec fant 12 svakheter som ble rettet (skriv bedre). Viser verdi av konstant gjennomgang», og jeg har godkjent det som mitt.)*

@@ -392,3 +392,26 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Brukeren valgte selv hvilke læringspunkter som skulle med.
   - Brukeren skrev at det å flette uten gjennomgang «førte til at feil ikke ble oppdaget». Claude endret det til «feil gikk videre uten at jeg så dem», fordi det ikke er sikkert at en menneskelig gjennomgang ville funnet `get_session`-feilen. Brukeren ble gjort oppmerksom på endringen.
 - **Commit**: `71520af`, `e9ac439`, `585fee5`, pluss dokumentasjonscommiten som inneholder denne oppføringen.
+
+## 2026-11-27 — Story 2.1: lavnivåkoder og resultatform
+
+- **Hvorfor**: Første story i epic 2. Kjernen trengte lavnivåkoder og én resultatform lik fasiten før netting, R11 og meldinger kan bygges i 2.2–2.4 (FR-10, AD-2, AD-3).
+- **Prompt(er)**:
+  - «Fortsett med story 2.1. Les først CLAUDE.md …, åpne tiltak fra retrospektiven av epic 1 i sprint-status.yaml, og issues.md … Ta inn tiltak som gjelder story 2.1 i specen.»
+  - Svarene på sjekkpunktene: «Flytt til 3.1», «Er det trygt å forkorte specen?», «Ja, bruk dem» (subagenter), «Gjennomgå specen», «Så vi bør i utgangspunktet ikke forkorte specen?», «Hva kan du jobbe med imens?» og «Godkjenn og fortsett».
+- **Verktøy/modell**: Claude Code (Opus 5.5) med `bmad-build`. Én subagent gikk gjennom specen, én implementerte, og tre gikk gjennom koden (blind-hunter, edge-case-hunter, verification-gap).
+- **Endringer**:
+  - `backend/src/rbe/mrp/`: resultattypene i `types.py`, `llc.py` med `low_level_codes` (lengste vei uten rekursjon, sjekk av inndata og sykler), og `run.py` med `run_mrp`, `result_to_dict` og sorteringen etter AD-3 på ett sted. Ukesarrayene er nuller til 2.2.
+  - `backend/tests/conftest.py`: én kilde til fasitstien (`FIXTURE_DIR`, AD-4) og `pytest_generate_tests`, som lager fasittilfeller fra `expected.json` med en tabell fra felt til FR. 2.2–2.4 utvider bare tabellen.
+  - `backend/tests/mrp/test_fixture_scenarios.py` (55 LLC-tilfeller for A–E, id-er som `A-FR-10-PLT-900-low_level_code`) og `test_llc.py` (resten av I/O-matrisen).
+  - `_bmad-output/implementation-artifacts/epic-2-context.md` (ny) og specen for 2.1.
+- **Verifisering**:
+  - `uv run python -m pytest` ga 195 tester som består, og ruff ga 0 funn.
+  - Vakten (SM-C2) er prøvd. Med LLC midlertidig regnet som korteste vei feilet de fem PLT-900-tilfellene og testen av rekkefølgen.
+  - Spec-gjennomgangen fant 12 svakheter før koden ble skrevet. Det alvorligste var at `result_to_dict` kunne gitt tupler, og `(0, 0) == [0, 0]` er falskt i Python, så alle sammenligningene mot fasiten i 2.2 ville feilet.
+  - Kodegjennomgangen gav 12 rader i triageloggen: 6 rettet og 6 avvist med begrunnelse. Viktigst var at sorteringen av meldinger ikke var testet. Testsettet besto med feil sorteringsnøkkel, og fasittestene i 2.4 sammenligner som mengde.
+- **Brukerens styring**:
+  - Brukeren valgte å flytte tiltak 4 fra retrospektiven (tester for egen `RBE_DEMO_USERNAME` og `RBE_FIXTURE_PATH`) fra 2.1 til 3.1, etter Claudes anbefaling. Det er ført i `deferred-work.md`.
+  - Brukeren valgte ikke mellom «behold» og «kort ned» da specen var for lang, men spurte om det var trygt å korte den ned. Claude svarte at feltlistene er kontrakten for de neste storyene. Specen ble ikke kortet ned for å nå en lengde.
+  - Brukeren ba om at specen ble gjennomgått før godkjenning, i stedet for å godkjenne direkte. Det fant feilen med tupler før koden ble skrevet.
+- **Commit**: `69c8ea0` (spec), `0710d01` (kode med tester), `37f552c` (retting etter gjennomgangen), pluss dokumentasjonscommiten som inneholder denne oppføringen.
