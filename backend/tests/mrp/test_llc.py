@@ -1,4 +1,5 @@
-"""Lavnivåkoder, inndatasjekk og resultatform (FR-10, AD-2, AD-3), scenario A som grunnlag."""
+"""Lavnivåkoder, inndatasjekk, resultatform og meldinger (FR-10, FR-13, FR-14, AD-2, AD-3),
+scenario A som grunnlag."""
 
 import json
 from dataclasses import FrozenInstanceError, replace
@@ -220,9 +221,10 @@ def test_ad2_item_result_is_frozen(scenario_a: MrpInput) -> None:
         item.low_level_code = 5  # type: ignore[misc]
 
 
-def test_ad2_exceptions_empty_until_story_2_4(scenario_a: MrpInput) -> None:
+def test_ad2_result_collections_are_tuples(scenario_a: MrpInput) -> None:
     result = run_mrp(scenario_a)
-    assert result.exceptions == ()
+    assert isinstance(result.items, tuple)
+    assert isinstance(result.exceptions, tuple)
     for item in result.items:
         assert isinstance(item.planned_orders, tuple), item.id
         for name in WEEK_FIELDS:
@@ -279,3 +281,27 @@ def test_ad3_ordered_sorts_items_orders_and_exceptions(
     assert [item.id for item in result.items] == [item.id for item in template]
     for item in result.items:
         assert [order.receipt_week for order in item.planned_orders] == [5, 12, 16]
+
+
+def test_fr13_fr14_scenario_a_exceptions(scenario_a: MrpInput) -> None:
+    assert run_mrp(scenario_a).exceptions == (
+        LeadTimeExceedsHorizon("MOT-210", lead_time_weeks=20, horizon_weeks=16),
+        PastDueRelease(
+            "MOT-210",
+            quantity=1,
+            receipt_week=12,
+            release_week=-8,
+            weeks_past_due=9,
+            earliest_receipt_week=21,
+        ),
+        PastDueRelease("VIN-920", 1, 6, 0, 1, 7),
+    )
+
+
+def test_fr13_fr14_empty_mps_gives_no_exceptions(scenario_a: MrpInput) -> None:
+    assert run_mrp(replace(scenario_a, mps=())).exceptions == ()
+
+
+def test_ad3_unknown_exception_type_is_rejected() -> None:
+    with pytest.raises(TypeError, match="ukjent meldingstype"):
+        _ordered([], [object()])  # type: ignore[list-item]

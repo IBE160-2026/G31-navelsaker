@@ -2,16 +2,24 @@
 
 ``run_mrp`` beregner lavnivåkodene (som også sjekker inndataene), planlegger varene i
 LLC-rekkefølge med ``plan_items`` (bruttobehov, netting, partiregel, ledetidsoffset og R11, der
-forfalte forslag gir barna behov i uke 1) og gir resultatet i fast rekkefølge. Meldingene er
-foreløpig tomme (story 2.4).
+forfalte forslag gir barna behov i uke 1), lager meldingene E1 og E2 med ``find_exceptions``
+(FR-13, FR-14) og gir resultatet i fast rekkefølge.
 """
 
 from dataclasses import fields, replace
 from typing import Any
 
+from .exceptions import find_exceptions
 from .llc import low_level_codes
 from .plan import plan_items
-from .types import ItemResult, MrpException, MrpInput, MrpResult
+from .types import (
+    ItemResult,
+    LeadTimeExceedsHorizon,
+    MrpException,
+    MrpInput,
+    MrpResult,
+    PastDueRelease,
+)
 
 WEEK_FIELDS = (
     "gross_requirements",
@@ -46,7 +54,7 @@ def run_mrp(data: MrpInput) -> MrpResult:
                 planned_orders=plan.planned_orders,
             )
         )
-    return _ordered(items, [])
+    return _ordered(items, find_exceptions(data, plans))
 
 
 def _ordered(items: list[ItemResult], exceptions: list[MrpException]) -> MrpResult:
@@ -55,13 +63,19 @@ def _ordered(items: list[ItemResult], exceptions: list[MrpException]) -> MrpResu
         _with_sorted_orders(item)
         for item in sorted(items, key=lambda item: (item.low_level_code, item.id))
     )
-    sorted_exceptions = tuple(
-        sorted(
-            exceptions,
-            key=lambda e: (e.type, e.item, getattr(e, "receipt_week", 0)),
-        )
-    )
+    sorted_exceptions = tuple(sorted(exceptions, key=_exception_key))
     return MrpResult(items=sorted_items, exceptions=sorted_exceptions)
+
+
+def _exception_key(exception: MrpException) -> tuple[str, str, int]:
+    """Sorteringsnøkkel per meldingstype (AD-3). En ukjent type gir ``TypeError``."""
+    match exception:
+        case LeadTimeExceedsHorizon():
+            return (exception.type, exception.item, 0)  # høyst én E1 per vare
+        case PastDueRelease():
+            return (exception.type, exception.item, exception.receipt_week)
+        case _:
+            raise TypeError(f"ukjent meldingstype: {type(exception).__name__}")
 
 
 def _with_sorted_orders(item: ItemResult) -> ItemResult:
