@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-24-2026 15:36
-last_updated: 11-27-2026 10:26
+last_updated: 11-27-2026 10:46
 project: Red Ball Express
 project_key: NOKEY
 tracking_system: file-system
@@ -84,14 +84,14 @@ action_items:
     epic: 1
     action: "Avstem epics.md med python -m-formen i AD-10, AD-11 og README (V5)"
     owner: "Claude"
-    status: open
+    status: done
     ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
   - id: "epic-1-retro-item-2-før-kopiert-cookie-avveiningen-inn-i-ad"
     epic: 1
     action: "Før kopiert-cookie-avveiningen inn i AD-8 og avgjør /docs, /redoc og
       /openapi.json, med utvidet rutetest (V6, R4)"
     owner: "Claude, Thobias velger"
-    status: open
+    status: done
     ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
   - id: "epic-1-retro-item-3-la-get_session-eie-transaksjonen-begin-m"
     epic: 1
@@ -112,7 +112,7 @@ action_items:
     action: "Presiser feilsøkingen for «Fikk ikke kontakt» i README: se etter feil
       i terminal 1 (R5)"
     owner: "Claude"
-    status: open
+    status: done
     ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
   - id: "epic-1-retro-item-6-ta-vern-mot-forespørsler-fra-andre-lokal"
     epic: 1
