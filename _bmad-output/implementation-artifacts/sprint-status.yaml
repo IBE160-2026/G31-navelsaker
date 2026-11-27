@@ -29,21 +29,21 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 11-24-2026 15:36
-last_updated: 11-26-2026 16:00
+last_updated: 11-27-2026 10:26
 project: Red Ball Express
 project_key: NOKEY
 tracking_system: file-system
 story_location: _bmad-output/implementation-artifacts
 development_status:
-  epic-1: in-progress
+  epic-1: done
   1-1-backend-oppsett-med-helsesjekk-og-konfigurasjon: done
   1-2-kjernens-datatyper-og-fasitparser: done
   1-3-database-og-seed-ved-tom-database: done
   1-4-innlogging-i-backend: done
   1-5-frontend-oppsett-designtokens-og-innloggingsside: done
   1-6-menylinje-og-startside: done
-  1-7-readme-v1-med-oppstart-og-tester: review
-  epic-1-retrospective: optional
+  1-7-readme-v1-med-oppstart-og-tester: done
+  epic-1-retrospective: done
 
   epic-2: backlog
   2-1-lavnivåkoder-og-resultatform: backlog
@@ -79,3 +79,64 @@ development_status:
   6-1-gjennomføre-testplanen-og-sjekke-sporbarheten: backlog
   6-2-readme-for-sensor-prøvd-på-ren-maskin: backlog
   epic-6-retrospective: optional
+action_items:
+  - id: "epic-1-retro-item-1-avstem-epics-md-med-python-m-formen-i-ad"
+    epic: 1
+    action: "Avstem epics.md med python -m-formen i AD-10, AD-11 og README (V5)"
+    owner: "Claude"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-2-før-kopiert-cookie-avveiningen-inn-i-ad"
+    epic: 1
+    action: "Før kopiert-cookie-avveiningen inn i AD-8 og avgjør /docs, /redoc og
+      /openapi.json, med utvidet rutetest (V6, R4)"
+    owner: "Claude, Thobias velger"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-3-la-get_session-eie-transaksjonen-begin-m"
+    epic: 1
+    action: "La get_session eie transaksjonen (begin()) med test for skriving, før
+      første skrivende rute i 3.1 (R1)"
+    owner: "Claude"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-4-tester-for-egen-rbe_demo_username-og-rbe"
+    epic: 1
+    action: "Tester for egen RBE_DEMO_USERNAME og RBE_FIXTURE_PATH gjennom seed og
+      innlogging (R2, R3)"
+    owner: "Claude"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-5-presiser-feilsøkingen-for-fikk-ikke-kont"
+    epic: 1
+    action: "Presiser feilsøkingen for «Fikk ikke kontakt» i README: se etter feil
+      i terminal 1 (R5)"
+    owner: "Claude"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-6-ta-vern-mot-forespørsler-fra-andre-lokal"
+    epic: 1
+    action: "Ta vern mot forespørsler fra andre lokale sider inn i spec 3.1 og CHECK-begrensninger
+      inn i spec 4.1 (R6, R7)"
+    owner: "Claude"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-7-gå-gjennom-hver-pr-selv-bmad-walkthrough"
+    epic: 1
+    action: "Gå gjennom hver PR selv (bmad-walkthrough) og skriv én egen observasjon
+      før fletting (P2)"
+    owner: "Thobias"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-8-spre-arbeidet-over-flere-dager-og-lag-én"
+    epic: 1
+    action: "Spre arbeidet over flere dager og lag én loggcommit per story (P1, V7)"
+    owner: "Thobias og Claude"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"
+  - id: "epic-1-retro-item-9-skriv-to-tre-setninger-med-egne-erfaring"
+    epic: 1
+    action: "Skriv to–tre setninger med egne erfaringer ved slutten av hver økt (P6)"
+    owner: "Thobias, Claude spør"
+    status: open
+    ref: "_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md"

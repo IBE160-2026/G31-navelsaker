@@ -328,3 +328,32 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
     - Avvist: 6 funn med begrunnelse i specens Review Triage Log. Tidtaking etter SM-3 på en ren maskin hører til story 6.2.
   - **Rettelse fra brukeren underveis:** skjermbildene ble tatt på nytt fra brukerens opptak i ekte nettleser (egen oppføring over).
 - **Commit**: `8225c6b` (README v1), `7466eac` (rettelser etter prøven), `f3518eb` (AD-10 og AD-11), `f38907f` (første versjon av denne oppføringen og prøven i specen), `f727195` (rettelser etter gjennomgangen), pluss commiten som inneholder denne oppdateringen.
+
+## 2026-11-27 — Retrospektiv av epic 1 og regel om retrospektiv etter hver epic
+
+- **Hvorfor**: Brukeren spurte om dokumentasjonen holder til en refleksjonsrapport. Ett av svarene var at ingen epic var oppsummert. Brukeren ba om en retrospektiv av det som er gjort, og om at det skal gjøres etter hver epic framover.
+- **Prompt(er)**: «Gjør 3. for det vi allerede har gjort og sett det opp slik at vi gjør det fremover også. Sensorveiledning ligger vel allerede inne?»
+- **Verktøy/modell**: Claude Code (Opus 5.5) med `bmad-retrospective`, og `bmad-review` med tre underagenter: adversarial, edge-case-hunter og verification-gap. Diffen var `73f2283..24f0d85`, med `backend/` og `frontend/`.
+- **Endringer**:
+  - [epic-1-retro-2026-11-27.md](../_bmad-output/implementation-artifacts/epic-1-retro-2026-11-27.md) har funn med kilde, prøve av appen, 9 tiltak og vurdering av akseptansen.
+  - Sprintstatus: `epic-1-retrospective` er satt til done, og de 9 tiltakene er ført inn med skriptet til skillen.
+  - CLAUDE.md har fått seksjonen «Retrospektiv etter hver epic».
+- **Verifisering**:
+  - 107 backendtester og 10 frontendtester består, og ruff og Biome gir 0 funn.
+  - Innloggingsflyten er prøvd fra start til slutt med curl mot en midlertidig backend. Prøven bekreftet at en kopiert cookie fortsatt virker etter utlogging, slik det er godtatt i triageloggen til 1.4. Avveiningen står ikke i AD-8 (tiltak 2).
+  - Funnene fra underagentene som tiltakene bygger på, er sjekket mot koden: `get_session` uten `begin()` (`deps.py:13-16`), sesjonsnøkkelen uten krav til lengde (`config.py:35-43`) og innstillingene som leses to ganger (`main.py:21, 36`).
+- **Resultat og vurdering**:
+  - Gjennomgangen av hele diffen fant 18 nye funn som ingen enkelt story så.
+  - Det viktigste er at `get_session` ikke committer, noe som må rettes før første skrivende rute i 3.1. To konfigurasjonsvariabler som README lover, mangler også tester.
+  - Prosessfunnene:
+    - 63 av 72 commits er fra én dag.
+    - PR #4–#6 ble flettet uten menneskelig gjennomgang.
+    - Prosessdokumentasjonen har ingen egne refleksjoner.
+  - Maskinens vurdering er *rejected*, fordi story 1.7 står i review (PR #7 er ikke flettet). Den blir *accepted-with-open-items* når brukeren fletter PR-en og bekrefter.
+  - **Sensorveiledningen:** den ligger i semestermappa utenfor repoet. Den ble flyttet dit med vilje i PRD-økten (kriterium 7). Den sier at refleksjonen vurderes i del 2, som er refleksjonsrapporten og teller 30 %. Veiledningen for del 2 finnes ikke i repoet eller i semestermappa.
+- **Oppfølging samme dag**:
+  - Prompt: «1. Ja 2. Hva anbefaler du? 3. Ja»
+  - PR #7 er flettet (`8784631`). Story 1.7 og epic 1 er satt til done, og vurderingen er endret til *accepted-with-open-items* etter brukerens beslutning (`3506901`).
+  - Brukeren godtok forslaget om refleksjonsnotater (tiltak 9). Det er laget [docs/refleksjonsnotater.md](refleksjonsnotater.md) med mal, og CLAUDE.md har fått en regel: Claude ber om to–tre setninger ved slutten av hver økt og fører dem inn ordrett (`ea544c0`).
+  - `/docs`: Claude anbefalte å skru den av. Brukeren har ikke bestemt seg ennå, og det gjøres i tiltak 2.
+- **Commit**: `d33e523` (retrospektiv og sprintstatus), `b89003f` (regel i CLAUDE.md), `e2ac951` (denne oppføringen), `3506901` og `ea544c0` (oppfølging), pluss commiten som inneholder denne oppdateringen.
