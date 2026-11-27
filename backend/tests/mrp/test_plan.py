@@ -235,3 +235,11 @@ def test_fr12_r11_parent_with_past_due_and_valid_orders(
     by_id = _chain(items, (BomLine("P", "C", 2),), mps)
     assert tuple(order.release_week for order in by_id["P"].planned_orders) == releases
     assert by_id["C"].gross_requirements == child_gross
+
+
+def test_fr12_r11_purchased_parent_past_due() -> None:
+    """R11 gjelder også kjøpte foreldre: P (``purchase``, ledetid 1) → C (mengde per 2)."""
+    items = (_item("P", lead_time=1), _item("C"))
+    by_id = _chain(items, (BomLine("P", "C", 2),), (MpsLine("P", 1, 1, 1),))
+    assert by_id["P"].planned_orders == (PlannedOrder(1, 0, 1),)
+    assert by_id["C"].gross_requirements == (2, 0, 0, 0, 0, 0)

@@ -25,7 +25,7 @@ SCENARIOS = ("A", "B", "C", "D", "E")
 
 @pytest.mark.parametrize("scenario", SCENARIOS, ids=[f"{s}-FR-11-massebalanse" for s in SCENARIOS])
 def test_fr11_mass_balance_per_item(scenario: str, result_for: ResultFor) -> None:
-    """Gjelder hver vare for seg, så den går opp også i D uten R11.
+    """Gjelder hver vare for seg og er uavhengig av R11.
 
     Tapte behov mellom forelder og barn fanges ikke her, men av
     ``test_fr12_no_requirements_are_lost`` (FR-12).
@@ -43,7 +43,9 @@ def test_fr11_mass_balance_per_item(scenario: str, result_for: ResultFor) -> Non
 @pytest.mark.parametrize(
     "scenario", SCENARIOS, ids=[f"{s}-FR-12-ingen-tapte-behov" for s in SCENARIOS]
 )
-def test_fr12_no_requirements_are_lost(scenario: str, input_path: Path) -> None:
+def test_fr12_no_requirements_are_lost(
+    scenario: str, input_path: Path, result_for: ResultFor
+) -> None:
     """For hver vare: sum BB = sum MPS + Σ forelderens forslag × mengde per (R3, R11).
 
     Sjekkes per vare, ikke per BOM-linje, fordi en vare med flere foreldre har ett samlet
@@ -51,7 +53,7 @@ def test_fr12_no_requirements_are_lost(scenario: str, input_path: Path) -> None:
     uavhengig av ``planned_order_releases`` (R9).
     """
     data = load_input(input_path, scenario)
-    items = result_to_dict(run_mrp(data))["items"]
+    items = result_for(scenario)["items"]
     expected_gross = {item_id: 0 for item_id in items}
     for mps in data.mps:
         expected_gross[mps.item] += mps.quantity
