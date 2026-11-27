@@ -34,4 +34,4 @@
 - [ ] 2026-11-27 [story-2-1-lavnivakoder](983-2026-11-27-12-12-26-story-2-1-lavnivakoder.md) — tiltak 4 fra retrospektiven av epic 1 (egen RBE_DEMO_USERNAME og RBE_FIXTURE_PATH) skal inn i specen for 3.1
 - [x] 2026-11-27 [story-2-2-bruttobehov-netting](982-2026-11-27-12-49-00-story-2-2-bruttobehov-netting.md) — Thobias går gjennom PR-en for 2.2 (bmad-walkthrough) og skriver én egen observasjon før fletting (tiltak 7) (løst 2026-11-27: observasjonen står i PR #12)
 - [x] 2026-11-27 [story-2-2-bruttobehov-netting](982-2026-11-27-12-49-00-story-2-2-bruttobehov-netting.md) — refleksjonsnotat for økten om story 2.2 venter på Thobias sine egne ord (løst 2026-11-27)
-- [ ] 2026-11-27 [story-2-2-bruttobehov-netting](982-2026-11-27-12-49-00-story-2-2-bruttobehov-netting.md) — flett PR #12 og sett 2.2 til done i spec-commiten for 2.3
+- [x] 2026-11-27 [story-2-2-bruttobehov-netting](982-2026-11-27-12-49-00-story-2-2-bruttobehov-netting.md) — flett PR #12 og sett 2.2 til done i spec-commiten for 2.3 (løst 2026-11-27: PR #12 flettet i b61dc11, 2.2 done)
