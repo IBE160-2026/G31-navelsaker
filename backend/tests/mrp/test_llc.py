@@ -15,15 +15,18 @@ from rbe.mrp import (
     LeadTimeExceedsHorizon,
     LotSizing,
     MpsLine,
+    MrpException,
     MrpInput,
     MrpInputError,
     MrpResult,
     PastDueRelease,
+    PlannedOrder,
     ScheduledReceipt,
     low_level_codes,
     result_to_dict,
     run_mrp,
 )
+from rbe.mrp.run import WEEK_FIELDS, _ordered
 
 EXTRA_KEYS = {"name", "unit", "on_hand"}
 
@@ -114,7 +117,8 @@ def test_ad2_extra_fields_come_from_input(scenario_a: MrpInput) -> None:
 def test_fr10_item_outside_bom_gets_zero(scenario_a: MrpInput) -> None:
     data = replace(scenario_a, items=(*scenario_a.items, _item("ZZZ-999")))
     assert low_level_codes(data)["ZZZ-999"] == 0
-    assert run_mrp(data).items[0].low_level_code == 0
+    by_id = {item.id: item for item in run_mrp(data).items}
+    assert by_id["ZZZ-999"].low_level_code == 0
 
 
 def test_fr10_deep_chain_without_recursion() -> None:
@@ -140,8 +144,25 @@ def test_fr10_cycle_names_only_cycle_items(scenario_a: MrpInput) -> None:
 
 
 def test_fr10_self_cycle(scenario_a: MrpInput) -> None:
-    with pytest.raises(MrpInputError, match="PLT-900"):
+    with pytest.raises(MrpInputError, match="PLT-900 → PLT-900"):
         run_mrp(_with_bom(scenario_a, ("PLT-900", "PLT-900")))
+
+
+def test_fr10_cycle_message_skips_smaller_item_below_cycle() -> None:
+    items = tuple(_item(i) for i in ("A", "B", "C"))
+    bom = tuple(BomLine(p, c, 1) for p, c in (("B", "C"), ("C", "B"), ("C", "A")))
+    with pytest.raises(MrpInputError) as info:
+        run_mrp(MrpInput(Horizon(1, 4), items, bom, (), ()))
+    message = str(info.value)
+    assert "B → C → B" in message
+    assert "A →" not in message and "→ A" not in message
+
+
+def test_fr10_low_level_codes_checks_input_directly(scenario_a: MrpInput) -> None:
+    with pytest.raises(MrpInputError, match="XXX-6"):
+        low_level_codes(_with_bom(scenario_a, ("SEK-110", "XXX-6")))
+    with pytest.raises(MrpInputError, match=scenario_a.items[0].id):
+        low_level_codes(replace(scenario_a, items=(*scenario_a.items, scenario_a.items[0])))
 
 
 def test_fr10_cycle_message_is_fixed_and_starts_with_smallest_id() -> None:
@@ -204,8 +225,10 @@ def test_ad2_week_arrays_are_zero_and_lists_empty(scenario_a: MrpInput) -> None:
     assert result.exceptions == ()
     for item in result.items:
         assert item.planned_orders == ()
-        assert set(item.gross_requirements) == {0}
-        assert isinstance(item.gross_requirements, tuple)
+        for name in WEEK_FIELDS:
+            values = getattr(item, name)
+            assert isinstance(values, tuple), (item.id, name)
+            assert values == (0,) * scenario_a.horizon.weeks, (item.id, name)
 
 
 def test_ad3_deterministic_and_independent_of_input_order(scenario_a: MrpInput) -> None:
@@ -216,23 +239,53 @@ def test_ad3_deterministic_and_independent_of_input_order(scenario_a: MrpInput) 
     assert result_to_dict(run_mrp(reversed_a)) == result_to_dict(first)
 
 
+def _fasit_exceptions(expected: dict[str, Any]) -> list[MrpException]:
+    """Meldingene i scenario A fra fasiten, bygd som kjernens typer."""
+    out: list[MrpException] = []
+    for raw in expected["A"]["exceptions"]:
+        fields = {key: value for key, value in raw.items() if key != "type"}
+        if raw["type"] == LeadTimeExceedsHorizon.type:
+            out.append(LeadTimeExceedsHorizon(**fields))
+        else:
+            out.append(PastDueRelease(**fields))
+    return out
+
+
 def test_ad2_exception_dict_matches_fasit_form(expected: dict[str, Any]) -> None:
-    exceptions = (
-        LeadTimeExceedsHorizon("MOT-210", 20, 16),
-        PastDueRelease("VIN-920", 1, 6, 0, 1, 7),
-    )
+    exceptions = tuple(_fasit_exceptions(expected))
     d = result_to_dict(MrpResult(items=(), exceptions=exceptions))
-    fasit = expected["A"]["exceptions"]
-    assert d["exceptions"] == [fasit[0], fasit[2]]
-    assert [list(e) for e in d["exceptions"]] == [
-        ["type", "item", "lead_time_weeks", "horizon_weeks"],
-        [
-            "type",
-            "item",
-            "quantity",
-            "receipt_week",
-            "release_week",
-            "weeks_past_due",
-            "earliest_receipt_week",
-        ],
+    assert d["exceptions"] == expected["A"]["exceptions"]
+    e1_keys = ["type", "item", "lead_time_weeks", "horizon_weeks"]
+    e2_keys = [
+        "type",
+        "item",
+        "quantity",
+        "receipt_week",
+        "release_week",
+        "weeks_past_due",
+        "earliest_receipt_week",
     ]
+    assert [list(e) for e in d["exceptions"]] == [e1_keys, e2_keys, e2_keys]
+
+
+def test_ad3_ordered_sorts_items_orders_and_exceptions(
+    scenario_a: MrpInput, expected: dict[str, Any]
+) -> None:
+    fasit = _fasit_exceptions(expected)
+    extra = PastDueRelease("MOT-210", 1, 4, -16, 17, 21)
+    shuffled = [fasit[2], extra, fasit[1], fasit[0]]
+    template = run_mrp(scenario_a).items
+    orders = (PlannedOrder(16, 14, 1), PlannedOrder(12, 10, 1), PlannedOrder(5, 3, 2))
+    items = [replace(item, planned_orders=orders) for item in template[::-1]]
+
+    result = _ordered(items, shuffled)
+
+    assert [(e.type, e.item, getattr(e, "receipt_week", None)) for e in result.exceptions] == [
+        ("LEAD_TIME_EXCEEDS_HORIZON", "MOT-210", None),
+        ("PAST_DUE_RELEASE", "MOT-210", 4),
+        ("PAST_DUE_RELEASE", "MOT-210", 12),
+        ("PAST_DUE_RELEASE", "VIN-920", 6),
+    ]
+    assert [item.id for item in result.items] == [item.id for item in template]
+    for item in result.items:
+        assert [order.receipt_week for order in item.planned_orders] == [5, 12, 16]
