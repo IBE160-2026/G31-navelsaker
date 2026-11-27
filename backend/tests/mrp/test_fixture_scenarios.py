@@ -1,7 +1,8 @@
 """Fasittestene (NFR-3, SM-1): kjernen mot ``testdata/testfartoy-v1/expected.json``.
 
 ``conftest.py`` lager ett tilfelle per scenario (A–E) × vare × felt i ``FIELD_FR``, med id-er
-som ``A-FR-10-PLT-900-low_level_code``. Story 2.3–2.4 utvider tabellen med feltene sine.
+som ``A-FR-10-PLT-900-low_level_code``. I scenario D får feltene fra 2.2 FR-12 (R11) i stedet,
+se ``fasit_fr``. Story 2.4 utvider tabellen med feltene sine.
 Fixturen ``result_for`` ligger i ``tests/mrp/conftest.py``.
 """
 
@@ -24,14 +25,12 @@ SCENARIOS = ("A", "B", "C", "D", "E")
 
 ResultFor = Callable[[str], dict[str, Any]]
 
-R11_SKIP = pytest.mark.skip(reason="R11 (FR-12) kommer i story 2.3")
 
-
-def fasit_marks(case: Any) -> tuple[pytest.MarkDecorator, ...]:
-    """Scenario D trenger R11 for feltene fra 2.2, så de tilfellene venter på story 2.3."""
-    if case.scenario == "D" and case.field != "low_level_code":
-        return (R11_SKIP,)
-    return ()
+def fasit_fr(scenario: str, field: str, fr: str) -> str:
+    """FR-nummeret i id-en: i D viser feltene fra 2.2 R11 (FR-12). LLC beholder FR-10."""
+    if scenario == "D" and field != "low_level_code":
+        return "FR-12"
+    return fr
 
 
 def test_fasit_field(fasit_case: Any, result_for: ResultFor) -> None:

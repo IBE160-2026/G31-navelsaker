@@ -1,15 +1,19 @@
-"""Bruttobehov, netting, partiregel og ledetidsoffset per vare (FR-10, FR-11).
+"""Bruttobehov, netting, partiregel, ledetidsoffset og R11 per vare (FR-10, FR-11, FR-12).
 
 Varene planlegges i rekkefølgen (``low_level_code``, ``id``), så alle foreldre er ferdige før
 barnet. Uke *t* har indeks *t* − 1 (``horizon.first_week`` er alltid 1, se ``Horizon``).
 
 - Bruttobehov (R3): varens MPS-linjer per uke, pluss forelderens forslag × mengde per i
   frigivelsesuka. Barna leser forelderens ``planned_orders``, ikke arrayen.
+- Forfalte forslag (R11): et forslag med frigivelsesuke < 1 gir barna behovet (antall × mengde
+  per) i uke 1, så ingen behov går tapt, i alle ledd nedover. Regelen gjelder alle foreldre,
+  uansett ``source``: en vare med BOM-linjer under seg produseres, og å hoppe over kjøpte
+  foreldre ville la behov gå tapt (en bevisst utvidelse av «produksjonsvare» i R11).
 - Netting (R2, R5, R7): startlageret gjelder før uke 1, og åpne ordre dekker behov samme uke.
   NB = max(0, BB + SS − (BL forrige + ÅO)) og BL = BL forrige + ÅO + PM − BB.
 - Partiregel (R6): L4L gir PM = NB, og FOQ med Q gir minste multiplum av Q som er ≥ NB.
 - Forslag (R8, R9): frigivelsesuke = mottaksuke − ledetid. Frigivelser før uke 1 står bare i
-  ``planned_orders``. Åpne ordre flyttes aldri (R10).
+  ``planned_orders``, ikke i ``planned_order_releases``. Åpne ordre flyttes aldri (R10).
 """
 
 from collections import defaultdict
@@ -49,8 +53,8 @@ def plan_items(data: MrpInput, codes: dict[str, int]) -> dict[str, ItemPlan]:
         gross = list(mps_by_item.get(item.id, [0] * weeks))
         for line in lines_by_child.get(item.id, ()):
             for order in plans[line.parent].planned_orders:
-                if order.release_week >= 1:
-                    gross[order.release_week - 1] += order.quantity * line.qty_per
+                week = max(order.release_week, 1)  # R11: forfalte forslag gir behov i uke 1
+                gross[week - 1] += order.quantity * line.qty_per
         receipts = receipts_by_item.get(item.id, [0] * weeks)
         plans[item.id] = _plan_item(item, gross, receipts)
     return plans

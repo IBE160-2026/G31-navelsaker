@@ -1,8 +1,9 @@
 """Inngangen til MRP-kjernen: ``run_mrp`` og ``result_to_dict`` (AD-2, AD-3).
 
 ``run_mrp`` beregner lavnivåkodene (som også sjekker inndataene), planlegger varene i
-LLC-rekkefølge med ``plan_items`` (bruttobehov, netting, partiregel og ledetidsoffset) og gir
-resultatet i fast rekkefølge. Meldingene er foreløpig tomme (story 2.4), og R11 kommer i 2.3.
+LLC-rekkefølge med ``plan_items`` (bruttobehov, netting, partiregel, ledetidsoffset og R11, der
+forfalte forslag gir barna behov i uke 1) og gir resultatet i fast rekkefølge. Meldingene er
+foreløpig tomme (story 2.4).
 """
 
 from dataclasses import fields, replace

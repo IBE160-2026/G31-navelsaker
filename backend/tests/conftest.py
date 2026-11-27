@@ -3,6 +3,7 @@
 Fixturene ``client`` og ``logged_in_client`` gir appen mot en midlertidig database (AD-8).
 Fasitstien har én kilde her (``FIXTURE_DIR``, AD-4). ``pytest_generate_tests`` lager ett
 fasittilfelle per scenario × FR × vare × felt for tester som tar argumentet ``fasit_case``.
+FR-nummeret kommer fra modulens ``FIELD_FR``, eller fra ``fasit_fr`` hvis modulen har den.
 """
 
 import json
@@ -67,19 +68,18 @@ def fasit_cases(field_fr: dict[str, str]) -> list[FasitCase]:
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     """Parametriser ``fasit_case`` fra fasiten med modulens tabell ``FIELD_FR``.
 
-    Har modulen funksjonen ``fasit_marks(case)``, får hvert tilfelle marks fra den (f.eks.
-    ``skip`` for felt som en senere story fyller inn).
+    Har modulen funksjonen ``fasit_fr(scenario, field, fr)``, gir den FR-nummeret for
+    tilfellet, både i id-en og i ``case.fr`` (f.eks. FR-12 for feltene R11 påvirker i D).
     """
     if "fasit_case" not in metafunc.fixturenames:
         return
-    marks_for = getattr(metafunc.module, "fasit_marks", None)
+    fr_for = getattr(metafunc.module, "fasit_fr", None)
+    cases = fasit_cases(metafunc.module.FIELD_FR)
+    if fr_for:
+        cases = [case._replace(fr=fr_for(case.scenario, case.field, case.fr)) for case in cases]
     params = [
-        pytest.param(
-            case,
-            id=f"{case.scenario}-{case.fr}-{case.item}-{case.field}",
-            marks=marks_for(case) if marks_for else (),
-        )
-        for case in fasit_cases(metafunc.module.FIELD_FR)
+        pytest.param(case, id=f"{case.scenario}-{case.fr}-{case.item}-{case.field}")
+        for case in cases
     ]
     metafunc.parametrize("fasit_case", params)
 
