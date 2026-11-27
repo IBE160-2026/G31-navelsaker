@@ -6,6 +6,13 @@ Når en oppgave eller økt avsluttes, før sluttoppsummeringen, bruk `sesjonslog
 
 Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til en oppføring i [docs/ai-log.md](docs/ai-log.md) etter formatet som står der: hvorfor, prompter, verktøy/modell, endringer, verifisering og commit. Ta med konkrete eksempler der brukeren presiserte, avviste eller rettet KI-forslag. Hopp over trivielle rettelser (skrivefeil, formatering). Rekkefølge ved avslutning: AI-logg → commit av arbeidet → sesjonslogg → sluttoppsummering.
 
+## Retrospektiv etter hver epic
+
+- Når siste story i en epic er flettet og satt til `done`, kjøres `bmad-retrospective` for epicen før neste epic starter. Si fra til brukeren og foreslå det, ikke hopp over det i stillhet.
+- Dokumentet lagres som `_bmad-output/implementation-artifacts/epic-<n>-retro-<dato>.md`. Tiltakene føres inn i `sprint-status.yaml` med skriptet til skillen, ikke for hånd.
+- Ved start av en epic leses åpne tiltak fra forrige retrospektiv (`action_items` i sprintstatus). Tiltak som gjelder epicen, tas inn i specen for storyen de hører til. Retrospektiven for neste epic sjekker om de ble gjort.
+- Retrospektiven får en oppføring i AI-loggen og en sesjonslogg, som annet arbeid.
+
 ## Commits
 
 - Commit avgrensede endringer underveis, ikke alt i én stor commit til slutt. Hver commit skal gjelde én sak.
