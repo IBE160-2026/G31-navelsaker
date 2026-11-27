@@ -287,3 +287,44 @@ Legg til én ny oppføring under **Logg** etter en KI-sesjon som endrer kode, te
   - Skjermbildet `docs/media/2026-11-26-innlogging.png` er oppdatert, og DESIGN.md (`login-card`) beskriver knappen.
 - **Verifisering**: `npm run build`, `npx biome check` og `npm run test` (10 tester) gir 0 feil. Skjermbildet fra Edge uten vindu viser knappen til høyre for etiketten.
 - **Commit**: commiten med koden og skjermbildet, og commiten med DESIGN.md og denne oppføringen.
+
+## 2026-11-26 — Skjermbilder fra ekte nettleser i stedet for Edge uten vindu
+
+- **Hvorfor**: Brukeren påpekte at skjermbildene tatt med Edge uten vindu ikke ga et riktig bilde av appen («Der ligger skrift utenfor boksene. Det må gjøres i en nettleser i full skjerm utenfor terminal, eller underveis i videoen»).
+- **Prompt(er)**: Se over. Det er en rettelse av en KI-praksis som stod i CLAUDE.md.
+- **Verktøy/modell**: Claude Code (Opus 5.5). ffmpeg (via `imageio-ffmpeg`) og Pillow.
+- **Endringer**:
+  - `docs/media/2026-11-26-startside.png` og `2026-11-26-innlogging.png` er tatt på nytt. Bildene er hentet fra brukerens skjermopptak i full skjerm (1902 × 1118): startsiden fra 0:34,5 og innloggingen fra 0:39,5.
+  - Nettleserrammen er beskåret bort. Cursoren på startsiden er dekket med bakgrunnsfargen.
+  - Bildene er komprimert til 243 kB og 20 kB.
+  - CLAUDE.md, under «Skjermbilder og video», sier nå at skjermbilder av appen skal vise den i en ekte nettleser i full skjerm.
+- **Verifisering**: Bildene er sjekket visuelt: ingen cursor, ingen nettleserramme og ingen hemmeligheter.
+- **Commit**: commiten som inneholder bildene, CLAUDE.md og denne oppføringen.
+
+## 2026-11-26 — Story 1.7: README v1 med oppstart og tester
+
+- **Hvorfor**: README sa ingenting om oppstart, innlogging eller tester. Sensor skal klone repoet og få app og tester til å kjøre med bare README, på under 15 minutter og uten kontoer eller hemmeligheter (NFR-1, NFR-2, SM-3).
+- **Prompt(er)**: «Les spec-1-7-readme-v1-med-oppstart-og-tester.md og implementer den. Specen er eneste sannhetskilde.» Specen fastsatte innholdet og rekkefølgen i README, og at README skulle prøves bokstavelig fra en ny klone i en mappe med mellomrom.
+- **Verktøy/modell**: Claude Code (Opus 5.5), som underagent fra `bmad-build`. Edge uten vindu over DevTools-protokollen for innloggingen.
+- **Endringer**:
+  - `README.md` er skrevet om: hva appen gjør, skjermbilde og video, forutsetninger, oppstart i to terminaler, demobrukeren, tester og kvalitetssjekk, feilsøking og lenker til planleggingsdokumentene.
+  - ARCHITECTURE-SPINE.md: AD-10 og AD-11 forklarer hvorfor README bruker `uv run python -m …`.
+  - Specen har fått steg og utfall fra prøven i Implementation Notes.
+- **Verifisering**:
+  - Ny klone fra GitHub i en mappe med mellomrom: 107 backendtester består med `uv run python -m pytest`, og ruff gir 0 funn. Frontend har 10 tester som består, `biome` gir 0 funn, og bygget lykkes.
+  - Første start av backend opprettet databasen med testfartøyet og demobrukeren, og `demo`/`demo` ga startsiden i Edge uten vindu.
+  - Et lite skript fant 0 døde relative lenker i README.
+  - **Prøven rettet README to steder:**
+    - En klone i scratchpad feilet med «Filename too long» og manglende moduler, fordi stien ble over 260 tegn. README ber nå om en kort sti og forklarer feilen.
+    - `uv python install` ble fjernet fra løsningen på os error 5, fordi den bare ga en advarsel.
+  - **Avvik:** å stoppe serverne fra økten på 8000 og 5173 ble nektet av tillatelsessystemet. Backend fra klonen ble derfor prøvd på port 8001, og frontend fra klonen fikk port 5175. Raden «Backend kjører ikke» ble ikke prøvd på nytt.
+  - **Brukerens styring:** brukeren valgte alternativ B for kommandoene, «den som er best og oppfyller kravene sensor stiller». Det ble `python -m`-formen, og prøven bekreftet valget: `uv run pytest` ga os error 5 i den nye klonen, mens `uv run python -m pytest` virket.
+  - **Gjennomgang med tre uavhengige lag** (blind-hunter, edge-case-hunter, verification-gap): 15 funn.
+    - Rettet (`f727195`):
+      - README beskrev MRP-funksjoner som om de fantes. Den har nå en statusdel, og setningen om beregningstestene er rettet.
+      - Det er nye setninger om `.env`, `RBE_SESSION_SECRET` og endret demobruker, og et nytt punkt om opptatt port 8000.
+      - Tilbakestillingen nevner nå `RBE_DATABASE_URL`, og rådet om kort sti peker på `C:\dev`.
+      - Kommandoene bruker `python -m ruff`, og formuleringen i AD-11 er presisert.
+    - Avvist: 6 funn med begrunnelse i specens Review Triage Log. Tidtaking etter SM-3 på en ren maskin hører til story 6.2.
+  - **Rettelse fra brukeren underveis:** skjermbildene ble tatt på nytt fra brukerens opptak i ekte nettleser (egen oppføring over).
+- **Commit**: `8225c6b` (README v1), `7466eac` (rettelser etter prøven), `f3518eb` (AD-10 og AD-11), `f38907f` (første versjon av denne oppføringen og prøven i specen), `f727195` (rettelser etter gjennomgangen), pluss commiten som inneholder denne oppdateringen.

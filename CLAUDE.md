@@ -21,7 +21,7 @@ Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til e
 
 ## Skjermbilder og video
 
-Sensor bruker skjermbilder og video i repoet som dokumentasjon av design og funksjonalitet, og som reserve hvis appen ikke lar seg kjøre. **Skjermbilder tar Claude selv** med Edge uten vindu (`msedge --headless=new --screenshot=… --window-size=…`) av HTML-skisser eller av appen når den kjører lokalt. Bildet beskjæres til innholdet og komprimeres før commit. **Video tar brukeren**, så Claude minner om den. Ved disse tidspunktene:
+Sensor bruker skjermbilder og video i repoet som dokumentasjon av design og funksjonalitet, og som reserve hvis appen ikke lar seg kjøre. **Skjermbilder av appen skal vise den i en ekte nettleser i full skjerm**, ikke fra Edge uten vindu (`--headless`), som ikke gir et riktig bilde. Claude henter dem som bilder fra brukerens skjermopptak, eller ber brukeren ta et kort opptak. Nettleserrammen beskjæres bort, cursor fjernes, og bildet komprimeres før commit. Edge uten vindu kan fortsatt brukes til å teste i nettleseren og til skisser i HTML. **Video tar brukeren**, så Claude minner om den. Ved disse tidspunktene:
 
 - **Et skjermbilde eller en brukerflyt virker for første gang**, f.eks. når en story med brukergrensesnitt er ferdig: skjermbilde.
 - **UX-skisser eller wireframes er laget**: legg dem i repoet som spor av designarbeid.
