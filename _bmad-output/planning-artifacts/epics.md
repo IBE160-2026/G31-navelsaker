@@ -71,8 +71,8 @@ Dette dokumentet bryter kravene i PRD-en, arkitekturen og UX-spinene ned i epics
 - **AD-7** Alle skrivinger går via backend og lagres i én transaksjon eller avvises. Uke valideres mot lagret horisont. Feil i FastAPIs 422-format med norske meldinger, og frontend viser dem ved feltet `loc` peker på. Frontend regner aldri MRP eller LLC.
 - **AD-8** Signert sesjonscookie (`SessionMiddleware`, httpOnly, SameSite=Lax), `pwdlib` argon2, `require_user` på alle `/api`-ruter unntatt `POST /api/auth/login` og `GET /api/health`. En test går gjennom `app.routes`.
 - **AD-9** Konfigurasjon med `pydantic-settings` og prefikset `RBE_`. `backend/.env.example` lister variablene. Mangler sesjonsnøkkel, lages en tilfeldig med advarsel. Ingen annen kode leser `os.environ`.
-- **AD-10** `uv run pytest` i `backend/` kjører alle backendtester. Fasittestene er parametrisert over scenario × vare × felt, og test-id-en oppgir scenario og FR. Integrasjonstester bruker `TestClient` og en midlertidig SQLite-fil.
-- **AD-11** Forutsetninger: uv og Node 26 LTS. Backend med `uv run fastapi dev src/rbe/main.py`, frontend med `npm run dev`, og Vite-proxy for `/api`. Ingen Docker.
+- **AD-10** `uv run python -m pytest` i `backend/` kjører alle backendtester. Fasittestene er parametrisert over scenario × vare × felt, og test-id-en oppgir scenario og FR. Integrasjonstester bruker `TestClient` og en midlertidig SQLite-fil.
+- **AD-11** Forutsetninger: uv og Node 26 LTS. Backend med `uv run python -m fastapi dev src/rbe/main.py`, frontend med `npm run dev`, og Vite-proxy for `/api`. Ingen Docker. Kommandoene bruker `python -m`-formen fordi den virker også der Windows sperrer konsollskriptene uv lager (os error 5), presisert i story 1.7 og i retrospektiven av epic 1.
 - **Konvensjoner:** engelske navn i kode etter fasitens feltnavn, norsk UI-tekst. Meldingsteksten lages i frontend. REST under `/api` med ressurser i flertall og bindestrek. `created_at` i UTC, vist i lokal tid. `logging`, ikke `print`. Ruff og Biome.
 - **Stack:** versjonene i arkitekturens Stack-tabell (Python 3.14, FastAPI 0.165.0, SQLAlchemy 2.1.9, React 19.3.1, Vite 8.3.8, React Router 8.5.2, Biome 2.6.8, @fontsource/manrope 5.3.0 osv.).
 
@@ -142,7 +142,7 @@ Sensor eller planleggeren starter appen etter README, logger inn med demobrukere
 
 ### Epic 2: Riktig MRP-beregning
 
-Den rene kjernen beregner lavnivåkoder, bruttobehov, netting, partiregler, ledetidsoffset, R11 og exception-meldingene. Sensor kan kjøre `uv run pytest` og se at alle felt stemmer med fasiten for scenario A–E, og at skalatesten viser at logikken er generell.
+Den rene kjernen beregner lavnivåkoder, bruttobehov, netting, partiregler, ledetidsoffset, R11 og exception-meldingene. Sensor kan kjøre `uv run python -m pytest` og se at alle felt stemmer med fasiten for scenario A–E, og at skalatesten viser at logikken er generell.
 **FR:** FR-10, FR-11, FR-12, FR-13, FR-14. **Også:** NFR-3, SM-1, SM-C2, AD-1, AD-2, AD-3, AD-10.
 
 ### Epic 3: Kjør MRP og se resultatet
@@ -182,7 +182,7 @@ Den manuelle testplanen er gjennomført og dokumentert, sporbarheten fra FR til 
 Dette gjelder hver story i tillegg til egne akseptansekriterier, så det ikke gjentas:
 
 - Storyen bygges på egen branch (`story/<n.m>-<kort-navn>`) og leveres som én pull request med 2–5 commits. Commit-meldingene er på norsk i imperativ og viser til FR-nummeret.
-- `uv run pytest`, `uv run ruff check` og `uv run ruff format --check` i `backend/` og `npx biome check` i `frontend/` gir 0 feil.
+- `uv run python -m pytest`, `uv run python -m ruff check` og `uv run python -m ruff format --check` i `backend/` og `npx biome check` i `frontend/` gir 0 feil.
 - Nye API-ruter har `require_user`, og rutetesten (AD-8) består uten nye unntak.
 - Automatiske tester har FR-nummeret og eventuelt scenarioet i navnet eller test-id-en (NFR-7).
 - Stories med skjermbilder følger EXPERIENCE.md og DESIGN.md: norsk tekst i du-form, fargene bare med sin faste betydning, tastaturbruk, synlig fokus, etiketter på felt, dokumenttittel og fokus til H1 ved sidebytte (NFR-6, UX-DR19, UX-DR21). Fra og med story 3.2 legges stegene for skjermbildet til i `docs/testplan.md`.
@@ -205,12 +205,12 @@ slik at jeg kan prøve appen uten manuelt oppsett.
 **Akseptansekriterier:**
 
 **Gitt** en ren klone med uv installert
-**Når** jeg kjører `uv run fastapi dev src/rbe/main.py` i `backend/`
+**Når** jeg kjører `uv run python -m fastapi dev src/rbe/main.py` i `backend/`
 **Så** henter uv Python 3.14 fra `.python-version`, og `GET /api/health` svarer 200 uten innlogging
 **Og** avhengighetene er festet i `pyproject.toml` og `uv.lock` med versjonene i arkitekturens Stack
 
 **Gitt** `backend/`
-**Når** jeg kjører `uv run pytest`
+**Når** jeg kjører `uv run python -m pytest`
 **Så** kjører og består helsesjekktesten og konfigurasjonstesten
 
 **Gitt** at det ikke finnes noen `.env`
@@ -367,12 +367,12 @@ slik at jeg kommer i gang uten å kjenne prosjektet.
 
 **Gitt** en ny klone av repoet i en tom mappe
 **Når** jeg følger README steg for steg på Windows
-**Så** starter backend og frontend, jeg kan logge inn, og `uv run pytest` består
+**Så** starter backend og frontend, jeg kan logge inn, og `uv run python -m pytest` består
 **Og** avvik mellom README og det som faktisk måtte gjøres, er rettet i README
 
 ## Epic 2: Riktig MRP-beregning
 
-Den rene kjernen beregner lavnivåkoder, bruttobehov, netting, partiregler, ledetidsoffset, R11 og exception-meldinger. Sensor kan kjøre `uv run pytest` og se at alle felt stemmer med fasiten for scenario A–E.
+Den rene kjernen beregner lavnivåkoder, bruttobehov, netting, partiregler, ledetidsoffset, R11 og exception-meldinger. Sensor kan kjøre `uv run python -m pytest` og se at alle felt stemmer med fasiten for scenario A–E.
 
 ### Story 2.1: Lavnivåkoder og resultatform
 
@@ -491,7 +491,7 @@ slik at jeg vet at logikken er generell og ikke tilpasset testfartøyet.
 **Gitt** den samme genererte strukturen
 **Når** kjernen kjører to ganger
 **Så** er resultatene identiske
-**Og** testen har ikke noe tidskrav og kjøres med `uv run pytest`
+**Og** testen har ikke noe tidskrav og kjøres med `uv run python -m pytest`
 
 ## Epic 3: Kjør MRP og se resultatet
 
@@ -884,7 +884,7 @@ Som sensor
 vil jeg se at appen er testet mot fasiten, og at hvert krav kan spores til kode og test,
 slik at jeg kan etterprøve kvaliteten.
 
-**Krav:** SM-1, SM-2, SM-4, NFR-6, NFR-7. **Tester:** `docs/testplan.md`, `uv run pytest`.
+**Krav:** SM-1, SM-2, SM-4, NFR-6, NFR-7. **Tester:** `docs/testplan.md`, `uv run python -m pytest`.
 
 **Akseptansekriterier:**
 
@@ -893,7 +893,7 @@ slik at jeg kan etterprøve kvaliteten.
 **Så** er resultatet for hvert steg ført inn med dato og commit, uten avvik, eller med avvik som er rettet og testet på nytt (SM-2)
 **Og** en tastaturgjennomgang av alle sidene og en sjekk av fargebetydningen er ført i testplanen (NFR-6)
 
-**Gitt** `uv run pytest`
+**Gitt** `uv run python -m pytest`
 **Når** testene kjøres
 **Så** består alle, også fasittestene for A–E og skalatesten, og sammendraget er ført i testplanen (SM-1)
 

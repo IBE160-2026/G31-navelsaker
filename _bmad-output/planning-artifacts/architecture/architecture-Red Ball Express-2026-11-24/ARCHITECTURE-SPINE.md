@@ -142,7 +142,7 @@ Pilene viser lovlig importretning. Ingen pil går inn i `rbe.api` fra backend, o
 | API | REST med JSON under `/api`. Ressurser i flertall med bindestrek (`/api/mps-lines`). Feil: FastAPIs standardformat (`detail`) |
 | Tid | `created_at` på kjøringer lagres som UTC ISO 8601 og vises i lokal tid |
 | Logging | Standardbibliotekets `logging` i backend. Ingen `print` i appkode |
-| Lint og format | Backend: `uv run ruff check` og `uv run ruff format`. Frontend: `npx biome check`. Konfigurasjonen ligger i `pyproject.toml` og `biome.json` |
+| Lint og format | Backend: `uv run python -m ruff check` og `uv run python -m ruff format`. Frontend: `npx biome check`. Konfigurasjonen ligger i `pyproject.toml` og `biome.json` |
 | Sporbarhet | Tester, commits og stories viser til FR-nummer, og beregningstester oppgir scenario (CLAUDE.md) |
 
 ## Stack
@@ -258,6 +258,6 @@ graph LR
 | Endepunktenes eksakte stier og nyttelast | Følger av stories innenfor AD-2, AD-7 og API-konvensjonen |
 | Omfang av frontendtester (Vitest) og ende-til-ende-tester | FR-15–FR-17 dekkes av manuell testplan (SM-2). Vurderes når skjermbildene finnes |
 | Statisk typesjekk i Python (mypy/pyright/ty) | Ruff og testene dekker v1. Kan legges til uten å endre strukturen |
-| CI (GitHub Actions) | Ikke et krav. `uv run pytest` lokalt er sensorflyten. Kan legges til senere uten arkitekturendring |
+| CI (GitHub Actions) | Ikke et krav. `uv run python -m pytest` lokalt er sensorflyten. Kan legges til senere uten arkitekturendring |
 | Drift utenfor lokal maskin, produksjonsbygg, HTTPS, flere brukere | Utenfor v1 (PRD §6, NFR-1). Ingen miljøer utover lokal utvikling |
 | Alt i trinn 2 (strukturredigering av BOM, sikkerhetslager, meldinger for åpne ordre) | PRD §7.2. v1 designes ikke for det |
