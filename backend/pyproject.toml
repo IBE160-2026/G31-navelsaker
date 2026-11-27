@@ -23,7 +23,7 @@ build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--import-mode=importlib"
+addopts = "--import-mode=importlib -p pytester"
 
 [tool.ruff]
 line-length = 100
