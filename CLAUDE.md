@@ -6,6 +6,12 @@ Når en oppgave eller økt avsluttes, før sluttoppsummeringen, bruk `sesjonslog
 
 Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til en oppføring i [docs/ai-log.md](docs/ai-log.md) etter formatet som står der: hvorfor, prompter, verktøy/modell, endringer, verifisering og commit. Ta med konkrete eksempler der brukeren presiserte, avviste eller rettet KI-forslag. Hopp over trivielle rettelser (skrivefeil, formatering). Rekkefølge ved avslutning: AI-logg → commit av arbeidet → sesjonslogg → sluttoppsummering.
 
+## Refleksjonsnotater
+
+- På slutten av hver økt som endret noe, ber Claude i sluttoppsummeringen brukeren om to–tre setninger om egne erfaringer: hva som fungerte og ikke fungerte med KI, hvor brukeren rettet eller avviste noe, og hva brukeren lærte.
+- Svaret føres **ordrett** i [docs/refleksjonsnotater.md](docs/refleksjonsnotater.md) under datoen for økten det gjelder, med lenke til sesjonsloggen, og committes for seg. Svarer brukeren i neste økt, føres det inn da.
+- Claude skriver aldri notater på vegne av brukeren og pynter ikke teksten. Hopper brukeren over, står det «(hoppet over)».
+
 ## Retrospektiv etter hver epic
 
 - Når siste story i en epic er flettet og satt til `done`, kjøres `bmad-retrospective` for epicen før neste epic starter. Si fra til brukeren og foreslå det, ikke hopp over det i stillhet.
