@@ -17,10 +17,11 @@ Epicen gir den rene MRP-kjernen i `rbe.mrp`: lavnivåkoder, bruttobehov, netting
 ## Requirements & Constraints
 
 - **Lavnivåkoder (FR-10):** LLC er det dypeste nivået en vare forekommer på, og hver vare planlegges én gang, etter alle foreldrene sine. PLT-900 står på nivå 2 og 3 og får LLC 3.
-- **Bruttobehov (FR-10, R3):** nivå 0 får behov fra MPS. Andre varer får summen over foreldrene av foreldrenes planlagte frigivelser i uka × mengde per.
+- **Bruttobehov (FR-10, R3):** nivå 0 får behov fra MPS. Andre varer får summen over foreldrene av foreldrenes planlagte frigivelser i uka × mengde per, pluss behov fra forfalte forslag i uke 1 (R11).
 - **Netting og partiregel (FR-11, R2, R5–R8):** startlager gjelder ved start av uke 1, og åpne ordre kommer inn ved starten av uka og kan dekke behov samme uke. NB = max(0, BB + SS − (BL forrige uke + ÅO)), med SS = 0 i v1. L4L gir PM = NB. FOQ med kvantum Q gir minste multiplum av Q som er ≥ NB. BL = BL forrige + ÅO + PM − BB. Frigivelse = mottaksuke − ledetid.
 - **Forfalte frigivelser (R9):** et forslag med frigivelsesuke < 1 beholder den beregnede uka i `planned_orders`, men kommer ikke med i `planned_order_releases`. MRP flytter aldri mottaksuka eller åpne ordre (R10).
-- **R11 (FR-12):** får en produksjonsvare et forslag med frigivelsesuke < 1, legges barnas bruttobehov fra forslaget (antall × mengde per) i uke 1, i alle ledd nedover. Ingen behov går tapt (scenario D).
+- **R11 (FR-12):** får en vare med BOM-linjer under seg et forslag med frigivelsesuke < 1, legges barnas bruttobehov fra forslaget (antall × mengde per) i uke 1, i alle ledd nedover. Det gjelder alle foreldre, også kjøpte varer, ikke bare produksjonsvarer slik fasitens R11 sier (presisert i 2.3, ført inn i FR-12). Alle felt skal stemme for scenario D.
+- **Ingen tapte behov (FR-12):** sjekkes per vare, ikke per BOM-linje: summen av varens bruttobehov = varens MPS + summen over BOM-linjene der varen er barn av forelderens bestillingsforslag × mengde per. En vare med flere foreldre (PLT-900) har ett samlet bruttobehov, og nivå 0 får behovet fra MPS. Gjelder A–E og skalatesten.
 - **Meldinger (FR-13, FR-14):** E1 `LEAD_TIME_EXCEEDS_HORIZON` én gang per vare med bruttobehov i horisonten og ledetid > horisont, med `lead_time_weeks` og `horizon_weeks`. E2 `PAST_DUE_RELEASE` én per forslag med frigivelsesuke < 1, med `quantity`, `receipt_week`, `release_week`, `weeks_past_due` = 1 − frigivelsesuke og `earliest_receipt_week` = 1 + ledetid. Kjernen lager ingen tekst.
 - **Testbar kjerne (NFR-3, SM-1):** testene leser `testdata/testfartoy-v1/input.json` og `expected.json` direkte, sammenligner hele ukesarrayer per scenario × vare × felt, og sammenligner `exceptions` som usortert mengde. Test-id-en oppgir scenario og FR-nummer.
 - **Ikke skreddersydd (SM-C2):** ingen varenummer, uker eller horisont hardkodet i kjernen. Horisonten leses fra inndataene. Egenskapstester (massebalanse, ingen tapte behov, determinisme) og skalatesten (~500 varer, 10 nivåer, felles komponent på flere nivåer, fast seed, uten tidskrav) skal avsløre tilpasning.
@@ -38,6 +39,6 @@ Epicen gir den rene MRP-kjernen i `rbe.mrp`: lavnivåkoder, bruttobehov, netting
 ## Cross-Story Dependencies
 
 - 2.1 gir lavnivåkodene, resultattypene og kjernens inngangsfunksjon. 2.2–2.4 fyller resten av feltene i den samme formen.
-- 2.2 bygger på LLC-rekkefølgen fra 2.1. 2.3 (R11) endrer hvordan barnas bruttobehov regnes i 2.2. 2.4 bruker forslagene fra 2.2 og 2.3.
+- 2.2 bygger på LLC-rekkefølgen fra 2.1. 2.3 (R11) endrer hvordan barnas bruttobehov regnes i 2.2, for alle foreldre med BOM-linjer. 2.4 bruker forslagene fra 2.2 og 2.3, og E2 gjelder alle forfalte forslag, også på kjøpte varer.
 - 2.5 bruker hele kjernen og trenger en uavhengig LLC-beregning i testen.
 - Epic 3 (3.1) kaller kjernen og lagrer resultatet som JSON. Epic 4 (BOM-treet, 4.4) henter LLC fra kjernen. Epic 5 (5.1) sammenligner to resultater i den samme formen.

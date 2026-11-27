@@ -29,11 +29,11 @@
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 3. `_check_input` i `backend/src/rbe/mrp/llc.py` sjekker bare duplikater og referanser. Horisont ≤ 0 ble avvist i triage nr. 7, fordi tilstanden ikke kan nås før epic 4.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
-  summary: Story 2.4 må gjøre sorteringsnøkkelen for meldinger eksplisitt per type, i stedet for `getattr(e, "receipt_week", 0)`, så en ny meldingstype ikke kan sorteres feil uten at noe sier fra.
+  summary: Story 2.4 må gjøre sorteringsnøkkelen for meldinger eksplisitt per type, i stedet for `getattr(e, "receipt_week", 0)`, så en ny meldingstype ikke kan sorteres feil uten at noe sier fra. *Løst i story 2.4 (2026-11-27):* `_exception_key` i `run.py` har en gren per type med `match`, og en ukjent type gir `TypeError` (`test_ad3_unknown_exception_type_is_rejected`).
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 4 (`_ordered` i `backend/src/rbe/mrp/run.py`). I dag finnes bare E1 og E2, og testen for `_ordered` dekker begge.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
-  summary: Story 2.4 trenger en egen fasittest for `exceptions`, sammenlignet som usortert mengde per scenario, fordi `pytest_generate_tests` i `tests/conftest.py` bare lager tilfeller for felt per vare.
+  summary: Story 2.4 trenger en egen fasittest for `exceptions`, sammenlignet som usortert mengde per scenario, fordi `pytest_generate_tests` i `tests/conftest.py` bare lager tilfeller for felt per vare. *Løst i story 2.4 (2026-11-27):* `test_fasit_exceptions` i `tests/mrp/test_fixture_scenarios.py` sammenligner meldingene som multimengde per scenario og type, med id-er fra `A-FR-13-meldinger` til `E-FR-14-meldinger`, og feiler på ukjent type.
   evidence: Thobias sin gjennomgang av PR #11, risikopunkt 5. `fasit_cases` leser bare `result["items"]`.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-lavnivakoder-og-resultatform.md`
@@ -43,3 +43,7 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-2-bruttobehov-netting-partiregel-og-ledetidsoffset.md`
   summary: Story 2.3 må legge til egenskapen «ingen behov går tapt» (sum av barnets bruttobehov = sum av foreldrenes `planned_orders` × mengde per, for A–E), fjerne `fasit_marks` og `R11_SKIP` i `tests/mrp/test_fixture_scenarios.py`, og gi D-tilfellene FR-12 i test-id-en. *Løst i story 2.3 (2026-11-27):* R11 er på plass, skip-regelen og `fasit_marks` er fjernet, D-tilfellene for feltene fra 2.2 har FR-12 i id-en, og `test_fr12_no_requirements_are_lost` sjekker egenskapen per vare for A–E (AC 3 i epics er skrevet om fra per BOM-linje til per vare).
   evidence: Thobias sin gjennomgang av PR #12. Ingenting feiler hvis skip-regelen blir stående etter at R11 er på plass: de 77 tilfellene forblir skipped og alt er grønt. Uten R11 er summen av bruttobehov for PLT-900 i D 30, mens fasiten har 66. Behovet forsvinner mellom forelder og barn, så bare egenskapen over fanger det. Massebalansen per vare går opp i D også uten R11, og D er derfor tatt med i den testen.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-komponentbehov-fra-forfalte-produksjonsordrer-r11.md`
+  summary: Story 4.1 må avgjøre om API-et skal avvise en kjøpt vare (`source` = `purchase`) med BOM-linjer under seg, sammen med CHECK-begrensningene fra tiltak 6 i retrospektiven av epic 1 (R7).
+  evidence: Thobias sin gjennomgang av PR #13. Kjernen bruker R11 på alle foreldre, også kjøpte, så ingen behov går tapt, og det beholdes (vedtak 2026-11-27). Fasiten har ingen kjøpte foreldre, og `test_fr12_r11_purchased_parent_past_due` i `tests/mrp/test_plan.py` er eneste test. Om en slik vare er en feil i inndataene, er et spørsmål for valideringen i 4.1, ikke for kjernen.

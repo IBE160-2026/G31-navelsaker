@@ -1,8 +1,10 @@
-"""Bruttobehov, netting, partiregel, ledetidsoffset og R11 (FR-10–FR-12) utenfor fasittabellen.
+"""Bruttobehov, netting, partiregel, ledetidsoffset, R11 og meldingene E1 og E2 (FR-10–FR-14)
+utenfor fasittabellen.
 
 Fasiten skiller ikke alle reglene: ingen vare har åpen ordre og bruttobehov i samme uke (R2),
 ingen FOQ-vare trenger mer enn ett parti (R6), og R11 vises bare i to ledd i D. Testene her
-dekker dem med små inndata.
+dekker dem med små inndata. For E1 og E2 dekker de grensene fasiten ikke har: frigivelse i
+nøyaktig uke 1, ledetid lik horisonten og ledetid lengre enn horisonten med og uten bruttobehov.
 """
 
 from collections.abc import Callable
@@ -18,10 +20,12 @@ from rbe.mrp import (
     Horizon,
     Item,
     ItemResult,
+    LeadTimeExceedsHorizon,
     LotSizing,
     MpsLine,
     MrpInput,
     MrpInputError,
+    PastDueRelease,
     PlannedOrder,
     ScheduledReceipt,
     run_mrp,
@@ -243,3 +247,35 @@ def test_fr12_r11_purchased_parent_past_due() -> None:
     by_id = _chain(items, (BomLine("P", "C", 2),), (MpsLine("P", 1, 1, 1),))
     assert by_id["P"].planned_orders == (PlannedOrder(1, 0, 1),)
     assert by_id["C"].gross_requirements == (2, 0, 0, 0, 0, 0)
+
+
+def test_fr14_release_in_week_1_is_not_past_due() -> None:
+    result = run_mrp(_single(_item(lead_time=2), mps=((3, 1),), weeks=6))
+    assert result.items[0].planned_orders == (PlannedOrder(3, 1, 1),)
+    assert result.exceptions == ()
+
+
+def test_fr13_fr14_lead_time_equal_to_horizon() -> None:
+    """LT 16 og H 16 gir ingen E1, men forslaget i uke 16 frigis i uke 0 (E2)."""
+    result = run_mrp(_single(_item(lead_time=16), mps=((16, 1),), weeks=16))
+    assert result.exceptions == (
+        PastDueRelease(
+            "X-1",
+            quantity=1,
+            receipt_week=16,
+            release_week=0,
+            weeks_past_due=1,
+            earliest_receipt_week=17,
+        ),
+    )
+
+
+def test_fr13_lead_time_over_horizon_with_requirement_covered_by_stock() -> None:
+    """Bruttobehov dekket av lager gir E1, men ingen forslag og dermed ingen E2."""
+    result = run_mrp(_single(_item(lead_time=20, on_hand=1), mps=((5, 1),), weeks=16))
+    assert result.items[0].planned_orders == ()
+    assert result.exceptions == (LeadTimeExceedsHorizon("X-1", 20, 16),)
+
+
+def test_fr13_lead_time_over_horizon_without_requirement() -> None:
+    assert run_mrp(_single(_item(lead_time=20), mps=(), weeks=16)).exceptions == ()

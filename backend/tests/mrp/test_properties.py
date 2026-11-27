@@ -1,5 +1,5 @@
-"""Egenskapstester for kjernen (FR-9, FR-11, FR-12, SM-C2): massebalanse, ingen tapte behov,
-determinisme og horisont.
+"""Egenskapstester for kjernen (FR-9, FR-11, FR-12, FR-14, SM-C2): massebalanse, ingen tapte
+behov, feltene i forfalte meldinger, determinisme og horisont.
 
 Massebalansen går nesten opp per definisjon når BL regnes med R7, men den fanger tapte eller
 doble mengder mellom arrayene. «Ingen behov går tapt» (FR-12) fanger behov som forsvinner mellom
@@ -60,8 +60,25 @@ def test_fr12_no_requirements_are_lost(
     for line in data.bom:
         ordered = sum(order["quantity"] for order in items[line.parent]["planned_orders"])
         expected_gross[line.child] += ordered * line.qty_per
-    for item_id, values in items.items():
-        assert sum(values["gross_requirements"]) == expected_gross[item_id], item_id
+    avvik = {
+        item_id: (sum(values["gross_requirements"]), expected_gross[item_id])
+        for item_id, values in items.items()
+        if sum(values["gross_requirements"]) != expected_gross[item_id]
+    }
+    assert avvik == {}, "vare: (faktisk, forventet)"
+
+
+@pytest.mark.parametrize(
+    "scenario", SCENARIOS, ids=[f"{s}-FR-14-forfalt-forsinkelse" for s in SCENARIOS]
+)
+def test_fr14_past_due_fields_agree(scenario: str, result_for: ResultFor) -> None:
+    """For hver E2: tidligste mottak − mottaksuke = uker forfalt, og frigivelse = 1 − uker
+    forfalt."""
+    e2 = [e for e in result_for(scenario)["exceptions"] if e["type"] == "PAST_DUE_RELEASE"]
+    assert e2, scenario
+    for e in e2:
+        assert e["earliest_receipt_week"] - e["receipt_week"] == e["weeks_past_due"], e
+        assert e["release_week"] == 1 - e["weeks_past_due"], e
 
 
 def _reversed(data: MrpInput) -> MrpInput:

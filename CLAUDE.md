@@ -23,12 +23,13 @@ Etter hver økt som endrer kode, tester eller planleggingsdokumenter, legg til e
 
 - Commit avgrensede endringer underveis, ikke alt i én stor commit til slutt. Hver commit skal gjelde én sak.
 - Commit-meldinger skrives på norsk, i imperativ og beskrivende (f.eks. «Legg til netting og partiregel i MRP-kjernen»).
-- Push bare når brukeren ber om det.
+- Push bare når brukeren ber om det. Godkjenner Thobias rekkefølgen for gjennomgang i specen for en story (se under), regnes det som en bestilling om å pushe den storyens branch.
 - **Fast mønster per story-PR, 4–5 commits** (innført etter retrospektiven av epic 1, der PR-ene hadde 8–14 commits, mest av like loggcommits):
   1. **Spec:** specen, sprintstatus `in-progress` for storyen og `done` for forrige story, hvis den ikke er satt ennå. For eksempel «Legg til spec for story 2.1».
   2. **Kode med tester,** 1–2 commits som viser til FR-nummeret, for eksempel «FR-5: beregn lavnivåkoder».
   3. **Retting etter gjennomgangen:** alle funn som rettes, i én commit, for eksempel «Rett funn fra gjennomgangen av story 2.1».
   4. **Dokumentasjon samlet:** AI-logg, sesjonslogg, triageloggen i specen, sprintstatus `review` og eventuelt refleksjonsnotat i én commit, for eksempel «Dokumenter story 2.1 i AI-logg og sesjonslogg».
+- **All gjennomgang er ferdig før dokumentasjonscommiten,** også Thobias sin egen (innført etter Thobias sin observasjon i PR #13, der gjennomgangen etter dokumentasjonscommiten ga to commits til). Rekkefølgen: kode, kodegjennomgang og retting, så pusher Claude branchen og oppretter PR-en, så går Thobias gjennom den (`bmad-walkthrough`) og skriver observasjonen i PR-en. Rettinger fra Thobias sin gjennomgang kommer i en ny commit etter rettingscommiten, fordi branchen da er pushet (ingen force-push). Dokumentasjonscommiten kommer til slutt, med AI-logg og sesjonslogg for hele storyen, også gjennomgangen.
 - Status `done` etter flettingen blir ikke en egen commit på `main`. Den tas med i spec-commiten til neste story.
 - Ikke slå sammen PR-er med «squash merge». Merge-commit beholder sporet fra spec via kode til retting.
 - Endringer utenfor en story, som tiltak fra en retrospektiv, følger samme tanke: én commit per sak, og dokumentasjonen samlet i én commit til slutt.
