@@ -164,7 +164,7 @@ Systemet beregner beregnet lager, nettobehov og bestillingsforslag per vare og u
 - Bestillingsforslag med frigivelsesuke før uke 1 beholdes med beregnet (negativ eller null) frigivelsesuke.
 
 #### FR-12: Komponentbehov fra forfalte produksjonsordrer
-Når en produksjonsvare får et bestillingsforslag med frigivelsesuke før uke 1, legges barnas bruttobehov fra det forslaget i uke 1. Forslaget gir en melding om forfalt bestilling (FR-14). Regelen gjelder i alle ledd nedover. Kjernen bruker regelen på alle foreldre, også kjøpte varer med BOM-linjer under seg, så ingen behov går tapt (presisert i story 2.3). Realiserer UJ-2.
+Når en vare med BOM-linjer under seg får et bestillingsforslag med frigivelsesuke før uke 1, legges barnas bruttobehov fra det forslaget i uke 1. Det gjelder også kjøpte varer, så ingen behov går tapt (presisert i story 2.3, der fasitens R11 sier «produksjonsvare»). Forslaget gir en melding om forfalt bestilling (FR-14). Regelen gjelder i alle ledd nedover. Realiserer UJ-2.
 
 **Konsekvenser (testbare):**
 - Alle felt stemmer med `expected.json` for scenario D (byggenr. 1 framskyndet til uke 4), regel R11 i fasiten.

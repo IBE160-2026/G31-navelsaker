@@ -441,7 +441,7 @@ slik at appen gir et forsiktig og synlig resultat også for urealistiske planer.
 **Når** kjernen kjører
 **Så** stemmer alle felt for alle varer, også `planned_orders`, med `expected.json` for D, med test-id som oppgir D og FR-12
 
-**Gitt** en produksjonsvare med bestillingsforslag med frigivelsesuke før uke 1
+**Gitt** en vare med BOM-linjer under seg (produksjonsvare eller kjøpt vare) med bestillingsforslag med frigivelsesuke før uke 1 (presisert i story 2.3)
 **Når** kjernen beregner barnas bruttobehov
 **Så** legges behovet (antall × mengde per) i uke 1, i alle ledd nedover
 
