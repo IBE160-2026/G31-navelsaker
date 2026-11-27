@@ -26,23 +26,25 @@ def run_mrp(data: MrpInput) -> MrpResult:
     """Kjør MRP på ``data``. Ugyldige inndata gir ``MrpInputError``."""
     codes = low_level_codes(data)
     plans = plan_items(data, codes)
-    items = [
-        ItemResult(
-            id=item.id,
-            name=item.name,
-            unit=item.unit,
-            on_hand=item.on_hand,
-            low_level_code=codes[item.id],
-            gross_requirements=plans[item.id].gross_requirements,
-            scheduled_receipts=plans[item.id].scheduled_receipts,
-            projected_on_hand=plans[item.id].projected_on_hand,
-            net_requirements=plans[item.id].net_requirements,
-            planned_order_receipts=plans[item.id].planned_order_receipts,
-            planned_order_releases=plans[item.id].planned_order_releases,
-            planned_orders=plans[item.id].planned_orders,
+    items = []
+    for item in data.items:
+        plan = plans[item.id]
+        items.append(
+            ItemResult(
+                id=item.id,
+                name=item.name,
+                unit=item.unit,
+                on_hand=item.on_hand,
+                low_level_code=codes[item.id],
+                gross_requirements=plan.gross_requirements,
+                scheduled_receipts=plan.scheduled_receipts,
+                projected_on_hand=plan.projected_on_hand,
+                net_requirements=plan.net_requirements,
+                planned_order_receipts=plan.planned_order_receipts,
+                planned_order_releases=plan.planned_order_releases,
+                planned_orders=plan.planned_orders,
+            )
         )
-        for item in data.items
-    ]
     return _ordered(items, [])
 
 

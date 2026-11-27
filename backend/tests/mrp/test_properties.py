@@ -13,20 +13,13 @@ import pytest
 
 from rbe.fixture import load_input
 from rbe.mrp import Horizon, MrpInput, result_to_dict, run_mrp
+from rbe.mrp.run import WEEK_FIELDS
 
 ResultFor = Callable[[str], dict[str, Any]]
 
 BALANCE_SCENARIOS = ("A", "B", "C", "E")
 """D venter på R11 (story 2.3): uten den går barnas behov fra forfalte frigivelser tapt."""
 SCENARIOS = ("A", "B", "C", "D", "E")
-WEEK_FIELDS = (
-    "gross_requirements",
-    "scheduled_receipts",
-    "projected_on_hand",
-    "net_requirements",
-    "planned_order_receipts",
-    "planned_order_releases",
-)
 
 
 @pytest.mark.parametrize(

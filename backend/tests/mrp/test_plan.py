@@ -101,6 +101,14 @@ def test_fr11_r2_scheduled_receipt_covers_same_week() -> None:
     assert result.projected_on_hand == (0,) * 6
 
 
+def test_fr11_r2_two_scheduled_receipts_same_week_are_summed() -> None:
+    data = _single(_item(), mps=((3, 10),), receipts=((3, 4), (3, 6)))
+    result = run_mrp(data).items[0]
+    assert result.scheduled_receipts[3 - 1] == 10
+    assert result.net_requirements[3 - 1] == 0
+    assert result.planned_orders == ()
+
+
 @pytest.mark.parametrize(
     ("need", "receipt"),
     [(60, 75), (25, 25), (26, 50), (1, 25)],
@@ -157,13 +165,20 @@ def test_fr8_first_week_other_than_1_is_rejected(scenario_a: MrpInput) -> None:
         (lambda d: replace(d, mps=(*d.mps, MpsLine("RBE-000", 17, 1, 3))), "RBE-000", 17),
         (
             lambda d: replace(
+                d, scheduled_receipts=(*d.scheduled_receipts, ScheduledReceipt("PRF-910", 0, 1))
+            ),
+            "PRF-910",
+            0,
+        ),
+        (
+            lambda d: replace(
                 d, scheduled_receipts=(*d.scheduled_receipts, ScheduledReceipt("PRF-910", 17, 1))
             ),
             "PRF-910",
             17,
         ),
     ],
-    ids=["mps-uke-0", "mps-uke-17", "apen-ordre-uke-17"],
+    ids=["mps-uke-0", "mps-uke-17", "apen-ordre-uke-0", "apen-ordre-uke-17"],
 )
 def test_fr8_week_outside_horizon_is_rejected(
     scenario_a: MrpInput, change: Callable[[MrpInput], MrpInput], item: str, week: int
