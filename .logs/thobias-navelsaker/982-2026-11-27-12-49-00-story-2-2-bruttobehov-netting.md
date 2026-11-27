@@ -23,3 +23,21 @@ Fortsette med story 2.2 i epic 2: bruttobehov, netting, partiregel og ledetidsof
 ### Åpne punkter
 - Thobias går gjennom PR-en for 2.2 (`bmad-walkthrough`) og skriver én egen observasjon før fletting (tiltak 7).
 - Refleksjonsnotat for økten om story 2.2 venter på Thobias sine egne ord.
+
+## 2026-11-27 kl. 13:05 — Thobias Navelsaker
+
+### Oppgave
+Føre inn refleksjonsnotatet for story 2.2 etter Thobias sine stikkord, skrevet bedre, og si fra om noe var feil.
+
+### Plan
+- Sammenligne stikkordene med det som faktisk skjedde i økten, og rette det som ikke stemte.
+
+### Resultat
+- Notatet er ført inn i `docs/refleksjonsnotater.md`, formulert av Claude, med stikkordene ordrett i parentes.
+- Tre punkter i stikkordene ble rettet og forklart for Thobias:
+  - Thobias fant uke → indeks selv, i gjennomgangen av PR #11.
+  - Begge feilene i specen ble funnet av KI: vakten i Claudes egenkontroll, og sikkerhetslageret i spec-gjennomgangen.
+  - Kodegjennomgangen fant to manglende tester etter at koden var skrevet.
+
+### Åpne punkter
+- Thobias går gjennom PR-en for 2.2 (`bmad-walkthrough`) og skriver én egen observasjon før fletting (står allerede i issues.md).
